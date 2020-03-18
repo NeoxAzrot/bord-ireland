@@ -9,6 +9,7 @@
 
     include 'assets/php/connect_PDO.php';
     include 'assets/php/dateChangeFormat.php';
+    include 'assets/php/ctrlSaisies.php';
 
 ?>
 
@@ -25,32 +26,30 @@
     </head>
 
     <body>
-        <h1>Bord'Irlande</h1>
-
-        <?php
-
-            // Check si l'user est connecté
-            if(isset($_SESSION['user']) && !empty($_SESSION['user']) && $_SESSION['user'] == true) {
-                $user = true;
-            } else {
-                $user = false;
-            }
-
-            // Affichage en fonction de si user connecté ou pas
-            if($user) {
-                echo $_SESSION['login'];
-                echo '<a href="deconnexion.php">Déconnexion</a>';
-            } else {
-                echo '<a href="connexion.php">Connexion</a> / <a href="inscription.php">Inscription</a>';
-            }
-
-        ?>
+        <h1>Les articles</h1>
 
         <?php include 'menu.php'; ?>
 
         <?php 
 
-            $req = $bdd->query('SELECT * FROM article ORDER BY DtCreA DESC LIMIT 1');
+        if(isset($_GET['numArt']) && !empty($_GET['numArt'])) {
+            $numArt = ctrlSaisies($_GET['numArt']);
+
+            $req = $bdd->prepare('SELECT * FROM article WHERE NumArt = ?');
+            $req->execute(array($numArt));
+            $donnees = $req->fetch();
+
+            if(empty($donnees)) {
+                header('Location: articles.php');
+            } else {
+                echo $donnees['LibTitrA'] . ' - ';
+                echo dateChangeFormat($donnees['DtCreA'], "Y-m-d", "d/m/Y");
+            }
+
+            $req->closeCursor();
+
+        } else {
+            $req = $bdd->query('SELECT * FROM article ORDER BY DtCreA DESC');
 
             while ($donnees = $req->fetch())
             {
@@ -58,9 +57,11 @@
                 echo dateChangeFormat($donnees['DtCreA'], "Y-m-d", "d/m/Y");
                 echo '<br><br>';
                 echo "<a href='articles.php?numArt=" . $donnees['NumArt'] . "'>En savoir plus</a>";
+                echo '<hr>';
             }
 
             $req->closeCursor();
+        }
 
         ?>
 
