@@ -52,7 +52,7 @@
             if($admin) {
 
             } else {
-
+                header('Location: index.php');
             }
 
         ?>

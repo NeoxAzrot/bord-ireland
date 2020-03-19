@@ -31,10 +31,78 @@
         <?php include 'assets/php/btnConnexion.php'; ?>
         <?php include 'assets/php/menu.php'; ?>
 
-        <?php 
+        <?php
 
         if(isset($_GET['numArt']) && !empty($_GET['numArt'])) {
             $numArt = ctrlSaisies($_GET['numArt']);
+
+            // Affiche le formulaire seulement la première fois
+            if($_POST) {
+                // Vérifie si tous les input ont été remplis et contrôle la saisie
+                if((isset($_POST['title_comment']) && !empty($_POST['title_comment'])) AND
+                (isset($_POST['comment']) && !empty($_POST['comment']))) {
+                    $title_comment = ctrlSaisies($_POST['title_comment']);
+                    $comment = ctrlSaisies($_POST['comment']);
+
+                    $req = $bdd->prepare('SELECT * FROM user WHERE Login = ?');
+                    $req->execute(array($_SESSION['login']));
+                    $donnees = $req->fetch();
+
+                    $pseudo = $donnees['Login'];
+                    $email = $donnees['EMail'];
+                    $date_comm = date("Y-m-d H:i:s");
+
+                    $req = $bdd->prepare('SELECT * FROM comment');
+                    $req->execute(array($numArt));
+                    $donnees = $req->fetch();
+        
+                    // Vérifie si la langue existe déjà. Exemple : FRAN
+                    if(empty($donnees)) {
+                        $req = $bdd->prepare('INSERT INTO comment(NumCom, DtCreC, PseudoAuteur, EmailAuteur, TitrCom, LibCom, NumArt) VALUES(:NumCom, :DtCreC, :PseudoAuteur, :EmailAuteur, :TitrCom, :LibCom, :NumArt)');
+                        $req->execute(array(
+                            'NumCom' => "001",
+                            'DtCreC' => $date_comm,
+                            'PseudoAuteur' => $pseudo,
+                            'EmailAuteur' => $email,
+                            'TitrCom' => $title_comment,
+                            'LibCom' => $comment,
+                            'NumArt' => $numArt
+                            ));
+                    } else {
+                        // Récupère la clé primaire maximale de la langue et lui ajoute 1
+                        $req = $bdd->prepare('SELECT MAX(NumCom) AS NumComMax FROM comment');
+                        $req->execute(array($numArt));
+                        $donnees = $req->fetch();
+
+                        $comm_max = $donnees['NumComMax'];
+                        $comm_max = (int) $comm_max + 1;
+                        
+                        // Rajoute un 0 devant si on est entre 1 et 9 car sinon on aurait par exemple : FRAN2 et non FRAN02
+                        if($comm_max < 10) {
+                            $comm_max = "0" . $comm_max;
+                        }
+
+                        if($comm_max < 100) {
+                            $comm_max = "0" . $comm_max;
+                        }
+
+                        // Ajoute la langue
+                        $req = $bdd->prepare('INSERT INTO comment(NumCom, DtCreC, PseudoAuteur, EmailAuteur, TitrCom, LibCom, NumArt) VALUES(:NumCom, :DtCreC, :PseudoAuteur, :EmailAuteur, :TitrCom, :LibCom, :NumArt)');
+                        $req->execute(array(
+                            'NumCom' => $comm_max,
+                            'DtCreC' => $date_comm,
+                            'PseudoAuteur' => $pseudo,
+                            'EmailAuteur' => $email,
+                            'TitrCom' => $title_comment,
+                            'LibCom' => $comment,
+                            'NumArt' => $numArt
+                            ));
+
+                        $req->closeCursor();
+                    }
+                    header('Location: articles.php?numArt=' . $numArt);
+                }
+            }
 
             $req = $bdd->prepare('SELECT * FROM article WHERE NumArt = ?');
             $req->execute(array($numArt));
@@ -65,19 +133,24 @@
 
             <?php
 
-                $req = $bdd->prepare('SELECT * FROM comment WHERE NumArt = ?');
-                $req->execute(array($numArt));
-
-                while($donnees = $req->fetch())
-                {
-                    echo $donnees['PseudoAuteur'] . ' : ' . $donnees['LibCom'] . '<br><br>';
-                }
-
                 // Check si l'user est connecté
                 if(isset($_SESSION['user']) && !empty($_SESSION['user']) && $_SESSION['user'] == true) {
                     $user = true;
                 } else {
                     $user = false;
+                }
+
+                $req = $bdd->prepare('SELECT * FROM comment WHERE NumArt = ? ORDER BY DtCreC');
+                $req->execute(array($numArt));
+
+                while($donnees = $req->fetch())
+                {
+                    echo dateChangeFormat($donnees['DtCreC'], "Y-m-d H:i:s", "d/m/Y H:i:s") . ' - ' . $donnees['PseudoAuteur'] . ' : ' . $donnees['LibCom'] . '<br><br>';
+                    if($user) {
+                        if($donnees['PseudoAuteur'] == $_SESSION['login']) {
+                            echo '<a href="supprimerCom.php?numCom=' . $donnees['NumCom'] . '&numArt=' . $donnees['NumArt'] . '">Supprimer</a>';
+                        }
+                    }
                 }
 
                 // Affichage en fonction de si user connecté ou pas
