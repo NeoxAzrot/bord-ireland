@@ -2,7 +2,7 @@
 
     // Ouverture de la session et initialisation des erreurs et des includes
     session_start();
-
+    
     ini_set('display_errors', 'on');
     ini_set('display_startup_errors', 'on');
     error_reporting(E_ALL);
@@ -49,11 +49,11 @@
             }
 
             // Affichage en fonction de si admin connecté ou pas
-            if($admin) {
-
-            } else {
+            if(!$admin) {
                 header('Location: index.php');
             }
+
+            
 
         ?>
 

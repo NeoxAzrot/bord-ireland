@@ -11,12 +11,22 @@
 
     // Supprime la langue en utilisant la clés primaire
     if(isset($_GET['numCom']) && !empty($_GET['numCom']) && isset($_GET['numArt']) && !empty($_GET['numArt'])) {
-        $req = $bdd->prepare('DELETE FROM comment WHERE NumCom = :numCom');
+
+        $req = $bdd->prepare('SELECT * FROM comment WHERE PseudoAuteur = :pseudo AND NumCom = :numCom');
         $req->execute(array(
+            'pseudo' => $_SESSION['login'],
             'numCom' => $_GET['numCom']
         ));
+        $donnees = $req->fetch();
 
-        $req->closeCursor();
+        if(!empty($donnees)) {
+            $req = $bdd->prepare('DELETE FROM comment WHERE NumCom = :numCom');
+            $req->execute(array(
+                'numCom' => $_GET['numCom']
+            ));
+    
+            $req->closeCursor();
+        }
     }
 
     // Redirection avec un message personnalisé
