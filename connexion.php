@@ -68,6 +68,11 @@
                     $_SESSION['login'] = $login;
                     $_SESSION['errorLogin'] = false;
 
+                    
+                    if($_SESSION['login'] == 'Admin') {
+                        $_SESSION['admin'] = true;
+                    }
+
                     header('Location: index.php');
                 }
 
@@ -78,6 +83,9 @@
     ?>
 
     <h1>Connexion</h1>
+
+    <?php include 'assets/php/btnConnexion.php'; ?>
+    <?php include 'assets/php/menu.php'; ?>
 
     <form action="" method="POST">
         <label for="login">Identifiant :</label>
@@ -90,6 +98,8 @@
 
         <input type="submit">
     </form>
+
+    <a href="inscription.php">S'inscrire</a>
 
     <script src="assets/js/script.js"></script>
 </body>

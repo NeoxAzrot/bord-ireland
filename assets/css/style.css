@@ -6,6 +6,15 @@ body {
     align-items: center;
 }
 
+hr {
+    border: 0;
+    clear: both;
+    display: block;
+    width: 30%;               
+    background-color: black;
+    height: 1px;
+}
+
 /* Affichage du tableau */
 
 table {
@@ -65,7 +74,7 @@ input[type="submit"]:hover {
    color: orange;
 }
 
-input[type="text"] {
+input[type="text"], input[type="email"], input[type="password"] {
     padding: 8px;
 }
 

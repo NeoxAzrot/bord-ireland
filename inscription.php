@@ -94,6 +94,9 @@
 
         <h1>Inscription</h1>
 
+        <?php include 'assets/php/btnConnexion.php'; ?>
+        <?php include 'assets/php/menu.php'; ?>
+
         <form action="" method="POST">
             <label for="firstName">Prénom :</label>
             <input type="text" id="firstName" name="firstName" placeholder="Sur 30 car." value="<?php echo isset($_SESSION['errorLogin']) && $_SESSION['errorLogin'] == true ? $_SESSION['firstName'] : "" ?>" size="30" maxlength="30" autofocus="autofocus" required>
@@ -113,6 +116,8 @@
 
             <input type="submit">
         </form>
+
+        <a href="connexion.php">Se connecter</a>
 
         <script src="assets/js/script.js"></script>
     </body>
