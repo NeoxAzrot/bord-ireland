@@ -7,7 +7,7 @@
         $user = false;
     }
 
-    // Affichage en fonction de si user connecté ou pas
+    // Affichage en fonction de si user est connecté ou pas
     if($user) {
         echo $_SESSION['login'];
         echo '<a href="deconnexion.php">Déconnexion</a>';

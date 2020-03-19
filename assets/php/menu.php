@@ -9,6 +9,7 @@
 
 ?>
 
+<!-- Affiche une partie pour admin si il est connecté -->
 <ul>
     <li><a href="index.php">Accueil</a></li>
     <li><a href="articles.php">Articles</a></li>

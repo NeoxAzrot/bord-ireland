@@ -35,12 +35,12 @@
                 $user = false;
             }
 
-            // Affichage en fonction de si user connecté ou pas
+            // Redirige si l'utilisateur est déjà connecté
             if($user) {
                 header('Location: index.php');
             }
 
-            // Affiche le formulaire seulement la première fois
+            // Affiche le formulaire d'inscription seulement la première fois
             if($_POST) {
                 // Vérifie si tous les input ont été remplis et contrôle la saisie
                 if((isset($_POST['firstName']) && !empty($_POST['firstName'])) AND
@@ -58,7 +58,7 @@
                     $req->execute(array($login));
                     $donnees = $req->fetch();
 
-                    // Vérifie si la langue existe déjà. Exemple : FRAN
+                    // Vérifie si l'utilisateur n'existe pas déjà
                     if(empty($donnees)) {
                         $req = $bdd->prepare('INSERT INTO user(FirstName, LastName, EMail, Login, Pass) VALUES(:FirstName, :LastName, :EMail, :Login, :Pass)');
                         $req->execute(array(
@@ -73,6 +73,12 @@
                         $_SESSION['login'] = $login;
                         $_SESSION['errorLogin'] = false;
 
+                        // Vérifie si c'est l'admin d'inscrit (si il s'est supprimé)
+                        if($_SESSION['login'] == 'Admin') {
+                            $_SESSION['admin'] = true;
+                        }
+
+                        // Redirige après l'inscription
                         header('Location: index.php');
                     } else {
                         $_SESSION['errorLogin'] = true;
@@ -83,6 +89,7 @@
                         $_SESSION['login'] = $login;
                         $_SESSION['password'] = $password;
 
+                        // Redirige avec un message d'erreur
                         header('Location: inscription.php');
                     }
 
@@ -94,9 +101,11 @@
 
         <h1>Inscription</h1>
 
+        <!-- Menus -->
         <?php include 'assets/php/btnConnexion.php'; ?>
         <?php include 'assets/php/menu.php'; ?>
 
+        <!-- Formulaire d'inscription avec input près remplis si erreur -->
         <form action="" method="POST">
             <label for="firstName">Prénom :</label>
             <input type="text" id="firstName" name="firstName" placeholder="Sur 30 car." value="<?php echo isset($_SESSION['errorLogin']) && $_SESSION['errorLogin'] == true ? $_SESSION['firstName'] : "" ?>" size="30" maxlength="30" autofocus="autofocus" required>
@@ -108,6 +117,7 @@
             <input type="email" id="email" name="email" placeholder="Sur 50 car." value="<?php echo isset($_SESSION['errorLogin']) && $_SESSION['errorLogin'] == true ? $_SESSION['email'] : "" ?>" size="50" maxlength="50" required>
 
             <label for="login">Identifiant :</label>
+            <!-- Message d'erreur de connexion -->
             <?php echo isset($_SESSION['errorLogin']) && $_SESSION['errorLogin'] == true ? "Cet identifiant existe déjà !" : "" ?>
             <input type="text" id="login" name="login" placeholder="Sur 30 car." value="<?php echo isset($_SESSION['errorLogin']) && $_SESSION['errorLogin'] == true ? $_SESSION['login'] : "" ?>" size="30" maxlength="30" required>
 
@@ -117,6 +127,7 @@
             <input type="submit">
         </form>
 
+        <!-- Lien pour se connecter -->
         <a href="connexion.php">Se connecter</a>
 
         <script src="assets/js/script.js"></script>

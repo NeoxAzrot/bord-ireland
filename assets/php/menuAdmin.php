@@ -1,9 +1,5 @@
 <?php
 
-    ini_set('display_errors', 'on');
-    ini_set('display_startup_errors', 'on');
-    error_reporting(E_ALL);
-
     // Check si l'admin est connecté
     if(isset($_SESSION['admin']) && !empty($_SESSION['admin']) && $_SESSION['admin'] == true) {
         $admin = true;
@@ -11,13 +7,14 @@
         $admin = false;
     }
 
-    // Affichage en fonction de si admin connecté ou pas
+    // Redirige si admin pas connecté
     if(!$admin) {
         header('Location: index.php');
     }
 
 ?>
 
+<!-- Menu pour toutes les pages administrateur -->
 <ul>
     <li><a href="../articles/index.php">Articles</a></li>
     <li><a href="../commentaires/index.php">Commentaires</a></li>

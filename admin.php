@@ -26,6 +26,7 @@
     <body>
         <h1>Administrateur</h1>
 
+        <!-- Menu différent car admin est à la racine -->
         <ul>
             <li><a href="articles/index.php">Articles</a></li>
             <li><a href="commentaires/index.php">Commentaires</a></li>
@@ -36,6 +37,7 @@
             <li><a href="langues/index.php">Langues</a></li>
         </ul>
 
+        <!-- Include des menus -->
         <?php include 'assets/php/btnConnexion.php'; ?>
         <?php include 'assets/php/menu.php'; ?>
         
@@ -48,7 +50,7 @@
                 $admin = false;
             }
 
-            // Affichage en fonction de si admin connecté ou pas
+            // Redirige si admin pas connecté
             if(!$admin) {
                 header('Location: index.php');
             }

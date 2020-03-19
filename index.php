@@ -27,11 +27,13 @@
     <body>
         <h1>Bord'Irlande</h1>
 
+        <!-- Menus -->
         <?php include 'assets/php/btnConnexion.php'; ?>
         <?php include 'assets/php/menu.php'; ?>
 
         <?php 
 
+            // Affiche le dernier article
             $req = $bdd->query('SELECT * FROM article ORDER BY DtCreA DESC LIMIT 1');
 
             while ($donnees = $req->fetch())

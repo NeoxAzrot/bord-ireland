@@ -28,15 +28,17 @@
     <body>
         <h1>Les articles</h1>
 
+        <!-- Menus -->
         <?php include 'assets/php/btnConnexion.php'; ?>
         <?php include 'assets/php/menu.php'; ?>
 
         <?php
 
+        // Vérifie si on affiche un article ou tout les articles
         if(isset($_GET['numArt']) && !empty($_GET['numArt'])) {
             $numArt = ctrlSaisies($_GET['numArt']);
 
-            // Affiche le formulaire seulement la première fois
+            // Vérifie si l'utilisateur a mis un commentaire
             if($_POST) {
                 // Vérifie si tous les input ont été remplis et contrôle la saisie
                 if((isset($_POST['title_comment']) && !empty($_POST['title_comment'])) AND
@@ -44,6 +46,7 @@
                     $title_comment = ctrlSaisies($_POST['title_comment']);
                     $comment = ctrlSaisies($_POST['comment']);
 
+                    // Récupère les informations de l'utilisateur
                     $req = $bdd->prepare('SELECT * FROM user WHERE Login = ?');
                     $req->execute(array($_SESSION['login']));
                     $donnees = $req->fetch();
@@ -52,12 +55,13 @@
                     $email = $donnees['EMail'];
                     $date_comm = date("Y-m-d H:i:s");
 
+                    // Vérifie si c'est le premier commentaire de la table
                     $req = $bdd->prepare('SELECT * FROM comment');
                     $req->execute(array($numArt));
                     $donnees = $req->fetch();
         
-                    // Vérifie si la langue existe déjà. Exemple : FRAN
                     if(empty($donnees)) {
+                        // Ajoute le commentaire si c'est le premier de la table
                         $req = $bdd->prepare('INSERT INTO comment(NumCom, DtCreC, PseudoAuteur, EmailAuteur, TitrCom, LibCom, NumArt) VALUES(:NumCom, :DtCreC, :PseudoAuteur, :EmailAuteur, :TitrCom, :LibCom, :NumArt)');
                         $req->execute(array(
                             'NumCom' => "001",
@@ -69,7 +73,7 @@
                             'NumArt' => $numArt
                             ));
                     } else {
-                        // Récupère la clé primaire maximale de la langue et lui ajoute 1
+                        // Récupère la clé primaire maximale du commentaire et lui ajoute 1
                         $req = $bdd->prepare('SELECT MAX(NumCom) AS NumComMax FROM comment');
                         $req->execute(array($numArt));
                         $donnees = $req->fetch();
@@ -77,16 +81,17 @@
                         $comm_max = $donnees['NumComMax'];
                         $comm_max = (int) $comm_max + 1;
                         
-                        // Rajoute un 0 devant si on est entre 1 et 9 car sinon on aurait par exemple : FRAN2 et non FRAN02
+                        // Rajoute un 0 devant si on est entre 1 et 9
                         if($comm_max < 10) {
                             $comm_max = "0" . $comm_max;
                         }
 
+                        // Rajoute un 0 devant si on est entre 1 et 99
                         if($comm_max < 100) {
                             $comm_max = "0" . $comm_max;
                         }
 
-                        // Ajoute la langue
+                        // Ajoute le commentaire
                         $req = $bdd->prepare('INSERT INTO comment(NumCom, DtCreC, PseudoAuteur, EmailAuteur, TitrCom, LibCom, NumArt) VALUES(:NumCom, :DtCreC, :PseudoAuteur, :EmailAuteur, :TitrCom, :LibCom, :NumArt)');
                         $req->execute(array(
                             'NumCom' => $comm_max,
@@ -100,17 +105,21 @@
 
                         $req->closeCursor();
                     }
+                    // Redirige vers l'article en question
                     header('Location: articles.php?numArt=' . $numArt);
                 }
             }
 
+            // Vérifie que l'article existe
             $req = $bdd->prepare('SELECT * FROM article WHERE NumArt = ?');
             $req->execute(array($numArt));
             $donnees = $req->fetch();
 
             if(empty($donnees)) {
+                // Redirige si l'article n'existe pas
                 header('Location: articles.php');
             } else {
+                // Récupère le nombre de like et le nombre de commentaire
                 $nb_like = $donnees['Likes'];
 
                 $req = $bdd->prepare('SELECT COUNT(*) AS nb_comm FROM comment WHERE NumArt = ?');
@@ -123,6 +132,7 @@
                 $req->execute(array($numArt));
                 $donnees = $req->fetch();
 
+                // Affiche l'article
                 echo $donnees['LibTitrA'] . ' - ';
                 echo dateChangeFormat($donnees['DtCreA'], "Y-m-d", "d/m/Y");
 
@@ -143,6 +153,7 @@
                 $req = $bdd->prepare('SELECT * FROM comment WHERE NumArt = ? ORDER BY DtCreC');
                 $req->execute(array($numArt));
 
+                // Affiche les commentaires et autorise la suppression si c'est l'auteur du commentaire
                 while($donnees = $req->fetch())
                 {
                     echo dateChangeFormat($donnees['DtCreC'], "Y-m-d H:i:s", "d/m/Y H:i:s") . ' - ' . $donnees['PseudoAuteur'] . ' : ' . $donnees['LibCom'] . '<br><br>';
@@ -153,7 +164,7 @@
                     }
                 }
 
-                // Affichage en fonction de si user connecté ou pas
+                // Affiche le formulaire de commentaire si l'utilisateur est connecté
                 if($user) {
 
                     ?>
@@ -171,6 +182,7 @@
 
                 <?php
 
+                // Affiche des liens pour se connecter sinon
                 } else {
 
                 ?>
@@ -187,6 +199,7 @@
             $req->closeCursor();
 
         } else {
+            // Affiches tout les articles en ordre décroissant, si on ne précise pas un article
             $req = $bdd->query('SELECT * FROM article ORDER BY DtCreA DESC');
 
             while ($donnees = $req->fetch())

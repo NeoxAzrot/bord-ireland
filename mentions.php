@@ -26,6 +26,7 @@
     <body>
         <h1>A propos</h1>
 
+        <!-- Menus -->
         <?php include 'assets/php/btnConnexion.php'; ?>
         <?php include 'assets/php/menu.php'; ?>
 

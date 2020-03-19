@@ -9,9 +9,10 @@
 
     include 'assets/php/connect_PDO.php';
 
-    // Supprime la langue en utilisant la clés primaire
+    // Supprime le commentaire en utilisant la clés primaire
     if(isset($_GET['numCom']) && !empty($_GET['numCom']) && isset($_GET['numArt']) && !empty($_GET['numArt'])) {
 
+        // Vérifie si c'est bien l'auteur qui demande de supprimer
         $req = $bdd->prepare('SELECT * FROM comment WHERE PseudoAuteur = :pseudo AND NumCom = :numCom');
         $req->execute(array(
             'pseudo' => $_SESSION['login'],
@@ -29,7 +30,7 @@
         }
     }
 
-    // Redirection avec un message personnalisé
+    // Redirection sur l'article en question
     header('Location: articles.php?numArt=' . $_GET['numArt']);
 
 ?>
