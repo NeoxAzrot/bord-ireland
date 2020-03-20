@@ -57,7 +57,7 @@
 
                 // Vérifie si l'utilisateur existe dans la base de donnée
                 if(empty($donnees)) {
-                    $_SESSION['errorLogin'] = true;
+                    $_SESSION['errorConnexion'] = true;
 
                     $_SESSION['login'] = $login;
                     $_SESSION['password'] = $password;
@@ -67,7 +67,7 @@
                 } else {
                     $_SESSION['user'] = true;
                     $_SESSION['login'] = $login;
-                    $_SESSION['errorLogin'] = false;
+                    $_SESSION['errorConnexion'] = false;
 
                     // Vérifie si c'est l'admin connecté
                     if($_SESSION['login'] == 'Admin') {
@@ -93,13 +93,13 @@
     <!-- Formulaire de connexion avec input près remplis si erreur -->
     <form action="" method="POST">
         <label for="login">Identifiant :</label>
-        <input type="text" id="login" name="login" placeholder="Sur 30 car." value="<?php echo isset($_SESSION['errorLogin']) && $_SESSION['errorLogin'] == true ? $_SESSION['login'] : "" ?>" size="30" maxlength="30" required>
+        <input type="text" id="login" name="login" placeholder="Sur 30 car." value="<?php echo isset($_SESSION['errorConnexion']) && $_SESSION['errorConnexion'] == true ? $_SESSION['login'] : "" ?>" size="30" maxlength="30" required>
 
         <label for="password">Mot de passe :</label>
-        <input type="password" id="password" name="password" placeholder="Sur 15 car." value="<?php echo isset($_SESSION['errorLogin']) && $_SESSION['errorLogin'] == true ? $_SESSION['password'] : "" ?>" size="15" maxlength="15" minlength="6" required>
+        <input type="password" id="password" name="password" placeholder="Sur 15 car." value="<?php echo isset($_SESSION['errorConnexion']) && $_SESSION['errorConnexion'] == true ? $_SESSION['password'] : "" ?>" size="15" maxlength="15" minlength="6" required>
 
         <!-- Message d'erreur de connexion -->
-        <?php echo isset($_SESSION['errorLogin']) && $_SESSION['errorLogin'] == true ? "L'identifiant ou le mot de passe n'est pas valide !" : "" ?>
+        <?php echo isset($_SESSION['errorConnexion']) && $_SESSION['errorConnexion'] == true ? "L'identifiant ou le mot de passe n'est pas valide !" : "" ?>
 
         <input type="submit">
     </form>
