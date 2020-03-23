@@ -8,6 +8,7 @@
     error_reporting(E_ALL);
 
     include '../assets/php/connect_PDO.php';
+    include '../assets/php/dateChangeFormat.php';
 
 ?>
 
@@ -26,6 +27,10 @@
     <body>
         <h1>Tout les commentaires.</h1>
 
+        <?php include '../assets/php/menuAdmin.php'; ?>
+        <?php include '../assets/php/btnConnexionInAdminShow.php'; ?>
+        <?php include '../assets/php/menuInAdminShow.php'; ?>
+
         <?php 
 
             // Affichage du message personnalisé lors de la redirection
@@ -39,30 +44,35 @@
         <table>
             <thead>
                 <tr>
-                    <th>NumLang</th>
-                    <th>Lib1Lang</th>
-                    <th>Lib2Lang</th>
-                    <th>NumPays</th>
+                    <th>NumCom</th>
+                    <th>DtCreC</th>
+                    <th>PseudoAuteur</th>
+                    <th>EmailAuteur</th>
+                    <th>TitrCom</th>
+                    <th>LibCom</th>
+                    <th>NumArt</th>
                 </tr>
             </thead>
             <tbody>
 
             <?php
 
-                $req = $bdd->query('SELECT * FROM langue ORDER BY NumLang');
+                $req = $bdd->query('SELECT * FROM comment ORDER BY NumCom');
 
-                // Affichage de toutes les langues dans un tableau
+                // Affichage de tout les commentaires dans un tableau
                 while ($donnees = $req->fetch())
                 {
 
             ?>
                 <tr>
-                    <td><?php echo $donnees['NumLang'];?></td>
-                    <td><?php echo $donnees['Lib1Lang'];?></td>
-                    <td><?php echo $donnees['Lib2Lang'];?></td>
-                    <td><?php echo $donnees['NumPays'];?></td>
-                    <td><a href="update.php?id=<?php echo $donnees['NumLang'];?>" class="modified_link"><i class="fas fa-edit"></i> Modifier</a></td>
-                    <td><a href="delete.php?id=<?php echo $donnees['NumLang'];?>" class="delete_link" data-id="<?php echo $donnees['NumLang']; ?>"><i class="fas fa-trash-alt"></i> Supprimer</a></td>
+                    <td><?php echo $donnees['NumCom'];?></td>
+                    <td><?php echo dateChangeFormat($donnees['DtCreC'], "Y-m-d H:i:s", "d/m/Y H:i:s");?></td>
+                    <td><?php echo $donnees['PseudoAuteur'];?></td>
+                    <td><?php echo $donnees['EmailAuteur'];?></td>
+                    <td><?php echo $donnees['TitrCom'];?></td>
+                    <td><?php echo $donnees['LibCom'];?></td>
+                    <td><a href="../articles/index.php"><?php echo $donnees['NumArt'];?></a></td>
+                    <td><a href="delete.php?id=<?php echo $donnees['NumCom'];?>" class="delete_link" data-id="<?php echo $donnees['NumCom']; ?>"><i class="fas fa-trash-alt"></i> Supprimer</a></td>
                 </tr>
 
                 <?php 
@@ -74,8 +84,6 @@
                 ?>
             </tbody>
         </table>
-
-        <a href="new.php" class="add"><i class="fas fa-plus"></i> Ajouter un nouveau commentaire</a>
 
         <script src="../assets/js/script.js"></script>
     </body>

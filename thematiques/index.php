@@ -26,6 +26,10 @@
     <body>
         <h1>Toutes les thématiques.</h1>
 
+        <?php include '../assets/php/menuAdmin.php'; ?>
+        <?php include '../assets/php/btnConnexionInAdminShow.php'; ?>
+        <?php include '../assets/php/menuInAdminShow.php'; ?>
+
         <?php 
 
             // Affichage du message personnalisé lors de la redirection
@@ -39,30 +43,28 @@
         <table>
             <thead>
                 <tr>
+                    <th>NumThem</th>
+                    <th>LibThem</th>
                     <th>NumLang</th>
-                    <th>Lib1Lang</th>
-                    <th>Lib2Lang</th>
-                    <th>NumPays</th>
                 </tr>
             </thead>
             <tbody>
 
             <?php
 
-                $req = $bdd->query('SELECT * FROM langue ORDER BY NumLang');
+                $req = $bdd->query('SELECT * FROM thematique ORDER BY NumThem');
 
-                // Affichage de toutes les langues dans un tableau
+                // Affichage de toutes les thématiques dans un tableau
                 while ($donnees = $req->fetch())
                 {
 
             ?>
                 <tr>
-                    <td><?php echo $donnees['NumLang'];?></td>
-                    <td><?php echo $donnees['Lib1Lang'];?></td>
-                    <td><?php echo $donnees['Lib2Lang'];?></td>
-                    <td><?php echo $donnees['NumPays'];?></td>
-                    <td><a href="update.php?id=<?php echo $donnees['NumLang'];?>" class="modified_link"><i class="fas fa-edit"></i> Modifier</a></td>
-                    <td><a href="delete.php?id=<?php echo $donnees['NumLang'];?>" class="delete_link" data-id="<?php echo $donnees['NumLang']; ?>"><i class="fas fa-trash-alt"></i> Supprimer</a></td>
+                    <td><?php echo $donnees['NumThem'];?></td>
+                    <td><?php echo $donnees['LibThem'];?></td>
+                    <td><a href="../langues/index.php"><?php echo $donnees['NumLang'];?></a></td>
+                    <td><a href="update.php?id=<?php echo $donnees['NumThem'];?>" class="modified_link"><i class="fas fa-edit"></i> Modifier</a></td>
+                    <td><a href="delete.php?id=<?php echo $donnees['NumThem'];?>" class="delete_link" data-id="<?php echo $donnees['NumLang']; ?>"><i class="fas fa-trash-alt"></i> Supprimer</a></td>
                 </tr>
 
                 <?php 
@@ -76,6 +78,7 @@
         </table>
 
         <a href="new.php" class="add"><i class="fas fa-plus"></i> Ajouter une nouvelle thématique</a>
+        <a href="traduction.php" class="add"><i class="fas fa-plus"></i> Traduire une thématique</a>
 
         <script src="../assets/js/script.js"></script>
     </body>

@@ -56,7 +56,7 @@
 
                 $req = $bdd->query('SELECT * FROM user ORDER BY Login');
 
-                // Affichage de toutes les langues dans un tableau
+                // Affichage de tout les utilisateurs dans un tableau
                 while ($donnees = $req->fetch())
                 {
 

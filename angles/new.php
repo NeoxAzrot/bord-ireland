@@ -35,41 +35,42 @@
                     $NumLang = ctrlSaisies($_POST['NumLang']);
                     $NumLang = strtoupper($NumLang);
 
-                    $req = $bdd->query('SELECT * FROM angle WHERE NumLang LIKE "' . $NumLang . '%"');
+                    $req = $bdd->query('SELECT * FROM angle');
                     $donnees = $req->fetch();
         
-                    // Vérifie si la langue existe déjà. Exemple : FRAN
+                    // Vérifie si l'angle existe déjà
                     if(empty($donnees)) {
-                        $req = $bdd->prepare('INSERT INTO langue(NumLang, Lib1Lang, Lib2Lang, NumPays) VALUES(:NumLang, :Lib1Lang, :Lib2Lang, :NumPays)');
+                        $req = $bdd->prepare('INSERT INTO angle(NumAngl, LibAngl, NumLang) VALUES(:NumAngl, :LibAngl, :NumLang)');
                         $req->execute(array(
-                            'NumLang' => $NumLang . "01",
-                            'Lib1Lang' => $LibAngl,
-                            'NumPays' => $pays
+                            'NumAngl' => "ANGL0101",
+                            'LibAngl' => $LibAngl,
+                            'NumLang' => $NumLang
                             ));
 
-                        $_SESSION['answer'] = "<b>" . $NumLang . "01" . "</b> vient d'être ajouté à la table !";
+                        $_SESSION['answer'] = "<b>" . "ANGL0101" . "</b> vient d'être ajouté à la table !";
                     } else {
-                        // Récupère la clé primaire maximale de la langue et lui ajoute 1
-                        $req = $bdd->query('SELECT MAX(NumLang) AS NumLangMax FROM langue WHERE NumLang LIKE "' . $NumLang . '%"');
+                        // Récupère la clé primaire maximale de l'angle et lui ajoute 1
+                        $req = $bdd->query('SELECT MAX(NumAngl) AS NumAnglMax FROM angle');
                         $donnees = $req->fetch();
 
-                        $NumLang_split = str_split($donnees['NumLangMax'], 4);
-                        $NumLang_next_id = (int) $NumLang_split[1] + 1;
+                        $NumAngl_split = str_split($donnees['NumAnglMax'], 4);
+                        $NumAngl_split_id = str_split($NumAngl_split[1], 2);
+                        $NumAngl_next_id = (int) $NumAngl_split_id[0] + 1;
                         
-                        // Rajoute un 0 devant si on est entre 1 et 9 car sinon on aurait par exemple : FRAN2 et non FRAN02
-                        if($NumLang_next_id < 10) {
-                            $NumLang_next_id = "0" . $NumLang_next_id;
+                        // Rajoute un 0 devant si on est entre 1 et 9 car sinon on aurait par exemple : ANGL2 et non ANGL02
+                        if($NumAngl_next_id < 10) {
+                            $NumAngl_next_id = "0" . $NumAngl_next_id;
                         }
 
-                        // Ajoute la langue
-                        $req = $bdd->prepare('INSERT INTO langue(NumLang, Lib1Lang, Lib2Lang, NumPays) VALUES(:NumLang, :Lib1Lang, :Lib2Lang, :NumPays)');
+                        // Ajoute l'angle
+                        $req = $bdd->prepare('INSERT INTO angle(NumAngl, LibAngl, NumLang) VALUES(:NumAngl, :LibAngl, :NumLang)');
                         $req->execute(array(
-                            'NumLang' => $NumLang_split[0] . $NumLang_next_id,
-                            'Lib1Lang' => $LibAngl,
-                            'NumPays' => $NumLang
+                            'NumAngl' => $NumAngl_split[0] . $NumAngl_next_id . "01",
+                            'LibAngl' => $LibAngl,
+                            'NumLang' => $NumLang
                             ));
 
-                        $_SESSION['answer'] = "<b>" . $NumLang_split[0] . $NumLang_next_id  . "</b> vient d'être ajouté à la table !";
+                        $_SESSION['answer'] = "<b>" . $NumAngl_split[0] . $NumAngl_next_id . "01" . "</b> vient d'être ajouté à la table !";
 
                         $req->closeCursor();
                     }
@@ -83,6 +84,10 @@
         ?>
         
         <h1>Ajoutez un angle.</h1>
+
+        <?php include '../assets/php/menuAdmin.php'; ?>
+        <?php include '../assets/php/btnConnexionInAdminShow.php'; ?>
+        <?php include '../assets/php/menuInAdminShow.php'; ?>
 
         <form action="new.php" method="POST">
             <label for="LibAngl">Libellé angle :</label>

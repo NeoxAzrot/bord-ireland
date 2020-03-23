@@ -26,6 +26,10 @@
     <body>
         <h1>Tout les angles.</h1>
 
+        <?php include '../assets/php/menuAdmin.php'; ?>
+        <?php include '../assets/php/btnConnexionInAdminShow.php'; ?>
+        <?php include '../assets/php/menuInAdminShow.php'; ?>
+
         <?php 
 
             // Affichage du message personnalisé lors de la redirection
@@ -58,7 +62,7 @@
                 <tr>
                     <td><?php echo $donnees['NumAngl'];?></td>
                     <td><?php echo $donnees['LibAngl'];?></td>
-                    <td><?php echo $donnees['NumLang'];?></td>
+                    <td><a href="../langues/index.php"><?php echo $donnees['NumLang'];?></a></td>
                     <td><a href="update.php?id=<?php echo $donnees['NumAngl'];?>" class="modified_link"><i class="fas fa-edit"></i> Modifier</a></td>
                     <td><a href="delete.php?id=<?php echo $donnees['NumAngl'];?>" class="delete_link" data-id="<?php echo $donnees['NumLang']; ?>"><i class="fas fa-trash-alt"></i> Supprimer</a></td>
                 </tr>
@@ -74,6 +78,7 @@
         </table>
 
         <a href="new.php" class="add"><i class="fas fa-plus"></i> Ajouter un nouvel angle</a>
+        <a href="traduction.php" class="add"><i class="fas fa-plus"></i> Traduire un angle</a>
 
         <script src="../assets/js/script.js"></script>
     </body>

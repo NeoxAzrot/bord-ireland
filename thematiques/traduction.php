@@ -29,50 +29,59 @@
             // Affiche le formulaire seulement la première fois
             if($_POST) {
                 // Vérifie si tous les input ont été remplis et contrôle la saisie
-                if((isset($_POST['LibAngl']) && !empty($_POST['LibAngl'])) AND
+                if((isset($_POST['NumAngl']) && !empty($_POST['NumAngl'])) AND
+                (isset($_POST['LibAngl']) && !empty($_POST['LibAngl'])) AND
                 (isset($_POST['NumLang']) && !empty($_POST['NumLang']))) {
+                    $NumAngl = ctrlSaisies($_POST['NumAngl']);
+                    $NumAngl = strtoupper($NumAngl);
                     $LibAngl = ctrlSaisies($_POST['LibAngl']);
                     $NumLang = ctrlSaisies($_POST['NumLang']);
                     $NumLang = strtoupper($NumLang);
 
-                    $req = $bdd->query('SELECT * FROM angle');
+                    $req = $bdd->query('SELECT * FROM angle WHERE NumAngl = "' . $NumAngl . '"');
                     $donnees = $req->fetch();
         
                     // Vérifie si l'angle existe déjà
-                    if(empty($donnees)) {
-                        $req = $bdd->prepare('INSERT INTO angle(NumAngl, LibAngl, NumLang) VALUES(:NumAngl, :LibAngl, :NumLang)');
-                        $req->execute(array(
-                            'NumAngl' => "ANGL0101",
-                            'LibAngl' => $LibAngl,
-                            'NumLang' => $NumLang
-                            ));
+                    if(!empty($donnees)) {
+                        $NumAngl_split = str_split($donnees['NumAngl'], 4);
+                        $NumAngl_split_id = str_split($NumAngl_split[1], 2);
 
-                        $_SESSION['answer'] = "<b>" . "ANGL0101" . "</b> vient d'être ajouté à la table !";
-                    } else {
                         // Récupère la clé primaire maximale de l'angle et lui ajoute 1
-                        $req = $bdd->query('SELECT MAX(NumAngl) AS NumAnglMax FROM angle');
+                        $req = $bdd->query('SELECT MAX(NumAngl) AS NumAnglMax FROM angle WHERE NumAngl LIKE "' . $NumAngl_split[0] . $NumAngl_split_id[0] . '%"');
                         $donnees = $req->fetch();
 
                         $NumAngl_split = str_split($donnees['NumAnglMax'], 4);
                         $NumAngl_split_id = str_split($NumAngl_split[1], 2);
-                        $NumAngl_next_id = (int) $NumAngl_split_id[0] + 1;
+                        $NumAngl_next_id = (int) $NumAngl_split_id[1] + 1;
                         
                         // Rajoute un 0 devant si on est entre 1 et 9 car sinon on aurait par exemple : ANGL2 et non ANGL02
                         if($NumAngl_next_id < 10) {
                             $NumAngl_next_id = "0" . $NumAngl_next_id;
                         }
 
-                        // Ajoute l'angle
-                        $req = $bdd->prepare('INSERT INTO angle(NumAngl, LibAngl, NumLang) VALUES(:NumAngl, :LibAngl, :NumLang)');
+                        $req = $bdd->prepare('SELECT * FROM angle WHERE NumAngl LIKE :NumAngl AND NumLang = :NumLang');
                         $req->execute(array(
-                            'NumAngl' => $NumAngl_split[0] . $NumAngl_next_id . "01",
-                            'LibAngl' => $LibAngl,
+                            'NumAngl' => $NumAngl_split[0] . $NumAngl_split_id[0] . "%",
                             'NumLang' => $NumLang
-                            ));
+                        ));
+                        $donnees = $req->fetch();
 
-                        $_SESSION['answer'] = "<b>" . $NumAngl_split[0] . $NumAngl_next_id . "01" . "</b> vient d'être ajouté à la table !";
+                        if(empty($donnees)) {
+                            // Ajoute l'angle
+                            $req = $bdd->prepare('INSERT INTO angle(NumAngl, LibAngl, NumLang) VALUES(:NumAngl, :LibAngl, :NumLang)');
+                            $req->execute(array(
+                                'NumAngl' => $NumAngl_split[0] . $NumAngl_split_id[0] . $NumAngl_next_id,
+                                'LibAngl' => $LibAngl,
+                                'NumLang' => $NumLang
+                                ));
 
-                        $req->closeCursor();
+                            $_SESSION['answer'] = "<b>" . $NumAngl . "</b> vient d'être traduit !";
+
+                            $req->closeCursor();
+                        } else {
+                            $_SESSION['answer'] = "<span><b>La traduction de " . $NumAngl . "</b> en <b>" . $NumLang . "</b> existe déjà !</span>";
+                        }
+
                     }
 
                 }
@@ -83,15 +92,35 @@
 
         ?>
         
-        <h1>Ajoutez une thématique.</h1>
+        <h1>Traduire un angle.</h1>
 
         <?php include '../assets/php/menuAdmin.php'; ?>
         <?php include '../assets/php/btnConnexionInAdminShow.php'; ?>
         <?php include '../assets/php/menuInAdminShow.php'; ?>
 
-        <form action="new.php" method="POST">
-            <label for="LibThem">Libellé thématique :</label>
-            <input type="text" id="LibThem" name="LibThem" placeholder="Sur 60 car." size="60" maxlength="60" autofocus="autofocus" required>
+        <form action="traduction.php" method="POST">
+            <label for="NumAngl">NumAngl :</label>
+            <select name="NumAngl" id="NumAngl" required>
+                <option value="" disabled selected>-- Choisir un angle --</option>
+                <?php 
+                
+                    $req = $bdd->query('SELECT * FROM angle WHERE NumAngl LIKE "%01" ORDER BY NumAngl');
+
+                    while($donnees = $req->fetch()) {
+                ?>
+
+                        <option value="<?php echo $donnees['NumAngl']; ?>"><?php echo $donnees['LibAngl']; ?></option>
+                
+                <?php
+                    }
+
+                    $req->closeCursor();
+
+                ?>
+            </select>
+
+            <label for="LibAngl">Libellé angle :</label>
+            <input type="text" id="LibAngl" name="LibAngl" placeholder="Sur 60 car." size="60" maxlength="60" autofocus="autofocus" required>
 
             <label for="NumLang">NumLang :</label>
             <select name="NumLang" id="NumLang" required>
