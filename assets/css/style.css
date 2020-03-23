@@ -43,12 +43,29 @@ img {
 body {
     display: flex;
     margin: 0px;
+    
 }
 
 /* Acceuil */
 .body {
-    background-image: url("assets/images/logo.png");
-    display: flex;
+    background-image: url("../images/image_2.png");
+    background-color: #345831;
+    flex-direction: column;
+    width: 100vw;
+    height: 100vh;
 }
 
 /* Connexion */
+.connexion {
+    float: right;
+    margin-top: 3vh;
+    margin-right: 4vw;
+    font-size: 33px;
+}
+
+.connexion a {
+    color: white;
+    font-size: 33px;
+}
+
+/* article */
