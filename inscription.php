@@ -102,8 +102,8 @@
         <h1>Inscription</h1>
 
         <!-- Menus -->
-        <?php include 'assets/php/btnConnexion.php'; ?>
         <?php include 'assets/php/menu.php'; ?>
+        <?php include 'assets/php/btnConnexion.php'; ?>
 
         <!-- Formulaire d'inscription avec input près remplis si erreur -->
         <form action="" method="POST">

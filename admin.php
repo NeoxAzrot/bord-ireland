@@ -38,8 +38,8 @@
         </ul>
 
         <!-- Include des menus -->
-        <?php include 'assets/php/btnConnexion.php'; ?>
         <?php include 'assets/php/menu.php'; ?>
+        <?php include 'assets/php/btnConnexion.php'; ?>
         
         <?php
 

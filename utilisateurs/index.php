@@ -27,8 +27,8 @@
         <h1>Tout les utilisateurs.</h1>
 
         <?php include '../assets/php/menuAdmin.php'; ?>
-        <?php include '../assets/php/btnConnexionInAdminShow.php'; ?>
-        <?php include '../assets/php/menuInAdminShow.php'; ?>
+        <?php include '../assets/php/btnConnexion.php'; ?>
+        <?php include '../assets/php/menu.php'; ?>
 
         <?php 
 
@@ -56,7 +56,7 @@
 
                 $req = $bdd->query('SELECT * FROM user ORDER BY Login');
 
-                // Affichage de tout les utilisateurs dans un tableau
+                // Affichage de toutes les langues dans un tableau
                 while ($donnees = $req->fetch())
                 {
 
