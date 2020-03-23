@@ -27,8 +27,8 @@
         <h1>Tout les utilisateurs.</h1>
 
         <?php include '../assets/php/menuAdmin.php'; ?>
-        <?php include '../assets/php/btnConnexion.php'; ?>
-        <?php include '../assets/php/menu.php'; ?>
+        <?php include '../assets/php/btnConnexionInAdminShow.php'; ?>
+        <?php include '../assets/php/menuInAdminShow.php'; ?>
 
         <?php 
 
