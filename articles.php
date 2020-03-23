@@ -29,8 +29,8 @@
         <h1>Les articles</h1>
 
         <!-- Menus -->
-        <?php include 'assets/php/btnConnexion.php'; ?>
         <?php include 'assets/php/menu.php'; ?>
+        <?php include 'assets/php/btnConnexion.php'; ?>
 
         <?php
 
