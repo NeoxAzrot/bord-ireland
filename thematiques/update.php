@@ -29,64 +29,79 @@
             // Affiche le formulaire seulement la première fois
             if($_POST) {
                 // Vérifie si tous les input ont été remplis et contrôle la saisie
-                if((isset($_POST['num_lang']) && !empty($_POST['num_lang'])) AND
-                (isset($_POST['lib_court']) && !empty($_POST['lib_court'])) AND
-                (isset($_POST['lib_long']) && !empty($_POST['lib_long'])) AND
-                (isset($_POST['pays']) && !empty($_POST['pays']))) {
-                    $lib_court = ctrlSaisies($_POST['lib_court']);
-                    $lib_long = ctrlSaisies($_POST['lib_long']);
-                    $pays = ctrlSaisies($_POST['pays']);
-                    $pays = strtoupper($pays);
+                if((isset($_POST['LibAngl']) && !empty($_POST['LibAngl'])) AND
+                (isset($_POST['NumLang']) && !empty($_POST['NumLang']))) {
+                    $LibAngl = ctrlSaisies($_POST['LibAngl']);
+                    $NumLang = ctrlSaisies($_POST['NumLang']);
+                    $NumLang = strtoupper($NumLang);
 
-                    // Met à jour la langue
-                    $req = $bdd->prepare('UPDATE langue SET Lib1Lang = :Lib1Lang, Lib2Lang = :Lib2Lang, NumPays = :NumPays WHERE NumLang = :ID');
+                    $NumAngl_split = str_split($_GET['id'], 4);
+                    $NumAngl_split_id = str_split($NumAngl_split[1], 2);
+
+                    $req = $bdd->prepare('SELECT * FROM angle WHERE NumAngl LIKE :NumAngl AND NumLang = :NumLang');
                     $req->execute(array(
-                        'Lib1Lang' => $lib_court,
-                        'Lib2Lang' => $lib_long,
-                        'NumPays' => $pays,
-                        'ID' => $_GET['id']
-                        ));
+                        'NumAngl' => $NumAngl_split[0] . $NumAngl_split_id[0] . "%",
+                        'NumLang' => $NumLang
+                    ));
+                    $donnees = $req->fetch();
+
+                    if(empty($donnees)) {
+                        // Met à jour l'angle
+                        $req = $bdd->prepare('UPDATE angle SET LibAngl = :LibAngl, NumLang = :NumLang WHERE NumAngl = :ID');
+                        $req->execute(array(
+                            'LibAngl' => $LibAngl,
+                            'NumLang' => $NumLang,
+                            'ID' => $_GET['id']
+                            ));
+                            
+                        $_SESSION['answer'] = "La modification de <b>" . $_GET['id'] . "</b> a bien été pris en compte !";
+                    } else {
+                        $_SESSION['answer'] = "<span><b>" . $_GET['id'] . "</b> existe déjà en <b>" . $NumLang . "</b> !</span>";
+                    }
+
                 }
 
                 // Redirection avec un message personnalisé
-                $_SESSION['answer'] = "La modification de <b>" . $_GET['id'] . "</b> a bien été pris en compte !";
                 header('Location: index.php');
             }
 
             if(isset($_GET['id']) && !empty($_GET['id'])) {
-                $req = $bdd->prepare('SELECT * FROM langue WHERE NumLang = :id');
+                $req = $bdd->prepare('SELECT * FROM angle WHERE NumAngl = :id');
                 $req->execute(array(
                     'id' => $_GET['id']
                 ));
 
                 $donnees = $req->fetch();
 
-                // Affiche le formulaire et le pré remplie que si la langue existe
+                $NumLangAngl = $donnees['NumLang'];
+
+                // Affiche le formulaire et le pré remplie que si l'angle existe
                 if(!empty($donnees)) {
                     ?>
-                        <h1>Modifiez la thématique <span><?php echo $_GET['id']; ?></span>.</h1>
+                        <h1>Modifiez l'angle <span><?php echo $_GET['id']; ?></span>.</h1>
+
+                        <?php include '../assets/php/menuAdmin.php'; ?>
+                        <?php include '../assets/php/btnConnexionInAdminShow.php'; ?>
+                        <?php include '../assets/php/menuInAdminShow.php'; ?>
 
                         <form action="update.php?id=<?php echo $_GET['id']; ?>" method="POST">
-                            <label for="num_lang">ID :</label>
-                            <input type="text" id="num_lang" name="num_lang" placeholder="Sur 6 car." size="6" minlength="6" value="<?php echo $donnees['NumLang']; ?>" required disabled>
+                            <label for="NumAngl">ID :</label>
+                            <input type="text" id="NumAngl" name="NumAngl" placeholder="Sur 8 car." size="8" minlength="8" value="<?php echo $donnees['NumAngl']; ?>" required disabled>
 
-                            <label for="lib_court">Libellé court :</label>
-                            <input type="text" id="lib_court" name="lib_court" placeholder="Sur 25 car." size="25" maxlength="25" autofocus="autofocus" value="<?php echo $donnees['Lib1Lang']; ?>" required>
+                            <label for="LibAngl">Libellé angle :</label>
+                            <input type="text" id="LibAngl" name="LibAngl" placeholder="Sur 60 car." size="60" maxlength="60" autofocus="autofocus" value="<?php echo $donnees['LibAngl']; ?>" required>
 
-                            <label for="lib_long">Libellé long :</label>
-                            <input type="text" id="lib_long" name="lib_long" placeholder="Sur 45 car." size="45" maxlength="45" value="<?php echo $donnees['Lib2Lang']; ?>" required>
-
-                            <label for="pays">Quel pays :</label>
-                            <select name="pays" id="pays" required>
+                            <label for="NumLang">NumLang :</label>
+                            <select name="NumLang" id="NumLang" required>
                                 <option value="" disabled>-- Choisir un pays --</option>
                                 <?php 
                                 
-                                    $req = $bdd->query('SELECT * FROM pays ORDER BY numPays');
+                                    $req = $bdd->query('SELECT * FROM langue ORDER BY NumLang');
 
                                     while($donnees = $req->fetch()) {
                                 ?>
 
-                                        <option value="<?php echo $donnees['numPays']; ?>" <?php echo $donnees['numPays'] == str_split($_GET['id'], 4)[0] ? "selected" : ""; ?>><?php echo $donnees['frPays']; ?></option>
+                                        <option value="<?php echo $donnees['NumLang']; ?>" <?php echo $donnees['NumLang'] == $NumLangAngl ? "selected" : ""; ?>><?php echo $donnees['Lib1Lang']; ?></option>
                                 
                                 <?php
                                     }
@@ -102,18 +117,14 @@
                         <a href="index.php" class="back"><i class="fas fa-arrow-left"></i> Revenir au tableau</a>
                     <?php
                 } else {
-                    // Permet de renvoyer le message personnalisé quand on change la langue de base. Exemple : ITAL --> FRAN (car l'id n'était plus trouvé)
-                    if(isset($_POST['num_lang'])) {
-                        $_SESSION['answer'] = "La modification de <b>" . $_GET['id'] . "</b> a bien été pris en compte !";
-                    } else {
-                        $_SESSION['answer'] = "<span>Cette langue est introuvable !</span>";
-                    }
+                    $_SESSION['answer'] = "<span>Cet angle est introuvable !</span>";
+
                     // Redirection avec un message personnalisé
                     header('Location: index.php');
                 }
             } else {
                 // Redirection avec un message personnalisé
-                $_SESSION['answer'] = "<span>Cette langue est introuvable !</span>";
+                $_SESSION['answer'] = "<span>Cet angle est introuvable !</span>";
                 header('Location: index.php');
             }
 

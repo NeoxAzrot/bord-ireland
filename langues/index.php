@@ -26,6 +26,10 @@
     <body>
         <h1>Toutes les langues.</h1>
 
+        <?php include '../assets/php/menuAdmin.php'; ?>
+        <?php include '../assets/php/btnConnexionInAdminShow.php'; ?>
+        <?php include '../assets/php/menuInAdminShow.php'; ?>
+
         <?php 
 
             // Affichage du message personnalisé lors de la redirection

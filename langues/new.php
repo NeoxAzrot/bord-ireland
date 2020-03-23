@@ -88,6 +88,10 @@
         
         <h1>Ajoutez une langue.</h1>
 
+        <?php include '../assets/php/menuAdmin.php'; ?>
+        <?php include '../assets/php/btnConnexionInAdminShow.php'; ?>
+        <?php include '../assets/php/menuInAdminShow.php'; ?>
+
         <form action="new.php" method="POST">
             <label for="lib_court">Libellé court :</label>
             <input type="text" id="lib_court" name="lib_court" placeholder="Sur 25 car." size="25" maxlength="25" autofocus="autofocus" required>

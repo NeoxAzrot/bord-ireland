@@ -29,8 +29,7 @@
             // Affiche le formulaire seulement la première fois
             if($_POST) {
                 // Vérifie si tous les input ont été remplis et contrôle la saisie
-                if((isset($_POST['num_lang']) && !empty($_POST['num_lang'])) AND
-                (isset($_POST['lib_court']) && !empty($_POST['lib_court'])) AND
+                if((isset($_POST['lib_court']) && !empty($_POST['lib_court'])) AND
                 (isset($_POST['lib_long']) && !empty($_POST['lib_long'])) AND
                 (isset($_POST['pays']) && !empty($_POST['pays']))) {
                     $lib_court = ctrlSaisies($_POST['lib_court']);
@@ -65,6 +64,10 @@
                 if(!empty($donnees)) {
                     ?>
                         <h1>Modifiez la langue <span><?php echo $_GET['id']; ?></span>.</h1>
+
+                        <?php include '../assets/php/menuAdmin.php'; ?>
+                        <?php include '../assets/php/btnConnexionInAdminShow.php'; ?>
+                        <?php include '../assets/php/menuInAdminShow.php'; ?>
 
                         <form action="update.php?id=<?php echo $_GET['id']; ?>" method="POST">
                             <label for="num_lang">ID :</label>
