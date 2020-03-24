@@ -1,174 +1,71 @@
-/* Body */
+/* menu */
 
-body {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-}
-
-hr {
-    border: 0;
-    clear: both;
-    display: block;
-    width: 30%;               
-    background-color: black;
-    height: 1px;
-}
-
-/* Affichage du tableau */
-
-table {
-    border-collapse: collapse;
-}
-
-table, th, td {
-    border: 1px solid black;
-}
-
-table th {
-    background: grey;
-}
-
-table td, table th {
-    padding: 10px;
-    color: black;
-    font-family: 'Poppins', sans-serif;
-}
-
-table td {
-    font-weight: 400;
-    font-size: 14px;
-}
-
-table th {
-    font-weight: 700;
-    font-size: 18px;
-}
-
-tr:hover {
-    background-color: #bbb;
-    cursor: default;
-}
-
-/* Affichage du formulaire */
-
-form {
-    display: flex;
-    flex-direction: column;
-    width: 30%;
-}
-
-input[type="submit"] {
-    width: 30%;
-    margin: auto;
-    margin-top: 30px;
-    font-family: 'Poppins', sans-serif;
-    font-weight: 300;
-    font-size: 18px;
-    padding: 8px;
-    transition: 0.3s ease;
-}
-
-input[type="submit"]:hover {
-   cursor: pointer;
-   color: orange;
-}
-
-input[type="text"], input[type="email"], input[type="password"] {
-    padding: 8px;
-}
-
-label {
-    margin-top: 30px;
-    font-family: 'Poppins', sans-serif;
-    font-weight: 300;
-    font-size: 16px;
-}
-
-input {
-    font-family: 'Poppins', sans-serif;
-    font-weight: 400;
-    font-size: 16px;
-}
-
-select {
-    font-family: 'Poppins', sans-serif;
-    font-weight: 400;
-    font-size: 16px;
-    padding: 8px;
-}
-
-input:disabled:hover {
-    cursor: not-allowed;
-}
-
-/* Réponse SESSION */
-
-.answer {
-    color: green;
-}
-
-.answer span {
-    color: red;
-    text-decoration: none !important;
-}
-
-
-/* Liens */
-
-.add, .back {
-    display: inline-block;
-    font-size: 20px;
-    margin-top: 30px;
-    text-decoration: none;
-    border: 2px solid black;
-    padding: 10px;
-    color: black;
-    background-color: white;
-    transition: 0.3s ease;
-}
-
-.add:hover, .back:hover {
-    text-decoration: none !important;
-    color: white;
-    background-color: black;
+li a{
+    font-size: 25px;
+    color: #6D0A1B;
 }
 
 a {
-    font-family: 'Poppins', sans-serif;
-    font-weight: 400;
-    font-size: 14px;
     text-decoration: none;
-    transition: 0.3s ease;
-}
-
-.modified_link {
-    color: blue;
-}
-
-.delete_link {
-    color: red;
+    font-family: 'Bebas Neue', cursive;
 }
 
 a:hover {
     text-decoration: underline;
 }
 
-
-/* Texte */
-
-h1 {
-    font-family: 'Poppins', sans-serif;
-    font-weight: 900;
-    font-size: 48px;
+li {
+    list-style: none;
+    margin-top: 20px;
 }
 
-p {
-    font-family: 'Poppins', sans-serif;
-    font-weight: 300;
-    font-size: 16px;
+ul {
+    text-align: center;
+    padding: 0px;
+    margin-top: 100px;
 }
 
-span {
-    color: orange;
+img {
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+    width: 15vw;
 }
+
+.menu {
+    background-color: white;
+    width: 20vw;
+    height: 100vh;
+    margin: 0px;
+    padding: 0px;
+}
+/* Acceuil */ 
+body {
+    display: flex;
+    margin: 0px;
+    
+}
+
+/* Acceuil */
+.body {
+    background-image: url("../images/image_2.png");
+    background-color: #345831;
+    flex-direction: column;
+    width: 100vw;
+    height: 100vh;
+}
+
+/* Connexion */
+.connexion {
+    float: right;
+    margin-top: 3vh;
+    margin-right: 4vw;
+    font-size: 33px;
+}
+
+.connexion a {
+    color: white;
+    font-size: 33px;
+}
+
+/* article */

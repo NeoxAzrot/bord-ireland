@@ -176,6 +176,7 @@
 
                         <label for="comment">Commentaire</label>
                         <textarea name="comment" id="comment" cols="30" rows="10" placeholder="Ecrivez ici..." required></textarea>
+                        
                         <input type="submit">
 
                     </form>

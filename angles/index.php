@@ -64,7 +64,7 @@
                     <td><?php echo $donnees['LibAngl'];?></td>
                     <td><a href="../langues/index.php"><?php echo $donnees['NumLang'];?></a></td>
                     <td><a href="update.php?id=<?php echo $donnees['NumAngl'];?>" class="modified_link"><i class="fas fa-edit"></i> Modifier</a></td>
-                    <td><a href="delete.php?id=<?php echo $donnees['NumAngl'];?>" class="delete_link" data-id="<?php echo $donnees['NumLang']; ?>"><i class="fas fa-trash-alt"></i> Supprimer</a></td>
+                    <td><a href="delete.php?id=<?php echo $donnees['NumAngl'];?>" class="delete_link" data-id="<?php echo $donnees['NumAngl']; ?>"><i class="fas fa-trash-alt"></i> Supprimer</a></td>
                 </tr>
 
                 <?php 

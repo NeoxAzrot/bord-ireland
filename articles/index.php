@@ -8,6 +8,7 @@
     error_reporting(E_ALL);
 
     include '../assets/php/connect_PDO.php';
+    include '../assets/php/dateChangeFormat.php';
 
 ?>
 
@@ -24,7 +25,11 @@
     </head>
 
     <body>
-        <h1>Tout les commentaires.</h1>
+        <h1>Tout les articles.</h1>
+
+        <?php include '../assets/php/menuAdmin.php'; ?>
+        <?php include '../assets/php/btnConnexionInAdminShow.php'; ?>
+        <?php include '../assets/php/menuInAdminShow.php'; ?>
 
         <?php 
 
@@ -39,30 +44,54 @@
         <table>
             <thead>
                 <tr>
+                    <th>NumArt</th>
+                    <th>DtCreA</th>
+                    <th>LibTitrA</th>
+                    <th>LibChapoA</th>
+                    <th>LibAccrochA</th>
+                    <th>Parag1A</th>
+                    <th>LibSsTitr1</th>
+                    <th>Parag2A</th>
+                    <th>LibSsTitr2</th>
+                    <th>Parag3A</th>
+                    <th>LibConclA</th>
+                    <th>UrlPhotA</th>
+                    <th>Likes</th>
+                    <th>NumAngl</th>
+                    <th>NumThem</th>
                     <th>NumLang</th>
-                    <th>Lib1Lang</th>
-                    <th>Lib2Lang</th>
-                    <th>NumPays</th>
                 </tr>
             </thead>
             <tbody>
 
             <?php
 
-                $req = $bdd->query('SELECT * FROM langue ORDER BY NumLang');
+                $req = $bdd->query('SELECT * FROM article ORDER BY NumArt');
 
-                // Affichage de toutes les langues dans un tableau
+                // Affichage de tout les articles dans un tableau
                 while ($donnees = $req->fetch())
                 {
 
             ?>
                 <tr>
-                    <td><?php echo $donnees['NumLang'];?></td>
-                    <td><?php echo $donnees['Lib1Lang'];?></td>
-                    <td><?php echo $donnees['Lib2Lang'];?></td>
-                    <td><?php echo $donnees['NumPays'];?></td>
-                    <td><a href="update.php?id=<?php echo $donnees['NumLang'];?>" class="modified_link"><i class="fas fa-edit"></i> Modifier</a></td>
-                    <td><a href="delete.php?id=<?php echo $donnees['NumLang'];?>" class="delete_link" data-id="<?php echo $donnees['NumLang']; ?>"><i class="fas fa-trash-alt"></i> Supprimer</a></td>
+                    <td><?php echo $donnees['NumArt'];?></td>
+                    <td><?php echo dateChangeFormat($donnees['DtCreA'], "Y-m-d", "d/m/Y");?></td>
+                    <td><?php echo $donnees['LibTitrA'];?></td>
+                    <td><?php echo $donnees['LibChapoA'];?></td>
+                    <td><?php echo $donnees['LibAccrochA'];?></td>
+                    <td><?php echo $donnees['Parag1A'];?></td>
+                    <td><?php echo $donnees['LibSsTitr1'];?></td>
+                    <td><?php echo $donnees['Parag2A'];?></td>
+                    <td><?php echo $donnees['LibSsTitr2'];?></td>
+                    <td><?php echo $donnees['Parag3A'];?></td>
+                    <td><?php echo $donnees['LibConclA'];?></td>
+                    <td><img src="<?php echo $donnees['UrlPhotA'];?>" alt="Image de l'article"></td>
+                    <td><?php echo $donnees['Likes'];?></td>
+                    <td><a href="../angles/index.php"><?php echo $donnees['NumAngl'];?></a></td>
+                    <td><a href="../thematiques/index.php"><?php echo $donnees['NumThem'];?></a></td>
+                    <td><a href="../langues/index.php"><?php echo $donnees['NumLang'];?></a></td>
+                    <td><a href="update.php?id=<?php echo $donnees['NumArt'];?>" class="modified_link"><i class="fas fa-edit"></i> Modifier</a></td>
+                    <td><a href="delete.php?id=<?php echo $donnees['NumArt'];?>" class="delete_link" data-id="<?php echo $donnees['NumArt']; ?>"><i class="fas fa-trash-alt"></i> Supprimer</a></td>
                 </tr>
 
                 <?php 
@@ -75,7 +104,7 @@
             </tbody>
         </table>
 
-        <a href="new.php" class="add"><i class="fas fa-plus"></i> Ajouter un nouveau commentaire</a>
+        <a href="new.php" class="add"><i class="fas fa-plus"></i> Ajouter un nouvel article</a>
 
         <script src="../assets/js/script.js"></script>
     </body>

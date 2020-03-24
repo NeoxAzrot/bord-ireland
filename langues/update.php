@@ -105,12 +105,8 @@
                         <a href="index.php" class="back"><i class="fas fa-arrow-left"></i> Revenir au tableau</a>
                     <?php
                 } else {
-                    // Permet de renvoyer le message personnalisé quand on change la langue de base. Exemple : ITAL --> FRAN (car l'id n'était plus trouvé)
-                    if(isset($_POST['num_lang'])) {
-                        $_SESSION['answer'] = "La modification de <b>" . $_GET['id'] . "</b> a bien été pris en compte !";
-                    } else {
-                        $_SESSION['answer'] = "<span>Cette langue est introuvable !</span>";
-                    }
+                    $_SESSION['answer'] = "<span>Cette langue est introuvable !</span>";
+
                     // Redirection avec un message personnalisé
                     header('Location: index.php');
                 }

@@ -29,48 +29,61 @@
             // Affiche le formulaire seulement la première fois
             if($_POST) {
                 // Vérifie si tous les input ont été remplis et contrôle la saisie
-                if((isset($_POST['LibAngl']) && !empty($_POST['LibAngl'])) AND
+                if((isset($_POST['LibThem']) && !empty($_POST['LibThem'])) AND
                 (isset($_POST['NumLang']) && !empty($_POST['NumLang']))) {
-                    $LibAngl = ctrlSaisies($_POST['LibAngl']);
+                    $LibThem = ctrlSaisies($_POST['LibThem']);
                     $NumLang = ctrlSaisies($_POST['NumLang']);
                     $NumLang = strtoupper($NumLang);
 
-                    $req = $bdd->query('SELECT * FROM angle');
+                    $req = $bdd->query('SELECT * FROM thematique WHERE NumLang = "' . $NumLang . '"');
                     $donnees = $req->fetch();
         
-                    // Vérifie si l'angle existe déjà
+                    // Vérifie si la thématique existe déjà
                     if(empty($donnees)) {
-                        $req = $bdd->prepare('INSERT INTO angle(NumAngl, LibAngl, NumLang) VALUES(:NumAngl, :LibAngl, :NumLang)');
-                        $req->execute(array(
-                            'NumAngl' => "ANGL0101",
-                            'LibAngl' => $LibAngl,
-                            'NumLang' => $NumLang
-                            ));
-
-                        $_SESSION['answer'] = "<b>" . "ANGL0101" . "</b> vient d'être ajouté à la table !";
-                    } else {
-                        // Récupère la clé primaire maximale de l'angle et lui ajoute 1
-                        $req = $bdd->query('SELECT MAX(NumAngl) AS NumAnglMax FROM angle');
+                        // Récupère la clé primaire maximale de la thématique et lui ajoute 1
+                        $req = $bdd->query('SELECT MAX(NumThem) AS NumThemMax FROM thematique');
                         $donnees = $req->fetch();
 
-                        $NumAngl_split = str_split($donnees['NumAnglMax'], 4);
-                        $NumAngl_split_id = str_split($NumAngl_split[1], 2);
-                        $NumAngl_next_id = (int) $NumAngl_split_id[0] + 1;
-                        
-                        // Rajoute un 0 devant si on est entre 1 et 9 car sinon on aurait par exemple : ANGL2 et non ANGL02
-                        if($NumAngl_next_id < 10) {
-                            $NumAngl_next_id = "0" . $NumAngl_next_id;
+                        $NumThem_split = str_split($donnees['NumThemMax'], 3);
+                        $NumThem_split_id = str_split($NumThem_split[1] . $NumThem_split[2], 2);
+                        $NumThem_next_id = (int) $NumThem_split_id[0] + 1;
+
+                        // Rajoute un 0 devant si on est entre 1 et 9 car sinon on aurait par exemple : THE2 et non THE02
+                        if($NumThem_next_id < 10) {
+                            $NumThem_next_id = "0" . $NumThem_next_id;
                         }
 
-                        // Ajoute l'angle
-                        $req = $bdd->prepare('INSERT INTO angle(NumAngl, LibAngl, NumLang) VALUES(:NumAngl, :LibAngl, :NumLang)');
+                        $req = $bdd->prepare('INSERT INTO thematique(NumThem, LibThem, NumLang) VALUES(:NumThem, :LibThem, :NumLang)');
                         $req->execute(array(
-                            'NumAngl' => $NumAngl_split[0] . $NumAngl_next_id . "01",
-                            'LibAngl' => $LibAngl,
+                            'NumThem' => "THE" . $NumThem_next_id . "01",
+                            'LibThem' => $LibThem,
                             'NumLang' => $NumLang
                             ));
 
-                        $_SESSION['answer'] = "<b>" . $NumAngl_split[0] . $NumAngl_next_id . "01" . "</b> vient d'être ajouté à la table !";
+                        $_SESSION['answer'] = "<b>" . "THE" . $NumThem_next_id . "01" . "</b> vient d'être ajouté à la table !";
+                    } else {
+                        // Récupère la clé primaire maximale de la thématique par rapport à la langue et lui ajoute 1
+                        $req = $bdd->query('SELECT MAX(NumThem) AS NumThemMax FROM thematique WHERE NumLang = "' . $NumLang . '"');
+                        $donnees = $req->fetch();
+
+                        $NumThem_split = str_split($donnees['NumThemMax'], 3);
+                        $NumThem_split_id = str_split($NumThem_split[1] . $NumThem_split[2], 2);
+                        $NumThem_next_id = (int) $NumThem_split_id[1] + 1;
+                        
+                        // Rajoute un 0 devant si on est entre 1 et 9 car sinon on aurait par exemple : THE2 et non THE02
+                        if($NumThem_next_id < 10) {
+                            $NumThem_next_id = "0" . $NumThem_next_id;
+                        }
+
+                        // Ajoute la thématique
+                        $req = $bdd->prepare('INSERT INTO thematique(NumThem, LibThem, NumLang) VALUES(:NumThem, :LibThem, :NumLang)');
+                        $req->execute(array(
+                            'NumThem' => "THE" . $NumThem_split_id[0] . $NumThem_next_id,
+                            'LibThem' => $LibThem,
+                            'NumLang' => $NumLang
+                            ));
+
+                        $_SESSION['answer'] = "<b>" . "THE" . $NumThem_split_id[0] . $NumThem_next_id . "</b> vient d'être ajouté à la table !";
 
                         $req->closeCursor();
                     }
