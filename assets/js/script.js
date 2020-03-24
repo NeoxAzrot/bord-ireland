@@ -6,7 +6,13 @@ $(function() {
     });
 });
 
-$(document).ready(function() {
+input = $( "#MotCleJS" ).html();
+
+$(".addMotCleJS").click(function() {
+	jQuery('#MotCleJS').append(input);
+});
+
+/*$(document).ready(function() {
 	$('#fetchval').on('change', function() {
 		var value = $(this).val();
 		$.ajax({
@@ -22,4 +28,4 @@ $(document).ready(function() {
 		})
 
 	})
-})
+})*/

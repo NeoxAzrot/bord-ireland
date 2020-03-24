@@ -21,6 +21,7 @@
 		<link rel="stylesheet" href="../assets/css/style.css" />
         <link href="https://fonts.googleapis.com/css?family=Poppins:300,400,700,900&display=swap" rel="stylesheet">
         <script src="https://kit.fontawesome.com/f69c2bce58.js" crossorigin="anonymous"></script>
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
     </head>
 
     <body>
@@ -196,10 +197,41 @@
                 ?>
             </select>
 
+            <!-- Génération mot clés avec JavaScript -->
+            <div id="MotCleJS">
+                <div class="MotCleContainer">
+                    <label for="MotCle">Mot clés :</label>
+                    <select name="MotCle[]" id="MotCle" required>
+                        <option value="" disabled selected>-- Choisir un mot clés --</option>
+                        <?php 
+                        
+                            $req = $bdd->query('SELECT * FROM motcle ORDER BY NumMoCle');
+
+                            while($donnees = $req->fetch()) {
+                        ?>
+
+                                <option value="<?php echo $donnees['NumMoCle']; ?>"><?php echo $donnees['LibMoCle']; ?></option>
+                        
+                        <?php
+                            }
+
+                            $req->closeCursor();
+
+                        ?>
+                    </select>
+
+                    <button type="button" class="removeMotCleJS" onclick="$(this).parents('.MotCleContainer').remove();">Supprimer <i class="fas fa-minus"></i></button>
+                </div>
+            </div>
+
+            <button type="button" class="addMotCleJS">Ajouter un mot clés <i class="fas fa-plus"></i></button>
+
             <input type="submit">
         </form>
 
         <a href="index.php" class="back"><i class="fas fa-arrow-left"></i> Revenir au tableau</a>
+
+        <script src="../assets/js/script.js"></script>
     </body>
 
 </html>
