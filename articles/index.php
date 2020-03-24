@@ -25,88 +25,90 @@
     </head>
 
     <body>
-        <h1>Tout les articles.</h1>
-
-        <?php include '../assets/php/menuAdmin.php'; ?>
-        <?php include '../assets/php/btnConnexionInAdminShow.php'; ?>
+    
         <?php include '../assets/php/menuInAdminShow.php'; ?>
+        <div class="articleAdmin">
+            <?php include '../assets/php/menuAdmin.php'; ?>
+            
+            <h1>Tout les articles.</h1>
+            
+            <?php 
 
-        <?php 
-
-            // Affichage du message personnalisé lors de la redirection
-            if(isset($_SESSION['answer']) && !empty($_SESSION['answer'])) {
-                echo "<p class='answer'>" . $_SESSION['answer'] . "</p>";
-                $_SESSION['answer'] = "";
-            }
-
-        ?>
-
-        <table>
-            <thead>
-                <tr>
-                    <th>NumArt</th>
-                    <th>DtCreA</th>
-                    <th>LibTitrA</th>
-                    <th>LibChapoA</th>
-                    <th>LibAccrochA</th>
-                    <th>Parag1A</th>
-                    <th>LibSsTitr1</th>
-                    <th>Parag2A</th>
-                    <th>LibSsTitr2</th>
-                    <th>Parag3A</th>
-                    <th>LibConclA</th>
-                    <th>UrlPhotA</th>
-                    <th>Likes</th>
-                    <th>NumAngl</th>
-                    <th>NumThem</th>
-                    <th>NumLang</th>
-                </tr>
-            </thead>
-            <tbody>
-
-            <?php
-
-                $req = $bdd->query('SELECT * FROM article ORDER BY NumArt');
-
-                // Affichage de tout les articles dans un tableau
-                while ($donnees = $req->fetch())
-                {
+                // Affichage du message personnalisé lors de la redirection
+                if(isset($_SESSION['answer']) && !empty($_SESSION['answer'])) {
+                    echo "<p class='answer'>" . $_SESSION['answer'] . "</p>";
+                    $_SESSION['answer'] = "";
+                }
 
             ?>
-                <tr>
-                    <td><?php echo $donnees['NumArt'];?></td>
-                    <td><?php echo dateChangeFormat($donnees['DtCreA'], "Y-m-d", "d/m/Y");?></td>
-                    <td><?php echo $donnees['LibTitrA'];?></td>
-                    <td><?php echo $donnees['LibChapoA'];?></td>
-                    <td><?php echo $donnees['LibAccrochA'];?></td>
-                    <td><?php echo $donnees['Parag1A'];?></td>
-                    <td><?php echo $donnees['LibSsTitr1'];?></td>
-                    <td><?php echo $donnees['Parag2A'];?></td>
-                    <td><?php echo $donnees['LibSsTitr2'];?></td>
-                    <td><?php echo $donnees['Parag3A'];?></td>
-                    <td><?php echo $donnees['LibConclA'];?></td>
-                    <td><img src="<?php echo $donnees['UrlPhotA'];?>" alt="Image de l'article"></td>
-                    <td><?php echo $donnees['Likes'];?></td>
-                    <td><a href="../angles/index.php"><?php echo $donnees['NumAngl'];?></a></td>
-                    <td><a href="../thematiques/index.php"><?php echo $donnees['NumThem'];?></a></td>
-                    <td><a href="../langues/index.php"><?php echo $donnees['NumLang'];?></a></td>
-                    <td><a href="update.php?id=<?php echo $donnees['NumArt'];?>" class="modified_link"><i class="fas fa-edit"></i> Modifier</a></td>
-                    <td><a href="delete.php?id=<?php echo $donnees['NumArt'];?>" class="delete_link" data-id="<?php echo $donnees['NumArt']; ?>"><i class="fas fa-trash-alt"></i> Supprimer</a></td>
-                </tr>
 
-                <?php 
+            <table>
+                <thead>
+                    <tr>
+                        <th>NumArt</th>
+                        <th>DtCreA</th>
+                        <th>LibTitrA</th>
+                        <th>LibChapoA</th>
+                        <th>LibAccrochA</th>
+                        <th>Parag1A</th>
+                        <th>LibSsTitr1</th>
+                        <th>Parag2A</th>
+                        <th>LibSsTitr2</th>
+                        <th>Parag3A</th>
+                        <th>LibConclA</th>
+                        <th>UrlPhotA</th>
+                        <th>Likes</th>
+                        <th>NumAngl</th>
+                        <th>NumThem</th>
+                        <th>NumLang</th>
+                    </tr>
+                </thead>
+                <tbody>
 
-                    }
+                <?php
 
-                    $req->closeCursor();
+                    $req = $bdd->query('SELECT * FROM article ORDER BY NumArt');
+
+                    // Affichage de tout les articles dans un tableau
+                    while ($donnees = $req->fetch())
+                    {
 
                 ?>
-            </tbody>
-        </table>
+                    <tr>
+                        <td><?php echo $donnees['NumArt'];?></td>
+                        <td><?php echo dateChangeFormat($donnees['DtCreA'], "Y-m-d", "d/m/Y");?></td>
+                        <td><?php echo $donnees['LibTitrA'];?></td>
+                        <td><?php echo $donnees['LibChapoA'];?></td>
+                        <td><?php echo $donnees['LibAccrochA'];?></td>
+                        <td><?php echo $donnees['Parag1A'];?></td>
+                        <td><?php echo $donnees['LibSsTitr1'];?></td>
+                        <td><?php echo $donnees['Parag2A'];?></td>
+                        <td><?php echo $donnees['LibSsTitr2'];?></td>
+                        <td><?php echo $donnees['Parag3A'];?></td>
+                        <td><?php echo $donnees['LibConclA'];?></td>
+                        <td><img src="<?php echo $donnees['UrlPhotA'];?>" alt="Image de l'article"></td>
+                        <td><?php echo $donnees['Likes'];?></td>
+                        <td><a href="../angles/index.php"><?php echo $donnees['NumAngl'];?></a></td>
+                        <td><a href="../thematiques/index.php"><?php echo $donnees['NumThem'];?></a></td>
+                        <td><a href="../langues/index.php"><?php echo $donnees['NumLang'];?></a></td>
+                        <td><a href="update.php?id=<?php echo $donnees['NumArt'];?>" class="modified_link"><i class="fas fa-edit"></i> Modifier</a></td>
+                        <td><a href="delete.php?id=<?php echo $donnees['NumArt'];?>" class="delete_link" data-id="<?php echo $donnees['NumArt']; ?>"><i class="fas fa-trash-alt"></i> Supprimer</a></td>
+                    </tr>
 
-        <a href="new.php" class="add"><i class="fas fa-plus"></i> Ajouter un nouvel article</a>
+                    <?php 
 
-        <script src="../assets/js/script.js"></script>
+                        }
+
+                        $req->closeCursor();
+
+                    ?>
+                </tbody>
+            </table>
+
+            <a href="new.php" class="add"><i class="fas fa-plus"></i> Ajouter un nouvel article</a>
+
+            <script src="../assets/js/script.js"></script>
+        </div>
     </body>
 
 </html>

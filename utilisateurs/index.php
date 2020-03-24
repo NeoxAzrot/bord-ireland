@@ -24,12 +24,13 @@
     </head>
 
     <body>
-        <h1>Tout les utilisateurs.</h1>
+        
 
-        <?php include '../assets/php/menuAdmin.php'; ?>
-        <?php include '../assets/php/btnConnexionInAdminShow.php'; ?>
         <?php include '../assets/php/menuInAdminShow.php'; ?>
-
+        <?php include '../assets/php/menuAdmin.php'; ?>
+        
+        <h1>Tout les utilisateurs.</h1>
+        
         <?php 
 
             // Affichage du message personnalisé lors de la redirection

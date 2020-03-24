@@ -26,12 +26,13 @@
     </head>
 
     <body>
-        <h1>Les articles</h1>
 
         <!-- Menus -->
         <?php include 'assets/php/menu.php'; ?>
         <?php include 'assets/php/btnConnexion.php'; ?>
 
+        <h1>Les articles</h1>
+        
         <?php
 
         // Vérifie si on affiche un article ou tout les articles

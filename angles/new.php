@@ -83,12 +83,13 @@
 
         ?>
         
-        <h1>Ajoutez un angle.</h1>
-
+        
+        <?php include '../assets/php/menuInAdminShow.php'; ?>
         <?php include '../assets/php/menuAdmin.php'; ?>
         <?php include '../assets/php/btnConnexionInAdminShow.php'; ?>
-        <?php include '../assets/php/menuInAdminShow.php'; ?>
-
+        
+        <h1>Ajoutez un angle.</h1>
+        
         <form action="new.php" method="POST">
             <label for="LibAngl">Libellé angle :</label>
             <input type="text" id="LibAngl" name="LibAngl" placeholder="Sur 60 car." size="60" maxlength="60" autofocus="autofocus" required>

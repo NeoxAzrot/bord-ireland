@@ -12,7 +12,7 @@
 <!-- Affiche une partie pour admin si il est connecté -->
 <div class="menu">
     <img src="assets/images/logo.png" />
-
+    
     <ul>
         <li><a href="index.php">Accueil</a></li>
         <li><a href="articles.php">Articles</a></li>

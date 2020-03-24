@@ -96,12 +96,12 @@
 
         ?>
         
-        <h1>Ajoutez un article.</h1>
-
-        <?php include '../assets/php/menuAdmin.php'; ?>
-        <?php include '../assets/php/btnConnexionInAdminShow.php'; ?>
+        
         <?php include '../assets/php/menuInAdminShow.php'; ?>
-
+        <?php include '../assets/php/menuAdmin.php'; ?>
+        
+        <h1>Ajoutez un article.</h1>
+        
         <form action="new.php" method="POST">
             <label for="DtCreA">Date de l'article :</label>
             <input type="date" id="DtCreA" name="DtCreA" autofocus="autofocus" required>

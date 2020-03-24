@@ -1,174 +1,194 @@
-/* Body */
+/* menu */
 
-body {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
+.menu li a{
+    font-size: 25px;
+    color: #6D0A1B;
 }
 
-hr {
-    border: 0;
-    clear: both;
-    display: block;
-    width: 30%;               
-    background-color: black;
-    height: 1px;
-}
-
-/* Affichage du tableau */
-
-table {
-    border-collapse: collapse;
-}
-
-table, th, td {
-    border: 1px solid black;
-}
-
-table th {
-    background: grey;
-}
-
-table td, table th {
-    padding: 10px;
-    color: black;
-    font-family: 'Poppins', sans-serif;
-}
-
-table td {
-    font-weight: 400;
-    font-size: 14px;
-}
-
-table th {
-    font-weight: 700;
-    font-size: 18px;
-}
-
-tr:hover {
-    background-color: #bbb;
-    cursor: default;
-}
-
-/* Affichage du formulaire */
-
-form {
-    display: flex;
-    flex-direction: column;
-    width: 30%;
-}
-
-input[type="submit"] {
-    width: 30%;
-    margin: auto;
-    margin-top: 30px;
-    font-family: 'Poppins', sans-serif;
-    font-weight: 300;
-    font-size: 18px;
-    padding: 8px;
-    transition: 0.3s ease;
-}
-
-input[type="submit"]:hover {
-   cursor: pointer;
-   color: orange;
-}
-
-input[type="text"], input[type="email"], input[type="password"] {
-    padding: 8px;
-}
-
-label {
-    margin-top: 30px;
-    font-family: 'Poppins', sans-serif;
-    font-weight: 300;
-    font-size: 16px;
-}
-
-input {
-    font-family: 'Poppins', sans-serif;
-    font-weight: 400;
-    font-size: 16px;
-}
-
-select {
-    font-family: 'Poppins', sans-serif;
-    font-weight: 400;
-    font-size: 16px;
-    padding: 8px;
-}
-
-input:disabled:hover {
-    cursor: not-allowed;
-}
-
-/* Réponse SESSION */
-
-.answer {
-    color: green;
-}
-
-.answer span {
-    color: red;
-    text-decoration: none !important;
-}
-
-
-/* Liens */
-
-.add, .back {
-    display: inline-block;
-    font-size: 20px;
-    margin-top: 30px;
+.menu a {
     text-decoration: none;
-    border: 2px solid black;
-    padding: 10px;
-    color: black;
-    background-color: white;
-    transition: 0.3s ease;
+    font-family: 'Bebas Neue', cursive;
 }
 
-.add:hover, .back:hover {
-    text-decoration: none !important;
-    color: white;
-    background-color: black;
-}
-
-a {
-    font-family: 'Poppins', sans-serif;
-    font-weight: 400;
-    font-size: 14px;
-    text-decoration: none;
-    transition: 0.3s ease;
-}
-
-.modified_link {
-    color: blue;
-}
-
-.delete_link {
-    color: red;
-}
-
-a:hover {
+.menu a:hover {
     text-decoration: underline;
 }
 
-
-/* Texte */
-
-h1 {
-    font-family: 'Poppins', sans-serif;
-    font-weight: 900;
-    font-size: 48px;
+.menu li {
+    list-style: none;
+    margin-top: 20px;
 }
 
-p {
-    font-family: 'Poppins', sans-serif;
-    font-weight: 300;
-    font-size: 16px;
+.menu ul {
+    text-align: center;
+    padding: 0px;
+    margin-top: 100px;
 }
 
-span {
-    color: orange;
+.menu img {
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+    width: 15vw;
+}
+
+.menu {
+    background-color: white;
+    width: 20vw;
+    height: 100vh;
+    margin: 0px;
+    padding: 0px;
+}
+
+/* Menu Admin */
+.menuAdmin li a{
+    font-size: 25px;
+    color: #6D0A1B;
+}
+
+.menuAdmin a {
+    text-decoration: none;
+    font-family: 'Bebas Neue', cursive;
+}
+
+.menuAdmin a:hover {
+    text-decoration: underline;
+}
+
+.menuAdmin li {
+    flex-direction: row;
+    list-style: none;
+    margin-left: 4vw;
+}
+
+.menuAdmin ul {
+    display: flex;
+    padding: 0px;
+    margin-top: 3vh; 
+    margin-bottom: 3vh;
+}
+
+.menuAdmin {
+    background-color: white;
+    width: 80vw;
+    height: 10vh;
+    margin: 0px;
+    padding: 0px;
+}
+/* Connexion */ 
+.connexion {
+    display: flex;
+}
+
+.contentConnexion {
+    width: 60vw;
+    height: 60vh;
+    background-color: white;
+    margin-left: 10vw;
+    margin-top: 20vh;
+}
+
+.contentConnexion h1 {
+    font-family: 'Bebas Neue', cursive;
+    font-size: 70px;
+    text-align: center;
+    color: #6D0A1B;
+}
+
+.contentConnexion label {
+    color: #355931;
+    font-family: Helvetica, sans-serif;
+    font-size: 30px;
+}
+
+.contentConnexion .inputConnexion input {
+    border: 1px solid #6D0A1B;
+    background-color: white;
+    width: 35vw;
+    height: 4vh;
+    margin-top: 20px;
+}
+
+.formulaireConnexion {
+    margin-left: auto;
+    margin-right: auto;
+    width: 30vw;
+}
+.validerConnexion {
+    margin: 0px;
+}
+.validerConnexion input {
+    font-family: 'Bebas Neue', cursive;
+    font-size: 24px;
+    background-color: white;
+    border: 1px solid #6D0A1B;
+    color: #6D0A1B;
+    margin-top: 20px;
+    height: 5vh;
+    width: 7vw;
+    padding-top: 3px;
+    margin-left: 70px;
+}
+
+.contentConnexion button {
+    text-decoration: none;
+    background-color: white;
+    border: 1px solid #6D0A1B;
+    height: 5vh;
+    width: 7vw;
+    font-family: 'Bebas Neue', cursive;
+    font-size: 24px;
+    color: #6D0A1B;
+    float: right;
+    margin-top: 20px;
+    text-align: center;
+    padding-top: 3px;
+}
+/* Administration */ 
+body .administration {
+    display: flex;
+    flex-direction: column;
+}
+.contentAdmin {
+    background-image: url("../images/image_2.png");
+    background-color: #345831;
+    width: 80vw;
+    height: 90vh;
+}
+
+/* Acceuil */ 
+body {
+    display: flex;
+    margin: 0px;
+    background-image: url("../images/image_2.png");
+    background-color: #345831;
+    width: 100vw;
+    height: 100vh;
+}
+
+.body {
+    flex-direction: column;
+    width: 80vw;
+}
+
+/* btnConnexion */
+.body .btnConnexion {
+    float: right;
+    margin-top: 3vh;
+    margin-right: 4vw;
+    font-size: 33px;
+}
+
+.body .btnConnexion a {
+    color: white;
+    font-size: 33px;
+}
+/* Connexion Menu Admin */
+.connexionAdmin {
+    border: 1px solid black;
+}
+/* Administration article */
+.articleAdmin {
+    display: flex;
+    flex-direction: column;
 }

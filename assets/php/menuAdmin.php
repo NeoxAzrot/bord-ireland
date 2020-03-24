@@ -15,12 +15,15 @@
 ?>
 
 <!-- Menu pour toutes les pages administrateur -->
-<ul>
-    <li><a href="../articles/index.php">Articles</a></li>
-    <li><a href="../commentaires/index.php">Commentaires</a></li>
-    <li><a href="../utilisateurs/index.php">Utilisateurs</a></li>
-    <li><a href="../angles/index.php">Angles</a></li>
-    <li><a href="../mots_cles/index.php">Mots clés</a></li>
-    <li><a href="../thematiques/index.php">Thématiques</a></li>
-    <li><a href="../langues/index.php">Langues</a></li>
-</ul>
+<div class="menuAdmin">
+    <ul>
+        <li><a href="../articles/index.php">Articles</a></li>
+        <li><a href="../commentaires/index.php">Commentaires</a></li>
+        <li><a href="../utilisateurs/index.php">Utilisateurs</a></li>
+        <li><a href="../angles/index.php">Angles</a></li>
+        <li><a href="../mots_cles/index.php">Mots clés</a></li>
+        <li><a href="../thematiques/index.php">Thématiques</a></li>
+        <li><a href="../langues/index.php">Langues</a></li>
+        <li class="connexionAdmin"> <?php include 'btnConnexionInAdminShow.php'; ?></li>
+    </ul>
+</div>

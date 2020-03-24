@@ -60,11 +60,11 @@
                 // Affiche le formulaire et le pré remplie que si le mot clés existe
                 if(!empty($donnees)) {
                     ?>
-                        <h1>Modifiez le mot clés <span><?php echo $_GET['id']; ?></span>.</h1>
-
-                        <?php include '../assets/php/menuAdmin.php'; ?>
-                        <?php include '../assets/php/btnConnexionInAdminShow.php'; ?>
+                       
                         <?php include '../assets/php/menuInAdminShow.php'; ?>
+                        <?php include '../assets/php/menuAdmin.php'; ?>
+                        
+                        <h1>Modifiez le mot clés <span><?php echo $_GET['id']; ?></span>.</h1>
 
                         <form action="update.php?id=<?php echo $_GET['id']; ?>" method="POST">
                             <label for="NumMoCle">ID :</label>

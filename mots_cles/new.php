@@ -96,12 +96,12 @@
 
         ?>
         
-        <h1>Ajoutez un mot clés.</h1>
-
-        <?php include '../assets/php/menuAdmin.php'; ?>
-        <?php include '../assets/php/btnConnexionInAdminShow.php'; ?>
+        
         <?php include '../assets/php/menuInAdminShow.php'; ?>
-
+        <?php include '../assets/php/menuAdmin.php'; ?>
+        
+        <h1>Ajoutez un mot clés.</h1>
+        
         <form action="new.php" method="POST">
             <label for="LibMoCle">Libellé mot clés :</label>
             <input type="text" id="LibMoCle" name="LibMoCle" placeholder="Sur 30 car." size="30" maxlength="30" autofocus="autofocus" required>

@@ -24,42 +24,51 @@
     </head>
 
     <body>
-        <h1>Administrateur</h1>
-
-        <!-- Menu différent car admin est à la racine -->
-        <ul>
-            <li><a href="articles/index.php">Articles</a></li>
-            <li><a href="commentaires/index.php">Commentaires</a></li>
-            <li><a href="utilisateurs/index.php">Utilisateurs</a></li>
-            <li><a href="angles/index.php">Angles</a></li>
-            <li><a href="mots_cles/index.php">Mots clés</a></li>
-            <li><a href="thematiques/index.php">Thématiques</a></li>
-            <li><a href="langues/index.php">Langues</a></li>
-        </ul>
+        
 
         <!-- Include des menus -->
         <?php include 'assets/php/menu.php'; ?>
-        <?php include 'assets/php/btnConnexion.php'; ?>
+
+        <!-- Menu différent car admin est à la racine -->
+        <div class="administration">
+            <div class="menuAdmin">
+                <ul>
+                    <li><a href="articles/index.php">Articles</a></li>
+                    <li><a href="commentaires/index.php">Commentaires</a></li>
+                    <li><a href="utilisateurs/index.php">Utilisateurs</a></li>
+                    <li><a href="angles/index.php">Angles</a></li>
+                    <li><a href="mots_cles/index.php">Mots clés</a></li>
+                    <li><a href="thematiques/index.php">Thématiques</a></li>
+                    <li><a href="langues/index.php">Langues</a></li>
+                    <li class="connexionAdmin"> <?php include 'assets/php/btnConnexion.php'; ?></li>
+                </ul>
+            </div>
         
-        <?php
+       
+            <div class="contentAdmin">
+                <h1>Administrateur</h1>
 
-            // Check si l'admin est connecté
-            if(isset($_SESSION['admin']) && !empty($_SESSION['admin']) && $_SESSION['admin'] == true) {
-                $admin = true;
-            } else {
-                $admin = false;
-            }
+                <?php
 
-            // Redirige si admin pas connecté
-            if(!$admin) {
-                header('Location: index.php');
-            }
+                    // Check si l'admin est connecté
+                    if(isset($_SESSION['admin']) && !empty($_SESSION['admin']) && $_SESSION['admin'] == true) {
+                        $admin = true;
+                    } else {
+                        $admin = false;
+                    }
 
-            
+                    // Redirige si admin pas connecté
+                    if(!$admin) {
+                        header('Location: index.php');
+                    }
 
-        ?>
+                    
 
-        <script src="assets/js/script.js"></script>
+                ?>
+
+                <script src="assets/js/script.js"></script>
+            </div>
+        </div>
     </body>
-
+    
 </html>

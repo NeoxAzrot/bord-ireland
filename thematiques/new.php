@@ -96,12 +96,12 @@
 
         ?>
         
-        <h1>Ajoutez une thématique.</h1>
 
-        <?php include '../assets/php/menuAdmin.php'; ?>
-        <?php include '../assets/php/btnConnexionInAdminShow.php'; ?>
         <?php include '../assets/php/menuInAdminShow.php'; ?>
+        <?php include '../assets/php/menuAdmin.php'; ?>
 
+        <h1>Ajoutez une thématique.</h1>
+        
         <form action="new.php" method="POST">
             <label for="LibThem">Libellé thématique :</label>
             <input type="text" id="LibThem" name="LibThem" placeholder="Sur 60 car." size="60" maxlength="60" autofocus="autofocus" required>

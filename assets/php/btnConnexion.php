@@ -1,4 +1,4 @@
-<div class="connexion">
+<div class="btnConnexion">
 <?php
 
     // Check si l'user est connecté

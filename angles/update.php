@@ -78,12 +78,13 @@
                 // Affiche le formulaire et le pré remplie que si l'angle existe
                 if(!empty($donnees)) {
                     ?>
-                        <h1>Modifiez l'angle <span><?php echo $_GET['id']; ?></span>.</h1>
-
+                        
+                        <?php include '../assets/php/menuInAdminShow.php'; ?>
                         <?php include '../assets/php/menuAdmin.php'; ?>
                         <?php include '../assets/php/btnConnexionInAdminShow.php'; ?>
-                        <?php include '../assets/php/menuInAdminShow.php'; ?>
-
+                        
+                        <h1>Modifiez l'angle <span><?php echo $_GET['id']; ?></span>.</h1>
+                        
                         <form action="update.php?id=<?php echo $_GET['id']; ?>" method="POST">
                             <label for="NumAngl">ID :</label>
                             <input type="text" id="NumAngl" name="NumAngl" placeholder="Sur 8 car." size="8" minlength="8" value="<?php echo $donnees['NumAngl']; ?>" required disabled>

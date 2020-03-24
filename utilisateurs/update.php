@@ -24,11 +24,10 @@
     </head>
 
     <body>
-
-        <?php include '../assets/php/menuAdmin.php'; ?>
-        <?php include '../assets/php/btnConnexionInAdminShow.php'; ?>
+        
         <?php include '../assets/php/menuInAdminShow.php'; ?>
-
+        <?php include '../assets/php/menuAdmin.php'; ?>
+        
         <?php
         
             // Affiche le formulaire seulement la première fois

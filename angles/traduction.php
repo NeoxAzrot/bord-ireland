@@ -92,11 +92,12 @@
 
         ?>
         
-        <h1>Traduire un angle.</h1>
-
+        
+        <?php include '../assets/php/menuInAdminShow.php'; ?>
         <?php include '../assets/php/menuAdmin.php'; ?>
         <?php include '../assets/php/btnConnexionInAdminShow.php'; ?>
-        <?php include '../assets/php/menuInAdminShow.php'; ?>
+
+        <h1>Traduire un angle.</h1>
 
         <form action="traduction.php" method="POST">
             <label for="NumAngl">NumAngl :</label>
