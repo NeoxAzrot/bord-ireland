@@ -26,6 +26,10 @@
     <body>
         <h1>Tout les mots clés.</h1>
 
+        <?php include '../assets/php/menuAdmin.php'; ?>
+        <?php include '../assets/php/btnConnexionInAdminShow.php'; ?>
+        <?php include '../assets/php/menuInAdminShow.php'; ?>
+
         <?php 
 
             // Affichage du message personnalisé lors de la redirection
@@ -39,30 +43,28 @@
         <table>
             <thead>
                 <tr>
+                    <th>NumMoCle</th>
+                    <th>LibMoCle</th>
                     <th>NumLang</th>
-                    <th>Lib1Lang</th>
-                    <th>Lib2Lang</th>
-                    <th>NumPays</th>
                 </tr>
             </thead>
             <tbody>
 
             <?php
 
-                $req = $bdd->query('SELECT * FROM langue ORDER BY NumLang');
+                $req = $bdd->query('SELECT * FROM motcle ORDER BY NumMoCle');
 
-                // Affichage de toutes les langues dans un tableau
+                // Affichage de tout les mots clés dans un tableau
                 while ($donnees = $req->fetch())
                 {
 
             ?>
                 <tr>
-                    <td><?php echo $donnees['NumLang'];?></td>
-                    <td><?php echo $donnees['Lib1Lang'];?></td>
-                    <td><?php echo $donnees['Lib2Lang'];?></td>
-                    <td><?php echo $donnees['NumPays'];?></td>
-                    <td><a href="update.php?id=<?php echo $donnees['NumLang'];?>" class="modified_link"><i class="fas fa-edit"></i> Modifier</a></td>
-                    <td><a href="delete.php?id=<?php echo $donnees['NumLang'];?>" class="delete_link" data-id="<?php echo $donnees['NumLang']; ?>"><i class="fas fa-trash-alt"></i> Supprimer</a></td>
+                    <td><?php echo $donnees['NumMoCle'];?></td>
+                    <td><?php echo $donnees['LibMoCle'];?></td>
+                    <td><a href="../langues/index.php"><?php echo $donnees['NumLang'];?></a></td>
+                    <td><a href="update.php?id=<?php echo $donnees['NumMoCle'];?>" class="modified_link"><i class="fas fa-edit"></i> Modifier</a></td>
+                    <td><a href="delete.php?id=<?php echo $donnees['NumMoCle'];?>" class="delete_link" data-id="<?php echo $donnees['NumMoCle']; ?>"><i class="fas fa-trash-alt"></i> Supprimer</a></td>
                 </tr>
 
                 <?php 

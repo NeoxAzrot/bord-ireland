@@ -64,7 +64,7 @@
                     <td><?php echo $donnees['LibThem'];?></td>
                     <td><a href="../langues/index.php"><?php echo $donnees['NumLang'];?></a></td>
                     <td><a href="update.php?id=<?php echo $donnees['NumThem'];?>" class="modified_link"><i class="fas fa-edit"></i> Modifier</a></td>
-                    <td><a href="delete.php?id=<?php echo $donnees['NumThem'];?>" class="delete_link" data-id="<?php echo $donnees['NumLang']; ?>"><i class="fas fa-trash-alt"></i> Supprimer</a></td>
+                    <td><a href="delete.php?id=<?php echo $donnees['NumThem'];?>" class="delete_link" data-id="<?php echo $donnees['NumThem']; ?>"><i class="fas fa-trash-alt"></i> Supprimer</a></td>
                 </tr>
 
                 <?php 
@@ -78,7 +78,6 @@
         </table>
 
         <a href="new.php" class="add"><i class="fas fa-plus"></i> Ajouter une nouvelle thématique</a>
-        <a href="traduction.php" class="add"><i class="fas fa-plus"></i> Traduire une thématique</a>
 
         <script src="../assets/js/script.js"></script>
     </body>

@@ -29,51 +29,61 @@
             // Affiche le formulaire seulement la première fois
             if($_POST) {
                 // Vérifie si tous les input ont été remplis et contrôle la saisie
-                if((isset($_POST['lib_court']) && !empty($_POST['lib_court'])) AND
-                (isset($_POST['lib_long']) && !empty($_POST['lib_long'])) AND
-                (isset($_POST['pays']) && !empty($_POST['pays']))) {
-                    $lib_court = ctrlSaisies($_POST['lib_court']);
-                    $lib_long = ctrlSaisies($_POST['lib_long']);
-                    $pays = ctrlSaisies($_POST['pays']);
-                    $pays = strtoupper($pays);
+                if((isset($_POST['LibThem']) && !empty($_POST['LibThem'])) AND
+                (isset($_POST['NumLang']) && !empty($_POST['NumLang']))) {
+                    $LibThem = ctrlSaisies($_POST['LibThem']);
+                    $NumLang = ctrlSaisies($_POST['NumLang']);
+                    $NumLang = strtoupper($NumLang);
 
-                    $req = $bdd->query('SELECT * FROM langue WHERE NumLang LIKE "' . $pays . '%"');
+                    $req = $bdd->query('SELECT * FROM thematique WHERE NumLang = "' . $NumLang . '"');
                     $donnees = $req->fetch();
         
-                    // Vérifie si la langue existe déjà. Exemple : FRAN
+                    // Vérifie si la thématique existe déjà
                     if(empty($donnees)) {
-                        $req = $bdd->prepare('INSERT INTO langue(NumLang, Lib1Lang, Lib2Lang, NumPays) VALUES(:NumLang, :Lib1Lang, :Lib2Lang, :NumPays)');
-                        $req->execute(array(
-                            'NumLang' => $pays . "01",
-                            'Lib1Lang' => $lib_court,
-                            'Lib2Lang' => $lib_long,
-                            'NumPays' => $pays
-                            ));
-
-                        $_SESSION['answer'] = "<b>" . $pays . "01" . "</b> vient d'être ajouté à la table !";
-                    } else {
-                        // Récupère la clé primaire maximale de la langue et lui ajoute 1
-                        $req = $bdd->query('SELECT MAX(NumLang) AS NumLangMax FROM langue WHERE NumLang LIKE "' . $pays . '%"');
+                        // Récupère la clé primaire maximale de la thématique et lui ajoute 1
+                        $req = $bdd->query('SELECT MAX(NumThem) AS NumThemMax FROM thematique');
                         $donnees = $req->fetch();
 
-                        $pays_split = str_split($donnees['NumLangMax'], 4);
-                        $pays_next_id = (int) $pays_split[1] + 1;
-                        
-                        // Rajoute un 0 devant si on est entre 1 et 9 car sinon on aurait par exemple : FRAN2 et non FRAN02
-                        if($pays_next_id < 10) {
-                            $pays_next_id = "0" . $pays_next_id;
+                        $NumThem_split = str_split($donnees['NumThemMax'], 3);
+                        $NumThem_split_id = str_split($NumThem_split[1] . $NumThem_split[2], 2);
+                        $NumThem_next_id = (int) $NumThem_split_id[0] + 1;
+
+                        // Rajoute un 0 devant si on est entre 1 et 9 car sinon on aurait par exemple : THE2 et non THE02
+                        if($NumThem_next_id < 10) {
+                            $NumThem_next_id = "0" . $NumThem_next_id;
                         }
 
-                        // Ajoute la langue
-                        $req = $bdd->prepare('INSERT INTO langue(NumLang, Lib1Lang, Lib2Lang, NumPays) VALUES(:NumLang, :Lib1Lang, :Lib2Lang, :NumPays)');
+                        $req = $bdd->prepare('INSERT INTO thematique(NumThem, LibThem, NumLang) VALUES(:NumThem, :LibThem, :NumLang)');
                         $req->execute(array(
-                            'NumLang' => $pays_split[0] . $pays_next_id,
-                            'Lib1Lang' => $lib_court,
-                            'Lib2Lang' => $lib_long,
-                            'NumPays' => $pays
+                            'NumThem' => "THE" . $NumThem_next_id . "01",
+                            'LibThem' => $LibThem,
+                            'NumLang' => $NumLang
                             ));
 
-                        $_SESSION['answer'] = "<b>" . $pays_split[0] . $pays_next_id  . "</b> vient d'être ajouté à la table !";
+                        $_SESSION['answer'] = "<b>" . "THE" . $NumThem_next_id . "01" . "</b> vient d'être ajouté à la table !";
+                    } else {
+                        // Récupère la clé primaire maximale de la thématique par rapport à la langue et lui ajoute 1
+                        $req = $bdd->query('SELECT MAX(NumThem) AS NumThemMax FROM thematique WHERE NumLang = "' . $NumLang . '"');
+                        $donnees = $req->fetch();
+
+                        $NumThem_split = str_split($donnees['NumThemMax'], 3);
+                        $NumThem_split_id = str_split($NumThem_split[1] . $NumThem_split[2], 2);
+                        $NumThem_next_id = (int) $NumThem_split_id[1] + 1;
+                        
+                        // Rajoute un 0 devant si on est entre 1 et 9 car sinon on aurait par exemple : THE2 et non THE02
+                        if($NumThem_next_id < 10) {
+                            $NumThem_next_id = "0" . $NumThem_next_id;
+                        }
+
+                        // Ajoute la thématique
+                        $req = $bdd->prepare('INSERT INTO thematique(NumThem, LibThem, NumLang) VALUES(:NumThem, :LibThem, :NumLang)');
+                        $req->execute(array(
+                            'NumThem' => "THE" . $NumThem_split_id[0] . $NumThem_next_id,
+                            'LibThem' => $LibThem,
+                            'NumLang' => $NumLang
+                            ));
+
+                        $_SESSION['answer'] = "<b>" . "THE" . $NumThem_split_id[0] . $NumThem_next_id . "</b> vient d'être ajouté à la table !";
 
                         $req->closeCursor();
                     }
@@ -86,17 +96,105 @@
 
         ?>
         
-        <h1>Ajoutez un commentaire.</h1>
+        <h1>Ajoutez un article.</h1>
+
+        <?php include '../assets/php/menuAdmin.php'; ?>
+        <?php include '../assets/php/btnConnexionInAdminShow.php'; ?>
+        <?php include '../assets/php/menuInAdminShow.php'; ?>
 
         <form action="new.php" method="POST">
-            <label for="lib_court">Libellé court :</label>
-            <input type="text" id="lib_court" name="lib_court" placeholder="Sur 25 car." size="25" maxlength="25" autofocus="autofocus" required>
+            <label for="DtCreA">Date de l'article :</label>
+            <input type="date" id="DtCreA" name="DtCreA" autofocus="autofocus" required>
 
-            <label for="lib_long">Libellé long :</label>
-            <input type="text" id="lib_long" name="lib_long" placeholder="Sur 45 car." size="45" maxlength="45" required>
+            <label for="LibTitrA">Libellé titre :</label>
+            <textarea name="LibTitrA" id="LibTitrA" cols="30" rows="10" placeholder="Ecrivez ici..." required></textarea>
+                       
+            <label for="LibChapoA">Libellé chapo :</label>
+            <textarea name="LibChapoA" id="LibChapoA" cols="30" rows="10" placeholder="Ecrivez ici..." required></textarea>
 
-            <label for="pays">Quel pays :</label>
-            <input type="text" id="pays" name="pays" placeholder="Sur 4 car." size="4" maxlength="4" minlength="4" required>
+            <label for="LibAccrochA">Libellé accroche :</label>
+            <textarea name="LibAccrochA" id="LibAccrochA" cols="30" rows="10" placeholder="Ecrivez ici..." required></textarea>
+
+            <label for="Parag1A">Libellé paragraphe 1 :</label>
+            <textarea name="Parag1A" id="Parag1A" cols="30" rows="10" placeholder="Ecrivez ici..." required></textarea>
+
+            <label for="LibSsTitr1">Libellé sous-titre 1 :</label>
+            <textarea name="LibSsTitr1" id="LibSsTitr1" cols="30" rows="10" placeholder="Ecrivez ici..." required></textarea>
+
+            <label for="Parag2A">Libellé paragraphe 2 :</label>
+            <textarea name="Parag2A" id="Parag2A" cols="30" rows="10" placeholder="Ecrivez ici..." required></textarea>
+
+            <label for="LibSsTitr2">Libellé sous-titre 2 :</label>
+            <textarea name="LibSsTitr2" id="LibSsTitr2" cols="30" rows="10" placeholder="Ecrivez ici..." required></textarea>
+
+            <label for="Parag3A">Libellé paragraphe 3 :</label>
+            <textarea name="Parag3A" id="Parag3A" cols="30" rows="10" placeholder="Ecrivez ici..." required></textarea>
+
+            <label for="LibConclA">Libellé conlusion :</label>
+            <textarea name="LibConclA" id="LibConclA" cols="30" rows="10" placeholder="Ecrivez ici..." required></textarea>
+
+            <label for="UrlPhotA">URL photo :</label>
+            <input type="text" id="UrlPhotA" name="UrlPhotA" placeholder="Sur 62 car." size="62" maxlength="62" required>
+
+            <label for="NumAngl">NumAngl :</label>
+            <select name="NumAngl" id="NumAngl" required>
+                <option value="" disabled selected>-- Choisir un angle --</option>
+                <?php 
+                
+                    $req = $bdd->query('SELECT * FROM angle ORDER BY NumAngl');
+
+                    while($donnees = $req->fetch()) {
+                ?>
+
+                        <option value="<?php echo $donnees['NumAngl']; ?>"><?php echo $donnees['LibAngl']; ?></option>
+                
+                <?php
+                    }
+
+                    $req->closeCursor();
+
+                ?>
+            </select>
+
+            <label for="NumThem">NumThem :</label>
+            <select name="NumThem" id="NumThem" required>
+                <option value="" disabled selected>-- Choisir une thématique --</option>
+                <?php 
+                
+                    $req = $bdd->query('SELECT * FROM thematique ORDER BY NumThem');
+
+                    while($donnees = $req->fetch()) {
+                ?>
+
+                        <option value="<?php echo $donnees['NumThem']; ?>"><?php echo $donnees['LibThem']; ?></option>
+                
+                <?php
+                    }
+
+                    $req->closeCursor();
+
+                ?>
+            </select>
+
+            <label for="NumLang">NumLang :</label>
+            <select name="NumLang" id="NumLang" required>
+                <option value="" disabled selected>-- Choisir une langue --</option>
+                <?php 
+                
+                    $req = $bdd->query('SELECT * FROM langue ORDER BY NumLang');
+
+                    while($donnees = $req->fetch()) {
+                ?>
+
+                        <option value="<?php echo $donnees['NumLang']; ?>"><?php echo $donnees['Lib1Lang']; ?></option>
+                
+                <?php
+                    }
+
+                    $req->closeCursor();
+
+                ?>
+            </select>
 
             <input type="submit">
         </form>

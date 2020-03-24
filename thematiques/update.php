@@ -29,35 +29,17 @@
             // Affiche le formulaire seulement la première fois
             if($_POST) {
                 // Vérifie si tous les input ont été remplis et contrôle la saisie
-                if((isset($_POST['LibAngl']) && !empty($_POST['LibAngl'])) AND
-                (isset($_POST['NumLang']) && !empty($_POST['NumLang']))) {
-                    $LibAngl = ctrlSaisies($_POST['LibAngl']);
-                    $NumLang = ctrlSaisies($_POST['NumLang']);
-                    $NumLang = strtoupper($NumLang);
+                if((isset($_POST['LibThem']) && !empty($_POST['LibThem']))) {
+                    $LibThem = ctrlSaisies($_POST['LibThem']);
 
-                    $NumAngl_split = str_split($_GET['id'], 4);
-                    $NumAngl_split_id = str_split($NumAngl_split[1], 2);
-
-                    $req = $bdd->prepare('SELECT * FROM angle WHERE NumAngl LIKE :NumAngl AND NumLang = :NumLang');
+                    // Met à jour la thématique
+                    $req = $bdd->prepare('UPDATE thematique SET LibThem = :LibThem WHERE NumThem = :ID');
                     $req->execute(array(
-                        'NumAngl' => $NumAngl_split[0] . $NumAngl_split_id[0] . "%",
-                        'NumLang' => $NumLang
-                    ));
-                    $donnees = $req->fetch();
-
-                    if(empty($donnees)) {
-                        // Met à jour l'angle
-                        $req = $bdd->prepare('UPDATE angle SET LibAngl = :LibAngl, NumLang = :NumLang WHERE NumAngl = :ID');
-                        $req->execute(array(
-                            'LibAngl' => $LibAngl,
-                            'NumLang' => $NumLang,
-                            'ID' => $_GET['id']
-                            ));
-                            
-                        $_SESSION['answer'] = "La modification de <b>" . $_GET['id'] . "</b> a bien été pris en compte !";
-                    } else {
-                        $_SESSION['answer'] = "<span><b>" . $_GET['id'] . "</b> existe déjà en <b>" . $NumLang . "</b> !</span>";
-                    }
+                        'LibThem' => $LibThem,
+                        'ID' => $_GET['id']
+                        ));
+                        
+                    $_SESSION['answer'] = "La modification de <b>" . $_GET['id'] . "</b> a bien été pris en compte !";
 
                 }
 
@@ -66,33 +48,33 @@
             }
 
             if(isset($_GET['id']) && !empty($_GET['id'])) {
-                $req = $bdd->prepare('SELECT * FROM angle WHERE NumAngl = :id');
+                $req = $bdd->prepare('SELECT * FROM thematique WHERE NumThem = :id');
                 $req->execute(array(
                     'id' => $_GET['id']
                 ));
 
                 $donnees = $req->fetch();
 
-                $NumLangAngl = $donnees['NumLang'];
+                $NumLangThem = $donnees['NumLang'];
 
-                // Affiche le formulaire et le pré remplie que si l'angle existe
+                // Affiche le formulaire et le pré remplie que si la thématique existe
                 if(!empty($donnees)) {
                     ?>
-                        <h1>Modifiez l'angle <span><?php echo $_GET['id']; ?></span>.</h1>
+                        <h1>Modifiez la thématique <span><?php echo $_GET['id']; ?></span>.</h1>
 
                         <?php include '../assets/php/menuAdmin.php'; ?>
                         <?php include '../assets/php/btnConnexionInAdminShow.php'; ?>
                         <?php include '../assets/php/menuInAdminShow.php'; ?>
 
                         <form action="update.php?id=<?php echo $_GET['id']; ?>" method="POST">
-                            <label for="NumAngl">ID :</label>
-                            <input type="text" id="NumAngl" name="NumAngl" placeholder="Sur 8 car." size="8" minlength="8" value="<?php echo $donnees['NumAngl']; ?>" required disabled>
+                            <label for="NumThem">ID :</label>
+                            <input type="text" id="NumThem" name="NumThem" placeholder="Sur 8 car." size="8" minlength="7" value="<?php echo $donnees['NumThem']; ?>" required disabled>
 
-                            <label for="LibAngl">Libellé angle :</label>
-                            <input type="text" id="LibAngl" name="LibAngl" placeholder="Sur 60 car." size="60" maxlength="60" autofocus="autofocus" value="<?php echo $donnees['LibAngl']; ?>" required>
+                            <label for="LibThem">Libellé thématique :</label>
+                            <input type="text" id="LibThem" name="LibThem" placeholder="Sur 60 car." size="60" maxlength="60" autofocus="autofocus" value="<?php echo $donnees['LibThem']; ?>" required>
 
                             <label for="NumLang">NumLang :</label>
-                            <select name="NumLang" id="NumLang" required>
+                            <select name="NumLang" id="NumLang" required disabled>
                                 <option value="" disabled>-- Choisir un pays --</option>
                                 <?php 
                                 
@@ -101,7 +83,7 @@
                                     while($donnees = $req->fetch()) {
                                 ?>
 
-                                        <option value="<?php echo $donnees['NumLang']; ?>" <?php echo $donnees['NumLang'] == $NumLangAngl ? "selected" : ""; ?>><?php echo $donnees['Lib1Lang']; ?></option>
+                                        <option value="<?php echo $donnees['NumLang']; ?>" <?php echo $donnees['NumLang'] == $NumLangThem ? "selected" : ""; ?>><?php echo $donnees['Lib1Lang']; ?></option>
                                 
                                 <?php
                                     }
@@ -117,14 +99,14 @@
                         <a href="index.php" class="back"><i class="fas fa-arrow-left"></i> Revenir au tableau</a>
                     <?php
                 } else {
-                    $_SESSION['answer'] = "<span>Cet angle est introuvable !</span>";
+                    $_SESSION['answer'] = "<span>Cette thématique est introuvable !</span>";
 
                     // Redirection avec un message personnalisé
                     header('Location: index.php');
                 }
             } else {
                 // Redirection avec un message personnalisé
-                $_SESSION['answer'] = "<span>Cet angle est introuvable !</span>";
+                $_SESSION['answer'] = "<span>Cette thématique est introuvable !</span>";
                 header('Location: index.php');
             }
 

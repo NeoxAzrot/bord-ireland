@@ -29,51 +29,61 @@
             // Affiche le formulaire seulement la première fois
             if($_POST) {
                 // Vérifie si tous les input ont été remplis et contrôle la saisie
-                if((isset($_POST['lib_court']) && !empty($_POST['lib_court'])) AND
-                (isset($_POST['lib_long']) && !empty($_POST['lib_long'])) AND
-                (isset($_POST['pays']) && !empty($_POST['pays']))) {
-                    $lib_court = ctrlSaisies($_POST['lib_court']);
-                    $lib_long = ctrlSaisies($_POST['lib_long']);
-                    $pays = ctrlSaisies($_POST['pays']);
-                    $pays = strtoupper($pays);
+                if((isset($_POST['LibMoCle']) && !empty($_POST['LibMoCle'])) AND
+                (isset($_POST['NumLang']) && !empty($_POST['NumLang']))) {
+                    $LibMoCle = ctrlSaisies($_POST['LibMoCle']);
+                    $NumLang = ctrlSaisies($_POST['NumLang']);
+                    $NumLang = strtoupper($NumLang);
 
-                    $req = $bdd->query('SELECT * FROM langue WHERE NumLang LIKE "' . $pays . '%"');
+                    $req = $bdd->query('SELECT * FROM motcle WHERE NumLang = "' . $NumLang . '"');
                     $donnees = $req->fetch();
         
-                    // Vérifie si la langue existe déjà. Exemple : FRAN
+                    // Vérifie si le mot clés existe déjà
                     if(empty($donnees)) {
-                        $req = $bdd->prepare('INSERT INTO langue(NumLang, Lib1Lang, Lib2Lang, NumPays) VALUES(:NumLang, :Lib1Lang, :Lib2Lang, :NumPays)');
-                        $req->execute(array(
-                            'NumLang' => $pays . "01",
-                            'Lib1Lang' => $lib_court,
-                            'Lib2Lang' => $lib_long,
-                            'NumPays' => $pays
-                            ));
-
-                        $_SESSION['answer'] = "<b>" . $pays . "01" . "</b> vient d'être ajouté à la table !";
-                    } else {
-                        // Récupère la clé primaire maximale de la langue et lui ajoute 1
-                        $req = $bdd->query('SELECT MAX(NumLang) AS NumLangMax FROM langue WHERE NumLang LIKE "' . $pays . '%"');
+                        // Récupère la clé primaire maximale du mot clés et lui ajoute 1
+                        $req = $bdd->query('SELECT MAX(NumMoCle) AS NumMoCleMax FROM motcle');
                         $donnees = $req->fetch();
 
-                        $pays_split = str_split($donnees['NumLangMax'], 4);
-                        $pays_next_id = (int) $pays_split[1] + 1;
-                        
-                        // Rajoute un 0 devant si on est entre 1 et 9 car sinon on aurait par exemple : FRAN2 et non FRAN02
-                        if($pays_next_id < 10) {
-                            $pays_next_id = "0" . $pays_next_id;
+                        $NumMoCle_split = str_split($donnees['NumMoCleMax'], 4);
+                        $NumMoCle_split_id = str_split($NumMoCle_split[1], 2);
+                        $NumMoCle_next_id = (int) $NumMoCle_split_id[0] + 1;
+
+                        // Rajoute un 0 devant si on est entre 1 et 9 car sinon on aurait par exemple : MTCL2 et non MTCL02
+                        if($NumMoCle_next_id < 10) {
+                            $NumMoCle_next_id = "0" . $NumMoCle_next_id;
                         }
 
-                        // Ajoute la langue
-                        $req = $bdd->prepare('INSERT INTO langue(NumLang, Lib1Lang, Lib2Lang, NumPays) VALUES(:NumLang, :Lib1Lang, :Lib2Lang, :NumPays)');
+                        $req = $bdd->prepare('INSERT INTO motcle(NumMoCle, LibMoCle, NumLang) VALUES(:NumMoCle, :LibMoCle, :NumLang)');
                         $req->execute(array(
-                            'NumLang' => $pays_split[0] . $pays_next_id,
-                            'Lib1Lang' => $lib_court,
-                            'Lib2Lang' => $lib_long,
-                            'NumPays' => $pays
+                            'NumMoCle' => "MTCL" . $NumMoCle_next_id . "01",
+                            'LibMoCle' => $LibMoCle,
+                            'NumLang' => $NumLang
                             ));
 
-                        $_SESSION['answer'] = "<b>" . $pays_split[0] . $pays_next_id  . "</b> vient d'être ajouté à la table !";
+                        $_SESSION['answer'] = "<b>" . "MTCL" . $NumMoCle_next_id . "01" . "</b> vient d'être ajouté à la table !";
+                    } else {
+                        // Récupère la clé primaire maximale du mot clés par rapport à la langue et lui ajoute 1
+                        $req = $bdd->query('SELECT MAX(NumMoCle) AS NumMoCleMax FROM motcle WHERE NumLang = "' . $NumLang . '"');
+                        $donnees = $req->fetch();
+
+                        $NumMoCle_split = str_split($donnees['NumMoCleMax'], 4);
+                        $NumMoCle_split_id = str_split($NumMoCle_split[1], 2);
+                        $NumMoCle_next_id = (int) $NumMoCle_split_id[1] + 1;
+                        
+                        // Rajoute un 0 devant si on est entre 1 et 9 car sinon on aurait par exemple : MTCL2 et non MTCL02
+                        if($NumMoCle_next_id < 10) {
+                            $NumMoCle_next_id = "0" . $NumMoCle_next_id;
+                        }
+
+                        // Ajoute le mot clés
+                        $req = $bdd->prepare('INSERT INTO motcle(NumMoCle, LibMoCle, NumLang) VALUES(:NumMoCle, :LibMoCle, :NumLang)');
+                        $req->execute(array(
+                            'NumMoCle' => "MTCL" . $NumMoCle_split_id[0] . $NumMoCle_next_id,
+                            'LibMoCle' => $LibMoCle,
+                            'NumLang' => $NumLang
+                            ));
+
+                        $_SESSION['answer'] = "<b>" . "MTCL" . $NumMoCle_split_id[0] . $NumMoCle_next_id . "</b> vient d'être ajouté à la table !";
 
                         $req->closeCursor();
                     }
@@ -86,17 +96,35 @@
 
         ?>
         
-        <h1>Ajoutez une langue.</h1>
+        <h1>Ajoutez un mot clés.</h1>
+
+        <?php include '../assets/php/menuAdmin.php'; ?>
+        <?php include '../assets/php/btnConnexionInAdminShow.php'; ?>
+        <?php include '../assets/php/menuInAdminShow.php'; ?>
 
         <form action="new.php" method="POST">
-            <label for="lib_court">Libellé court :</label>
-            <input type="text" id="lib_court" name="lib_court" placeholder="Sur 25 car." size="25" maxlength="25" autofocus="autofocus" required>
+            <label for="LibMoCle">Libellé mot clés :</label>
+            <input type="text" id="LibMoCle" name="LibMoCle" placeholder="Sur 30 car." size="30" maxlength="30" autofocus="autofocus" required>
 
-            <label for="lib_long">Libellé long :</label>
-            <input type="text" id="lib_long" name="lib_long" placeholder="Sur 45 car." size="45" maxlength="45" required>
+            <label for="NumLang">NumLang :</label>
+            <select name="NumLang" id="NumLang" required>
+                <option value="" disabled selected>-- Choisir une langue --</option>
+                <?php 
+                
+                    $req = $bdd->query('SELECT * FROM langue ORDER BY NumLang');
 
-            <label for="pays">Quel pays :</label>
-            <input type="text" id="pays" name="pays" placeholder="Sur 4 car." size="4" maxlength="4" minlength="4" required>
+                    while($donnees = $req->fetch()) {
+                ?>
+
+                        <option value="<?php echo $donnees['NumLang']; ?>"><?php echo $donnees['Lib1Lang']; ?></option>
+                
+                <?php
+                    }
+
+                    $req->closeCursor();
+
+                ?>
+            </select>
 
             <input type="submit">
         </form>
