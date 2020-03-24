@@ -30,10 +30,7 @@
         <?php include 'assets/php/menu.php'; ?>
 
         <div class="body">
-            <div class="connexion">
                 <?php include 'assets/php/btnConnexion.php'; ?>
-            </div>
-            <div class="segment"></div>
 
             <?php 
 

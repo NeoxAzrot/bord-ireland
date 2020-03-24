@@ -1,3 +1,4 @@
+<div class="connexion">
 <?php
 
     // Check si l'user est connecté
@@ -16,3 +17,4 @@
     }
 
 ?>
+</div>
