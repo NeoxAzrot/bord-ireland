@@ -150,8 +150,6 @@ body .administration {
     flex-direction: column;
 }
 .contentAdmin {
-    background-image: url("../images/image_2.png");
-    background-color: #345831;
     width: 80vw;
     height: 90vh;
 }
@@ -161,7 +159,9 @@ body {
     display: flex;
     margin: 0px;
     background-image: url("../images/image_2.png");
+    background-repeat: no-repeat;
     background-color: #345831;
+    background-size: cover;
     width: 100vw;
     height: 100vh;
 }
@@ -191,4 +191,24 @@ body {
 .articleAdmin {
     display: flex;
     flex-direction: column;
+}
+
+/* langue */ 
+.langues {
+    display: flex;
+    flex-direction: column;
+}
+
+/* Commentaires */ 
+.commentaires {
+    display: flex;
+    flex-direction: column;
+}
+.commentaires tr {
+    background-color: white;
+}
+
+.commentaires h1 {
+    font-family: 'Bebas Neue', cursive;
+    color: #6D0A1B;
 }

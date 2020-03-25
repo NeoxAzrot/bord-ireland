@@ -27,65 +27,65 @@
     <body>
         
         <?php include '../assets/php/menuInAdminShow.php'; ?>
-        <?php include '../assets/php/menuAdmin.php'; ?>
-        
-        <h1>Tout les commentaires.</h1>
-        
-        <?php 
+        <div class="commentaires">
+            <?php include '../assets/php/menuAdmin.php'; ?>
+            
+            <h1>Commentaires :</h1>
+            
+            <?php 
 
-            // Affichage du message personnalisé lors de la redirection
-            if(isset($_SESSION['answer']) && !empty($_SESSION['answer'])) {
-                echo "<p class='answer'>" . $_SESSION['answer'] . "</p>";
-                $_SESSION['answer'] = "";
-            }
-
-        ?>
-
-        <table>
-            <thead>
-                <tr>
-                    <th>NumCom</th>
-                    <th>DtCreC</th>
-                    <th>PseudoAuteur</th>
-                    <th>EmailAuteur</th>
-                    <th>TitrCom</th>
-                    <th>LibCom</th>
-                    <th>NumArt</th>
-                </tr>
-            </thead>
-            <tbody>
-
-            <?php
-
-                $req = $bdd->query('SELECT * FROM comment ORDER BY NumCom');
-
-                // Affichage de tout les commentaires dans un tableau
-                while ($donnees = $req->fetch())
-                {
+                // Affichage du message personnalisé lors de la redirection
+                if(isset($_SESSION['answer']) && !empty($_SESSION['answer'])) {
+                    echo "<p class='answer'>" . $_SESSION['answer'] . "</p>";
+                    $_SESSION['answer'] = "";
+                }
 
             ?>
-                <tr>
-                    <td><?php echo $donnees['NumCom'];?></td>
-                    <td><?php echo dateChangeFormat($donnees['DtCreC'], "Y-m-d H:i:s", "d/m/Y H:i:s");?></td>
-                    <td><?php echo $donnees['PseudoAuteur'];?></td>
-                    <td><?php echo $donnees['EmailAuteur'];?></td>
-                    <td><?php echo $donnees['TitrCom'];?></td>
-                    <td><?php echo $donnees['LibCom'];?></td>
-                    <td><a href="../articles/index.php"><?php echo $donnees['NumArt'];?></a></td>
-                    <td><a href="delete.php?id=<?php echo $donnees['NumCom'];?>" class="delete_link" data-id="<?php echo $donnees['NumCom']; ?>"><i class="fas fa-trash-alt"></i> Supprimer</a></td>
-                </tr>
 
-                <?php 
+            <table>
+                <thead>
+                    <tr>
+                        <th>Date :</th>
+                        <th>Pseudo :</th>
+                        <th>Email :</th>
+                        <th>Titre :</th>
+                        <th>Commentaire</th>
+                        <th>Numéro d'article :</th>
+                    </tr>
+                </thead>
+                <tbody>
 
-                    }
+                <?php
 
-                    $req->closeCursor();
+                    $req = $bdd->query('SELECT * FROM comment ORDER BY NumCom');
+
+                    // Affichage de tout les commentaires dans un tableau
+                    while ($donnees = $req->fetch())
+                    {
 
                 ?>
-            </tbody>
-        </table>
+                    <tr>
+                        <td><?php echo dateChangeFormat($donnees['DtCreC'], "Y-m-d H:i:s", "d/m/Y H:i:s");?></td>
+                        <td><?php echo $donnees['PseudoAuteur'];?></td>
+                        <td><?php echo $donnees['EmailAuteur'];?></td>
+                        <td><?php echo $donnees['TitrCom'];?></td>
+                        <td><?php echo $donnees['LibCom'];?></td>
+                        <td><a href="../articles/index.php"><?php echo $donnees['NumArt'];?></a></td>
+                        <td><a href="delete.php?id=<?php echo $donnees['NumCom'];?>" class="delete_link" data-id="<?php echo $donnees['NumCom']; ?>"><i class="fas fa-trash-alt"></i> Supprimer</a></td>
+                    </tr>
 
-        <script src="../assets/js/script.js"></script>
+                    <?php 
+
+                        }
+
+                        $req->closeCursor();
+
+                    ?>
+                </tbody>
+            </table>
+                            
+            <script src="../assets/js/script.js"></script>
+        </div>
     </body>
 
 </html>

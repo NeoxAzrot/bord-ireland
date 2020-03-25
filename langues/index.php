@@ -24,64 +24,66 @@
     </head>
 
     <body>
+       
+            <?php include '../assets/php/menuInAdminShow.php'; ?>
+        <div class="langues">
+            <?php include '../assets/php/menuAdmin.php'; ?>
         
-        <?php include '../assets/php/menuInAdminShow.php'; ?>
-        <?php include '../assets/php/menuAdmin.php'; ?>
-        
-        <h1>Toutes les langues.</h1>
-        
-        <?php 
+            <h1>Toutes les langues.</h1>
+            
+            <?php 
 
-            // Affichage du message personnalisé lors de la redirection
-            if(isset($_SESSION['answer']) && !empty($_SESSION['answer'])) {
-                echo "<p class='answer'>" . $_SESSION['answer'] . "</p>";
-                $_SESSION['answer'] = "";
-            }
-
-        ?>
-
-        <table>
-            <thead>
-                <tr>
-                    <th>NumLang</th>
-                    <th>Lib1Lang</th>
-                    <th>Lib2Lang</th>
-                    <th>NumPays</th>
-                </tr>
-            </thead>
-            <tbody>
-
-            <?php
-
-                $req = $bdd->query('SELECT * FROM langue ORDER BY NumLang');
-
-                // Affichage de toutes les langues dans un tableau
-                while ($donnees = $req->fetch())
-                {
+                // Affichage du message personnalisé lors de la redirection
+                if(isset($_SESSION['answer']) && !empty($_SESSION['answer'])) {
+                    echo "<p class='answer'>" . $_SESSION['answer'] . "</p>";
+                    $_SESSION['answer'] = "";
+                }
 
             ?>
-                <tr>
-                    <td><?php echo $donnees['NumLang'];?></td>
-                    <td><?php echo $donnees['Lib1Lang'];?></td>
-                    <td><?php echo $donnees['Lib2Lang'];?></td>
-                    <td><?php echo $donnees['NumPays'];?></td>
-                    <td><a href="update.php?id=<?php echo $donnees['NumLang'];?>" class="modified_link"><i class="fas fa-edit"></i> Modifier</a></td>
-                    <td><a href="delete.php?id=<?php echo $donnees['NumLang'];?>" class="delete_link" data-id="<?php echo $donnees['NumLang']; ?>"><i class="fas fa-trash-alt"></i> Supprimer</a></td>
-                </tr>
 
-                <?php 
+            <table>
+                <thead>
+                    <tr>
+                        <th>NumLang</th>
+                        <th>Lib1Lang</th>
+                        <th>Lib2Lang</th>
+                        <th>NumPays</th>
+                    </tr>
+                </thead>
+                <tbody>
 
-                    }
+                <?php
 
-                    $req->closeCursor();
+                    $req = $bdd->query('SELECT * FROM langue ORDER BY NumLang');
+
+                    // Affichage de toutes les langues dans un tableau
+                    while ($donnees = $req->fetch())
+                    {
 
                 ?>
-            </tbody>
-        </table>
+                    <tr>
+                        <td><?php echo $donnees['NumLang'];?></td>
+                        <td><?php echo $donnees['Lib1Lang'];?></td>
+                        <td><?php echo $donnees['Lib2Lang'];?></td>
+                        <td><?php echo $donnees['NumPays'];?></td>
+                        <td><a href="update.php?id=<?php echo $donnees['NumLang'];?>" class="modified_link"><i class="fas fa-edit"></i> Modifier</a></td>
+                        <td><a href="delete.php?id=<?php echo $donnees['NumLang'];?>" class="delete_link" data-id="<?php echo $donnees['NumLang']; ?>"><i class="fas fa-trash-alt"></i> Supprimer</a></td>
+                    </tr>
 
-        <a href="new.php" class="add"><i class="fas fa-plus"></i> Ajouter une nouvelle langue</a>
+                    <?php 
 
-        <script src="../assets/js/script.js"></script>
+                        }
+
+                        $req->closeCursor();
+
+                    ?>
+                </tbody>
+            </table>
+
+            <a href="new.php" class="add"><i class="fas fa-plus"></i> Ajouter une nouvelle langue</a>
+
+            <script src="../assets/js/script.js"></script>
+        </div>
     </body>
 
 </html>
