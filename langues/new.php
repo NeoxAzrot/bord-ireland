@@ -88,41 +88,43 @@
         
         
         <?php include '../assets/php/menuInAdminShow.php'; ?>
-        <?php include '../assets/php/menuAdmin.php'; ?>
-        
-        <h1>Ajoutez une langue.</h1>
+        <div class ="langues">
+            <?php include '../assets/php/menuAdmin.php'; ?>
+            
+            <h1>Ajoutez une langue.</h1>
 
-        <form action="new.php" method="POST">
-            <label for="lib_court">Libellé court :</label>
-            <input type="text" id="lib_court" name="lib_court" placeholder="Sur 25 car." size="25" maxlength="25" autofocus="autofocus" required>
+            <form action="new.php" method="POST">
+                <label for="lib_court">Libellé court :</label>
+                <input type="text" id="lib_court" name="lib_court" placeholder="Sur 25 car." size="25" maxlength="25" autofocus="autofocus" required>
 
-            <label for="lib_long">Libellé long :</label>
-            <input type="text" id="lib_long" name="lib_long" placeholder="Sur 45 car." size="45" maxlength="45" required>
+                <label for="lib_long">Libellé long :</label>
+                <input type="text" id="lib_long" name="lib_long" placeholder="Sur 45 car." size="45" maxlength="45" required>
 
-            <label for="pays">Quel pays :</label>
-            <select name="pays" id="pays" required>
-                <option value="" disabled selected>-- Choisir un pays --</option>
-                <?php 
-                
-                    $req = $bdd->query('SELECT * FROM pays ORDER BY numPays');
+                <label for="pays">Quel pays :</label>
+                <select name="pays" id="pays" required>
+                    <option value="" disabled selected>-- Choisir un pays --</option>
+                    <?php 
+                    
+                        $req = $bdd->query('SELECT * FROM pays ORDER BY numPays');
 
-                    while($donnees = $req->fetch()) {
-                ?>
+                        while($donnees = $req->fetch()) {
+                    ?>
 
-                        <option value="<?php echo $donnees['numPays']; ?>"><?php echo $donnees['frPays']; ?></option>
-                
-                <?php
-                    }
+                            <option value="<?php echo $donnees['numPays']; ?>"><?php echo $donnees['frPays']; ?></option>
+                    
+                    <?php
+                        }
 
-                    $req->closeCursor();
+                        $req->closeCursor();
 
-                ?>
-            </select>
+                    ?>
+                </select>
 
-            <input type="submit">
-        </form>
+                <input type="submit">
+            </form>
 
-        <a href="index.php" class="back"><i class="fas fa-arrow-left"></i> Revenir au tableau</a>
+            <a href="index.php" class="back"><i class="fas fa-arrow-left"></i> Revenir au tableau</a>
+        </div>
     </body>
 
 </html>

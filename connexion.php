@@ -14,7 +14,6 @@
 
 <!DOCTYPE html>
 <html>
-
     <head>
         <title>Bord'Irlande - BLOG</title>
         <meta charset="utf-8" />
@@ -94,7 +93,6 @@
                 }
 
             }
-
         ?>
         <div class="connexion">
             <!-- Menus -->
@@ -129,5 +127,4 @@
             </div>
         </div>
     </body>
-
 </html>

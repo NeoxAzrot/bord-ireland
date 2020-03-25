@@ -62,55 +62,64 @@
                     ?>
 
                         <?php include '../assets/php/menuInAdminShow.php'; ?>
-                        <?php include '../assets/php/menuAdmin.php'; ?>
-                        
-                        <h1>Modifiez la thématique <span><?php echo $_GET['id']; ?></span>.</h1>
+                    <div class="thematiques">
+                                        <?php include '../assets/php/menuAdmin.php'; ?>
+                        <div class="thematiquesUpdate">   
+                                            <h1>Modifiez la thématique <span><?php echo $_GET['id']; ?></span>.</h1>
+                            <div class="thematiquesUpdateContent"> 
+                                <div class="thematiquesMargin"> 
+                                            <form action="update.php?id=<?php echo $_GET['id']; ?>" method="POST">
+                                                <label for="NumThem">ID :</label>
+                                                <input type="text" id="NumThem" name="NumThem" placeholder="Sur 8 car." size="8" minlength="7" value="<?php echo $donnees['NumThem']; ?>" required disabled><br>
+                                </div>              
+                                <div class="thematiquesMargin">
+                                                <label for="LibThem">Libellé thématique :</label>
+                                                <input type="text" id="LibThem" name="LibThem" placeholder="Sur 60 car." size="60" maxlength="60" autofocus="autofocus" value="<?php echo $donnees['LibThem']; ?>" required><br>
+                                </div>
+                                <div class="thematiquesMargin">
+                                                <label for="NumLang">NumLang :</label>
+                                                <select name="NumLang" id="NumLang" required disabled>
+                                                    <option value="" disabled>-- Choisir un pays --</option>
+                                                    <?php 
+                                                    
+                                                        $req = $bdd->query('SELECT * FROM langue ORDER BY NumLang');
 
-                        <form action="update.php?id=<?php echo $_GET['id']; ?>" method="POST">
-                            <label for="NumThem">ID :</label>
-                            <input type="text" id="NumThem" name="NumThem" placeholder="Sur 8 car." size="8" minlength="7" value="<?php echo $donnees['NumThem']; ?>" required disabled>
+                                                        while($donnees = $req->fetch()) {
+                                                    ?>
 
-                            <label for="LibThem">Libellé thématique :</label>
-                            <input type="text" id="LibThem" name="LibThem" placeholder="Sur 60 car." size="60" maxlength="60" autofocus="autofocus" value="<?php echo $donnees['LibThem']; ?>" required>
+                                                            <option value="<?php echo $donnees['NumLang']; ?>" <?php echo $donnees['NumLang'] == $NumLangThem ? "selected" : ""; ?>><?php echo $donnees['Lib1Lang']; ?></option>
+                                                    
+                                                    <?php
+                                                        }
 
-                            <label for="NumLang">NumLang :</label>
-                            <select name="NumLang" id="NumLang" required disabled>
-                                <option value="" disabled>-- Choisir un pays --</option>
-                                <?php 
-                                
-                                    $req = $bdd->query('SELECT * FROM langue ORDER BY NumLang');
+                                                        $req->closeCursor();
 
-                                    while($donnees = $req->fetch()) {
-                                ?>
+                                                    ?>
+                                                </select>
+                                </div>
+                                <div class="thematiquesMargin">               
+                                    <input type="submit">
+                                </div>
+                                            </form>
+                                        <div class="thematiquesMargin">                     
+                                            <a href="index.php" class="back"><i class="fas fa-arrow-left"></i> Revenir au tableau</a>
+                                        </div>
+                                        <?php
+                                    } else {
+                                        $_SESSION['answer'] = "<span>Cette thématique est introuvable !</span>";
 
-                                        <option value="<?php echo $donnees['NumLang']; ?>" <?php echo $donnees['NumLang'] == $NumLangThem ? "selected" : ""; ?>><?php echo $donnees['Lib1Lang']; ?></option>
-                                
-                                <?php
+                                        // Redirection avec un message personnalisé
+                                        header('Location: index.php');
                                     }
+                                } else {
+                                    // Redirection avec un message personnalisé
+                                    $_SESSION['answer'] = "<span>Cette thématique est introuvable !</span>";
+                                    header('Location: index.php');
+                                }
 
-                                    $req->closeCursor();
-
-                                ?>
-                            </select>
-
-                            <input type="submit">
-                        </form>
-
-                        <a href="index.php" class="back"><i class="fas fa-arrow-left"></i> Revenir au tableau</a>
-                    <?php
-                } else {
-                    $_SESSION['answer'] = "<span>Cette thématique est introuvable !</span>";
-
-                    // Redirection avec un message personnalisé
-                    header('Location: index.php');
-                }
-            } else {
-                // Redirection avec un message personnalisé
-                $_SESSION['answer'] = "<span>Cette thématique est introuvable !</span>";
-                header('Location: index.php');
-            }
-
-        ?>
+                            ?>
+                        </div>
+                    </div>
     </body>
 
 </html>
