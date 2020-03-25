@@ -100,16 +100,16 @@
         <?php include '../assets/php/menuInAdminShow.php'; ?>
         <div class="thematiques">
             <?php include '../assets/php/menuAdmin.php'; ?>
-            <div class="thematiquesUpdate">
+            <div class="Update">
                 <h1>Ajoutez une thématique.</h1>
 
-                <div class="thematiquesUpdateContent">    
+                <div class="UpdateContent">    
                     <form action="new.php" method="POST">
-                        <div class="thematiquesMargin">
+                        <div class="Margin">
                             <label for="LibThem">Libellé thématique :</label>
                             <input type="text" id="LibThem" name="LibThem" placeholder="Sur 60 car." size="60" maxlength="60" autofocus="autofocus" required><br>
                         </div>
-                        <div class="thematiquesMargin">
+                        <div class="Margin">
                             <label for="NumLang">NumLang :</label>
                             <select name="NumLang" id="NumLang" required>
                                 <option value="" disabled selected>-- Choisir une langue --</option>

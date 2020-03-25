@@ -98,38 +98,48 @@
         
         
         <?php include '../assets/php/menuInAdminShow.php'; ?>
-        <?php include '../assets/php/menuAdmin.php'; ?>
-        
-        <h1>Ajoutez un mot clés.</h1>
-        
-        <form action="new.php" method="POST">
-            <label for="LibMoCle">Libellé mot clés :</label>
-            <input type="text" id="LibMoCle" name="LibMoCle" placeholder="Sur 30 car." size="30" maxlength="30" autofocus="autofocus" required>
+        <div class="thematiques">
+            <?php include '../assets/php/menuAdmin.php'; ?>
+            <div class="Update">
+                <h1>Ajoutez un mot clés.</h1>
 
-            <label for="NumLang">NumLang :</label>
-            <select name="NumLang" id="NumLang" required>
-                <option value="" disabled selected>-- Choisir une langue --</option>
-                <?php 
-                
-                    $req = $bdd->query('SELECT * FROM langue ORDER BY NumLang');
+                <div class="UpdateContent">
+                    <form action="new.php" method="POST">
+                        <div class="Margin">
+                            <label for="LibMoCle">Libellé mot clés :</label>
+                            <input type="text" id="LibMoCle" name="LibMoCle" placeholder="Sur 30 car." size="30" maxlength="30" autofocus="autofocus" required><br>
+                        </div>
+                        <div class="Margin">
+                            <label for="NumLang">NumLang :</label>
+                            <select name="NumLang" id="NumLang" required>
+                                <option value="" disabled selected>-- Choisir une langue --</option>
+                                <?php 
+                                
+                                    $req = $bdd->query('SELECT * FROM langue ORDER BY NumLang');
 
-                    while($donnees = $req->fetch()) {
-                ?>
+                                    while($donnees = $req->fetch()) {
+                                ?>
 
-                        <option value="<?php echo $donnees['NumLang']; ?>"><?php echo $donnees['Lib1Lang']; ?></option>
-                
-                <?php
-                    }
+                                        <option value="<?php echo $donnees['NumLang']; ?>"><?php echo $donnees['Lib1Lang']; ?></option>
+                                
+                                <?php
+                                    }
 
-                    $req->closeCursor();
+                                    $req->closeCursor();
 
-                ?>
-            </select>
-
-            <input type="submit">
-        </form>
-
-        <a href="index.php" class="back"><i class="fas fa-arrow-left"></i> Revenir au tableau</a>
+                                ?>
+                            </select><br>
+                        </div>
+                        <div class="Margin">                
+                            <input type="submit">
+                        </div>
+                    </form>
+                    <div class="Margin">                    
+                        <a href="index.php" class="back"><i class="fas fa-arrow-left"></i> Revenir au tableau</a>
+                    </div>
+                </div>
+            </div>
+        </div>
     </body>
 
 </html>

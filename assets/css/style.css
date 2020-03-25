@@ -254,7 +254,7 @@ body {
     flex-direction: column;
 }
 
-/* thematiques update & new */
+/* thematiques + mots clés update & new */
 .thematiques h1 {
     font-family: 'Bebas Neue', cursive;
     color: #6D0A1B;
@@ -264,7 +264,7 @@ body {
     margin: 0px;
 }
 
-.thematiquesUpdate {
+.Update {
     background-color: white;
     width: 60vw;
     height: 70vh;
@@ -273,14 +273,14 @@ body {
     font-size: 20px;
 }
 
-.thematiquesUpdateContent {
+.UpdateContent {
     color: #355931;
     width: 30vw;
     margin: 0px auto;
     font-family: Helvetica, sans-serif;
 }
 
-.thematiquesMargin {
+.Margin {
     margin-top: 30px;
 }
 
@@ -294,4 +294,4 @@ body {
 .thematiques a:hover {
     text-decoration: underline;
 }
-/* thematiques new */
+

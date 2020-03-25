@@ -64,19 +64,19 @@
                         <?php include '../assets/php/menuInAdminShow.php'; ?>
                     <div class="thematiques">
                                         <?php include '../assets/php/menuAdmin.php'; ?>
-                        <div class="thematiquesUpdate">   
+                        <div class="Update">   
                                             <h1>Modifiez la thématique <span><?php echo $_GET['id']; ?></span>.</h1>
-                            <div class="thematiquesUpdateContent"> 
-                                <div class="thematiquesMargin"> 
+                            <div class="UpdateContent"> 
+                                <div class="Margin"> 
                                             <form action="update.php?id=<?php echo $_GET['id']; ?>" method="POST">
                                                 <label for="NumThem">ID :</label>
                                                 <input type="text" id="NumThem" name="NumThem" placeholder="Sur 8 car." size="8" minlength="7" value="<?php echo $donnees['NumThem']; ?>" required disabled><br>
                                 </div>              
-                                <div class="thematiquesMargin">
+                                <div class="Margin"> 
                                                 <label for="LibThem">Libellé thématique :</label>
                                                 <input type="text" id="LibThem" name="LibThem" placeholder="Sur 60 car." size="60" maxlength="60" autofocus="autofocus" value="<?php echo $donnees['LibThem']; ?>" required><br>
                                 </div>
-                                <div class="thematiquesMargin">
+                                <div class="Margin"> 
                                                 <label for="NumLang">NumLang :</label>
                                                 <select name="NumLang" id="NumLang" required disabled>
                                                     <option value="" disabled>-- Choisir un pays --</option>
@@ -97,11 +97,11 @@
                                                     ?>
                                                 </select>
                                 </div>
-                                <div class="thematiquesMargin">               
+                                <div class="Margin">               
                                     <input type="submit">
                                 </div>
                                             </form>
-                                        <div class="thematiquesMargin">                     
+                                        <div class="Margin">                     
                                             <a href="index.php" class="back"><i class="fas fa-arrow-left"></i> Revenir au tableau</a>
                                         </div>
                                         <?php

@@ -26,62 +26,63 @@
     <body>
         
         <?php include '../assets/php/menuInAdminShow.php'; ?>
-        <?php include '../assets/php/menuAdmin.php'; ?>
-        <?php include '../assets/php/btnConnexionInAdminShow.php'; ?>
-        
-        <h1>Tout les angles.</h1>
-        
-        <?php 
+        <div class="thematiques">
+            <?php include '../assets/php/menuAdmin.php'; ?>
+            
+            <h1>Tout les angles.</h1>
+            
+            <?php 
 
-            // Affichage du message personnalisé lors de la redirection
-            if(isset($_SESSION['answer']) && !empty($_SESSION['answer'])) {
-                echo "<p class='answer'>" . $_SESSION['answer'] . "</p>";
-                $_SESSION['answer'] = "";
-            }
-
-        ?>
-
-        <table>
-            <thead>
-                <tr>
-                    <th>NumAngl</th>
-                    <th>LibAngl</th>
-                    <th>NumLang</th>
-                </tr>
-            </thead>
-            <tbody>
-
-            <?php
-
-                $req = $bdd->query('SELECT * FROM angle ORDER BY NumAngl');
-
-                // Affichage de tout les angles dans un tableau
-                while ($donnees = $req->fetch())
-                {
+                // Affichage du message personnalisé lors de la redirection
+                if(isset($_SESSION['answer']) && !empty($_SESSION['answer'])) {
+                    echo "<p class='answer'>" . $_SESSION['answer'] . "</p>";
+                    $_SESSION['answer'] = "";
+                }
 
             ?>
-                <tr>
-                    <td><?php echo $donnees['NumAngl'];?></td>
-                    <td><?php echo $donnees['LibAngl'];?></td>
-                    <td><a href="../langues/index.php"><?php echo $donnees['NumLang'];?></a></td>
-                    <td><a href="update.php?id=<?php echo $donnees['NumAngl'];?>" class="modified_link"><i class="fas fa-edit"></i> Modifier</a></td>
-                    <td><a href="delete.php?id=<?php echo $donnees['NumAngl'];?>" class="delete_link" data-id="<?php echo $donnees['NumAngl']; ?>"><i class="fas fa-trash-alt"></i> Supprimer</a></td>
-                </tr>
 
-                <?php 
+            <table>
+                <thead>
+                    <tr>
+                        <th>NumAngl</th>
+                        <th>LibAngl</th>
+                        <th>NumLang</th>
+                    </tr>
+                </thead>
+                <tbody>
 
-                    }
+                <?php
 
-                    $req->closeCursor();
+                    $req = $bdd->query('SELECT * FROM angle ORDER BY NumAngl');
+
+                    // Affichage de tout les angles dans un tableau
+                    while ($donnees = $req->fetch())
+                    {
 
                 ?>
-            </tbody>
-        </table>
+                    <tr>
+                        <td><?php echo $donnees['NumAngl'];?></td>
+                        <td><?php echo $donnees['LibAngl'];?></td>
+                        <td><a href="../langues/index.php"><?php echo $donnees['NumLang'];?></a></td>
+                        <td><a href="update.php?id=<?php echo $donnees['NumAngl'];?>" class="modified_link"><i class="fas fa-edit"></i> Modifier</a></td>
+                        <td><a href="delete.php?id=<?php echo $donnees['NumAngl'];?>" class="delete_link" data-id="<?php echo $donnees['NumAngl']; ?>"><i class="fas fa-trash-alt"></i> Supprimer</a></td>
+                    </tr>
 
-        <a href="new.php" class="add"><i class="fas fa-plus"></i> Ajouter un nouvel angle</a>
-        <a href="traduction.php" class="add"><i class="fas fa-plus"></i> Traduire un angle</a>
+                    <?php 
 
-        <script src="../assets/js/script.js"></script>
+                        }
+
+                        $req->closeCursor();
+
+                    ?>
+                </tbody>
+            </table>
+
+            <a href="new.php" class="add"><i class="fas fa-plus"></i> Ajouter un nouvel angle</a>
+            <a href="traduction.php" class="add"><i class="fas fa-plus"></i> Traduire un angle</a>
+
+            <script src="../assets/js/script.js"></script>
+        </div>
     </body>
 
 </html>

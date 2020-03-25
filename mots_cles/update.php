@@ -62,55 +62,65 @@
                     ?>
                        
                         <?php include '../assets/php/menuInAdminShow.php'; ?>
-                        <?php include '../assets/php/menuAdmin.php'; ?>
-                        
-                        <h1>Modifiez le mot clés <span><?php echo $_GET['id']; ?></span>.</h1>
+                    <div class="thematiques">
+                                        <?php include '../assets/php/menuAdmin.php'; ?>
+                        <div class="Update">                
+                                                <h1>Modifiez le mot clés <span><?php echo $_GET['id']; ?></span>.</h1>
+                            <div class="UpdateContent"> 
+                                                <form action="update.php?id=<?php echo $_GET['id']; ?>" method="POST">
+                                                <div class="Margin"> 
+                                                    <label for="NumMoCle">ID :</label>
+                                                    <input type="text" id="NumMoCle" name="NumMoCle" placeholder="Sur 8 car." size="8" minlength="8" value="<?php echo $donnees['NumMoCle']; ?>" required disabled><br>
+                                                </div> 
+                                                <div class="Margin"> 
+                                                    <label for="LibMoCle">Libellé mot clés :</label>
+                                                    <input type="text" id="LibMoCle" name="LibMoCle" placeholder="Sur 30 car." size="30" maxlength="30" autofocus="autofocus" value="<?php echo $donnees['LibMoCle']; ?>" required><br>
+                                                </div>
+                                                <div class="Margin"> 
+                                                    <label for="NumLang">NumLang :</label>
+                                                    <select name="NumLang" id="NumLang" required disabled>
+                                                        <option value="" disabled>-- Choisir un pays --</option>
+                                                        <?php 
+                                                        
+                                                            $req = $bdd->query('SELECT * FROM langue ORDER BY NumLang');
 
-                        <form action="update.php?id=<?php echo $_GET['id']; ?>" method="POST">
-                            <label for="NumMoCle">ID :</label>
-                            <input type="text" id="NumMoCle" name="NumMoCle" placeholder="Sur 8 car." size="8" minlength="8" value="<?php echo $donnees['NumMoCle']; ?>" required disabled>
+                                                            while($donnees = $req->fetch()) {
+                                                        ?>
 
-                            <label for="LibMoCle">Libellé mot clés :</label>
-                            <input type="text" id="LibMoCle" name="LibMoCle" placeholder="Sur 30 car." size="30" maxlength="30" autofocus="autofocus" value="<?php echo $donnees['LibMoCle']; ?>" required>
+                                                                <option value="<?php echo $donnees['NumLang']; ?>" <?php echo $donnees['NumLang'] == $NumLangMoCle ? "selected" : ""; ?>><?php echo $donnees['Lib1Lang']; ?></option>
+                                                        
+                                                        <?php
+                                                            }
 
-                            <label for="NumLang">NumLang :</label>
-                            <select name="NumLang" id="NumLang" required disabled>
-                                <option value="" disabled>-- Choisir un pays --</option>
-                                <?php 
-                                
-                                    $req = $bdd->query('SELECT * FROM langue ORDER BY NumLang');
+                                                            $req->closeCursor();
 
-                                    while($donnees = $req->fetch()) {
-                                ?>
+                                                        ?>
+                                                    </select> <br>
+                                                </div>
+                                                <div class="Margin"> 
+                                                    <input type="submit">
+                                                </div>
+                                                </form>
+                                                <div class="Margin">
+                                                    <a href="index.php" class="back"><i class="fas fa-arrow-left"></i> Revenir au tableau</a>
+                                                </div>
+                                            <?php
+                                        } else {
+                                            $_SESSION['answer'] = "<span>Ce mot clés est introuvable !</span>";
 
-                                        <option value="<?php echo $donnees['NumLang']; ?>" <?php echo $donnees['NumLang'] == $NumLangMoCle ? "selected" : ""; ?>><?php echo $donnees['Lib1Lang']; ?></option>
-                                
-                                <?php
+                                            // Redirection avec un message personnalisé
+                                            header('Location: index.php');
+                                        }
+                                    } else {
+                                        // Redirection avec un message personnalisé
+                                        $_SESSION['answer'] = "<span>Ce mot clés est introuvable !</span>";
+                                        header('Location: index.php');
                                     }
 
-                                    $req->closeCursor();
-
                                 ?>
-                            </select>
-
-                            <input type="submit">
-                        </form>
-
-                        <a href="index.php" class="back"><i class="fas fa-arrow-left"></i> Revenir au tableau</a>
-                    <?php
-                } else {
-                    $_SESSION['answer'] = "<span>Ce mot clés est introuvable !</span>";
-
-                    // Redirection avec un message personnalisé
-                    header('Location: index.php');
-                }
-            } else {
-                // Redirection avec un message personnalisé
-                $_SESSION['answer'] = "<span>Ce mot clés est introuvable !</span>";
-                header('Location: index.php');
-            }
-
-        ?>
+                            </div>
+                        </div>
+                    </div>    
     </body>
 
 </html>

@@ -65,58 +65,69 @@
                     ?>
                         
                         <?php include '../assets/php/menuInAdminShow.php'; ?>
-                        <?php include '../assets/php/menuAdmin.php'; ?>
-                        
-                        <h1>Modifiez la langue <span><?php echo $_GET['id']; ?></span>.</h1>
+                    <div class="thematiques">
+                                        <?php include '../assets/php/menuAdmin.php'; ?>
+                        <div class="Update">                
+                                                <h1>Modifiez la langue <span><?php echo $_GET['id']; ?></span>.</h1>
+                            <div class="UpdateContent"> 
+                                                <form action="update.php?id=<?php echo $_GET['id']; ?>" method="POST">
+                                                    <div class="Margin"> 
+                                                        <label for="num_lang">ID :</label>
+                                                        <input type="text" id="num_lang" name="num_lang" placeholder="Sur 6 car." size="6" minlength="6" value="<?php echo $donnees['NumLang']; ?>" required disabled><br>
+                                                    </div>
+                                                    <div class="Margin"> 
+                                                        <label for="lib_court">Libellé court :</label>
+                                                        <input type="text" id="lib_court" name="lib_court" placeholder="Sur 25 car." size="25" maxlength="25" autofocus="autofocus" value="<?php echo $donnees['Lib1Lang']; ?>" required><br>
+                                                    </div>
+                                                    <div class="Margin">
+                                                        <label for="lib_long">Libellé long :</label>
+                                                        <input type="text" id="lib_long" name="lib_long" placeholder="Sur 45 car." size="45" maxlength="45" value="<?php echo $donnees['Lib2Lang']; ?>" required><br>
+                                                    </div>
+                                                    <div class="Margin">
+                                                        <label for="pays">Quel pays :</label>
+                                                        <select name="pays" id="pays" required>
+                                                            <option value="" disabled>-- Choisir un pays --</option>
+                                                            <?php 
+                                                            
+                                                                $req = $bdd->query('SELECT * FROM pays ORDER BY numPays');
 
-                        <form action="update.php?id=<?php echo $_GET['id']; ?>" method="POST">
-                            <label for="num_lang">ID :</label>
-                            <input type="text" id="num_lang" name="num_lang" placeholder="Sur 6 car." size="6" minlength="6" value="<?php echo $donnees['NumLang']; ?>" required disabled>
+                                                                while($donnees = $req->fetch()) {
+                                                            ?>
 
-                            <label for="lib_court">Libellé court :</label>
-                            <input type="text" id="lib_court" name="lib_court" placeholder="Sur 25 car." size="25" maxlength="25" autofocus="autofocus" value="<?php echo $donnees['Lib1Lang']; ?>" required>
+                                                                    <option value="<?php echo $donnees['numPays']; ?>" <?php echo $donnees['numPays'] == str_split($_GET['id'], 4)[0] ? "selected" : ""; ?>><?php echo $donnees['frPays']; ?></option>
+                                                            
+                                                            <?php
+                                                                }
 
-                            <label for="lib_long">Libellé long :</label>
-                            <input type="text" id="lib_long" name="lib_long" placeholder="Sur 45 car." size="45" maxlength="45" value="<?php echo $donnees['Lib2Lang']; ?>" required>
+                                                                $req->closeCursor();
 
-                            <label for="pays">Quel pays :</label>
-                            <select name="pays" id="pays" required>
-                                <option value="" disabled>-- Choisir un pays --</option>
-                                <?php 
-                                
-                                    $req = $bdd->query('SELECT * FROM pays ORDER BY numPays');
+                                                            ?>
+                                                        </select><br>
+                                                    </div>
+                                                    <div class="Margin">
+                                                        <input type="submit">
+                                                    </div>
+                                                </form>
+                                            <div class="Margin">
+                                                <a href="index.php" class="back"><i class="fas fa-arrow-left"></i> Revenir au tableau</a>
+                                            </div>
+                                            <?php
+                                        } else {
+                                            $_SESSION['answer'] = "<span>Cette langue est introuvable !</span>";
 
-                                    while($donnees = $req->fetch()) {
-                                ?>
-
-                                        <option value="<?php echo $donnees['numPays']; ?>" <?php echo $donnees['numPays'] == str_split($_GET['id'], 4)[0] ? "selected" : ""; ?>><?php echo $donnees['frPays']; ?></option>
-                                
-                                <?php
+                                            // Redirection avec un message personnalisé
+                                            header('Location: index.php');
+                                        }
+                                    } else {
+                                        // Redirection avec un message personnalisé
+                                        $_SESSION['answer'] = "<span>Cette langue est introuvable !</span>";
+                                        header('Location: index.php');
                                     }
 
-                                    $req->closeCursor();
-
                                 ?>
-                            </select>
-
-                            <input type="submit">
-                        </form>
-
-                        <a href="index.php" class="back"><i class="fas fa-arrow-left"></i> Revenir au tableau</a>
-                    <?php
-                } else {
-                    $_SESSION['answer'] = "<span>Cette langue est introuvable !</span>";
-
-                    // Redirection avec un message personnalisé
-                    header('Location: index.php');
-                }
-            } else {
-                // Redirection avec un message personnalisé
-                $_SESSION['answer'] = "<span>Cette langue est introuvable !</span>";
-                header('Location: index.php');
-            }
-
-        ?>
+                            </div>
+                        </div>
+                    </div>
     </body>
 
 </html>

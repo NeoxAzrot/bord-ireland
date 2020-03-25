@@ -94,59 +94,68 @@
         
         
         <?php include '../assets/php/menuInAdminShow.php'; ?>
-        <?php include '../assets/php/menuAdmin.php'; ?>
-        <?php include '../assets/php/btnConnexionInAdminShow.php'; ?>
+        <div class="thematiques">
+            <?php include '../assets/php/menuAdmin.php'; ?>
+            <div class="Update">
+                    <h1>Traduire un angle.</h1>
+                    <div class="UpdateContent"> 
+                        <form action="traduction.php" method="POST">
+                            <div class="Margin">
+                                <label for="NumAngl">NumAngl :</label>
+                                <select name="NumAngl" id="NumAngl" required>
+                                    <option value="" disabled selected>-- Choisir un angle --</option>
+                                    <?php 
+                                    
+                                        $req = $bdd->query('SELECT * FROM angle WHERE NumAngl LIKE "%01" ORDER BY NumAngl');
 
-        <h1>Traduire un angle.</h1>
+                                        while($donnees = $req->fetch()) {
+                                    ?>
 
-        <form action="traduction.php" method="POST">
-            <label for="NumAngl">NumAngl :</label>
-            <select name="NumAngl" id="NumAngl" required>
-                <option value="" disabled selected>-- Choisir un angle --</option>
-                <?php 
-                
-                    $req = $bdd->query('SELECT * FROM angle WHERE NumAngl LIKE "%01" ORDER BY NumAngl');
+                                            <option value="<?php echo $donnees['NumAngl']; ?>"><?php echo $donnees['LibAngl']; ?></option>
+                                    
+                                    <?php
+                                        }
 
-                    while($donnees = $req->fetch()) {
-                ?>
+                                        $req->closeCursor();
 
-                        <option value="<?php echo $donnees['NumAngl']; ?>"><?php echo $donnees['LibAngl']; ?></option>
-                
-                <?php
-                    }
+                                    ?>
+                                </select><br>
+                            </div>
+                            <div class="Margin">
+                                <label for="LibAngl">Libellé angle :</label>
+                                <input type="text" id="LibAngl" name="LibAngl" placeholder="Sur 60 car." size="60" maxlength="60" autofocus="autofocus" required><br>
+                            </div>
+                            <div class="Margin">
+                                <label for="NumLang">NumLang :</label>
+                                <select name="NumLang" id="NumLang" required>
+                                    <option value="" disabled selected>-- Choisir une langue --</option>
+                                    <?php 
+                                    
+                                        $req = $bdd->query('SELECT * FROM langue ORDER BY NumLang');
 
-                    $req->closeCursor();
+                                        while($donnees = $req->fetch()) {
+                                    ?>
 
-                ?>
-            </select>
+                                            <option value="<?php echo $donnees['NumLang']; ?>"><?php echo $donnees['Lib1Lang']; ?></option>
+                                    
+                                    <?php
+                                        }
 
-            <label for="LibAngl">Libellé angle :</label>
-            <input type="text" id="LibAngl" name="LibAngl" placeholder="Sur 60 car." size="60" maxlength="60" autofocus="autofocus" required>
+                                        $req->closeCursor();
 
-            <label for="NumLang">NumLang :</label>
-            <select name="NumLang" id="NumLang" required>
-                <option value="" disabled selected>-- Choisir une langue --</option>
-                <?php 
-                
-                    $req = $bdd->query('SELECT * FROM langue ORDER BY NumLang');
-
-                    while($donnees = $req->fetch()) {
-                ?>
-
-                        <option value="<?php echo $donnees['NumLang']; ?>"><?php echo $donnees['Lib1Lang']; ?></option>
-                
-                <?php
-                    }
-
-                    $req->closeCursor();
-
-                ?>
-            </select>
-
-            <input type="submit">
-        </form>
-
-        <a href="index.php" class="back"><i class="fas fa-arrow-left"></i> Revenir au tableau</a>
+                                    ?>
+                                </select><br>
+                            </div>
+                            <div class="Margin">
+                                <input type="submit"><br>
+                            </div>
+                        </form>
+                    <div class="Margin">
+                        <a href="index.php" class="back"><i class="fas fa-arrow-left"></i> Revenir au tableau</a>
+                    </div>
+                </div>
+            </div>
+        </div>
     </body>
 
 </html>

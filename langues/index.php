@@ -26,7 +26,7 @@
     <body>
        
             <?php include '../assets/php/menuInAdminShow.php'; ?>
-        <div class="langues">
+        <div class="thematiques">
             <?php include '../assets/php/menuAdmin.php'; ?>
         
             <h1>Toutes les langues.</h1>

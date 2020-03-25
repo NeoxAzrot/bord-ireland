@@ -26,60 +26,62 @@
     <body>
         
         <?php include '../assets/php/menuInAdminShow.php'; ?>
-        <?php include '../assets/php/menuAdmin.php'; ?>
+        <div class="thematiques">
+            <?php include '../assets/php/menuAdmin.php'; ?>
 
-        <h1>Tout les mots clés.</h1>
+            <h1>Tout les mots clés.</h1>
 
-        <?php 
+            <?php 
 
-            // Affichage du message personnalisé lors de la redirection
-            if(isset($_SESSION['answer']) && !empty($_SESSION['answer'])) {
-                echo "<p class='answer'>" . $_SESSION['answer'] . "</p>";
-                $_SESSION['answer'] = "";
-            }
-
-        ?>
-
-        <table>
-            <thead>
-                <tr>
-                    <th>NumMoCle</th>
-                    <th>LibMoCle</th>
-                    <th>NumLang</th>
-                </tr>
-            </thead>
-            <tbody>
-
-            <?php
-
-                $req = $bdd->query('SELECT * FROM motcle ORDER BY NumMoCle');
-
-                // Affichage de tout les mots clés dans un tableau
-                while ($donnees = $req->fetch())
-                {
+                // Affichage du message personnalisé lors de la redirection
+                if(isset($_SESSION['answer']) && !empty($_SESSION['answer'])) {
+                    echo "<p class='answer'>" . $_SESSION['answer'] . "</p>";
+                    $_SESSION['answer'] = "";
+                }
 
             ?>
-                <tr>
-                    <td><?php echo $donnees['NumMoCle'];?></td>
-                    <td><?php echo $donnees['LibMoCle'];?></td>
-                    <td><a href="../langues/index.php"><?php echo $donnees['NumLang'];?></a></td>
-                    <td><a href="update.php?id=<?php echo $donnees['NumMoCle'];?>" class="modified_link"><i class="fas fa-edit"></i> Modifier</a></td>
-                    <td><a href="delete.php?id=<?php echo $donnees['NumMoCle'];?>" class="delete_link" data-id="<?php echo $donnees['NumMoCle']; ?>"><i class="fas fa-trash-alt"></i> Supprimer</a></td>
-                </tr>
 
-                <?php 
+            <table>
+                <thead>
+                    <tr>
+                        <th>NumMoCle</th>
+                        <th>LibMoCle</th>
+                        <th>NumLang</th>
+                    </tr>
+                </thead>
+                <tbody>
 
-                    }
+                <?php
 
-                    $req->closeCursor();
+                    $req = $bdd->query('SELECT * FROM motcle ORDER BY NumMoCle');
+
+                    // Affichage de tout les mots clés dans un tableau
+                    while ($donnees = $req->fetch())
+                    {
 
                 ?>
-            </tbody>
-        </table>
+                    <tr>
+                        <td><?php echo $donnees['NumMoCle'];?></td>
+                        <td><?php echo $donnees['LibMoCle'];?></td>
+                        <td><a href="../langues/index.php"><?php echo $donnees['NumLang'];?></a></td>
+                        <td><a href="update.php?id=<?php echo $donnees['NumMoCle'];?>" class="modified_link"><i class="fas fa-edit"></i> Modifier</a></td>
+                        <td><a href="delete.php?id=<?php echo $donnees['NumMoCle'];?>" class="delete_link" data-id="<?php echo $donnees['NumMoCle']; ?>"><i class="fas fa-trash-alt"></i> Supprimer</a></td>
+                    </tr>
 
-        <a href="new.php" class="add"><i class="fas fa-plus"></i> Ajouter un nouveau mot clés</a>
+                    <?php 
 
-        <script src="../assets/js/script.js"></script>
+                        }
+
+                        $req->closeCursor();
+
+                    ?>
+                </tbody>
+            </table>
+
+            <a href="new.php" class="add"><i class="fas fa-plus"></i> Ajouter un nouveau mot clés</a>
+
+            <script src="../assets/js/script.js"></script>
+        </div>
     </body>
 
 </html>

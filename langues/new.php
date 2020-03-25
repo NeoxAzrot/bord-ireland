@@ -88,42 +88,50 @@
         
         
         <?php include '../assets/php/menuInAdminShow.php'; ?>
-        <div class ="langues">
+        <div class="thematiques">
             <?php include '../assets/php/menuAdmin.php'; ?>
-            
-            <h1>Ajoutez une langue.</h1>
+            <div class="Update">
+                <h1>Ajoutez une langue.</h1>
+                <div class="UpdateContent">
+                    <form action="new.php" method="POST">
+                        <div class="Margin">
+                            <label for="lib_court">Libellé court :</label>
+                            <input type="text" id="lib_court" name="lib_court" placeholder="Sur 25 car." size="25" maxlength="25" autofocus="autofocus" required><br>
+                        </div>
+                        <div class="Margin">
+                            <label for="lib_long">Libellé long :</label>
+                            <input type="text" id="lib_long" name="lib_long" placeholder="Sur 45 car." size="45" maxlength="45" required><br>
+                        </div>
+                        <div class="Margin">
+                            <label for="pays">Quel pays :</label>
+                            <select name="pays" id="pays" required>
+                                <option value="" disabled selected>-- Choisir un pays --</option>
+                                <?php 
+                                
+                                    $req = $bdd->query('SELECT * FROM pays ORDER BY numPays');
 
-            <form action="new.php" method="POST">
-                <label for="lib_court">Libellé court :</label>
-                <input type="text" id="lib_court" name="lib_court" placeholder="Sur 25 car." size="25" maxlength="25" autofocus="autofocus" required>
+                                    while($donnees = $req->fetch()) {
+                                ?>
 
-                <label for="lib_long">Libellé long :</label>
-                <input type="text" id="lib_long" name="lib_long" placeholder="Sur 45 car." size="45" maxlength="45" required>
+                                        <option value="<?php echo $donnees['numPays']; ?>"><?php echo $donnees['frPays']; ?></option>
+                                
+                                <?php
+                                    }
 
-                <label for="pays">Quel pays :</label>
-                <select name="pays" id="pays" required>
-                    <option value="" disabled selected>-- Choisir un pays --</option>
-                    <?php 
-                    
-                        $req = $bdd->query('SELECT * FROM pays ORDER BY numPays');
+                                    $req->closeCursor();
 
-                        while($donnees = $req->fetch()) {
-                    ?>
-
-                            <option value="<?php echo $donnees['numPays']; ?>"><?php echo $donnees['frPays']; ?></option>
-                    
-                    <?php
-                        }
-
-                        $req->closeCursor();
-
-                    ?>
-                </select>
-
-                <input type="submit">
-            </form>
-
-            <a href="index.php" class="back"><i class="fas fa-arrow-left"></i> Revenir au tableau</a>
+                                ?>
+                            </select><br>
+                        </div>
+                        <div class="Margin">
+                            <input type="submit"><br>
+                        </div>
+                    </form>
+                    <div class="Margin">
+                        <a href="index.php" class="back"><i class="fas fa-arrow-left"></i> Revenir au tableau</a>
+                    </div>
+                </div>
+            </div>
         </div>
     </body>
 

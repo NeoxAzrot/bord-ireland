@@ -80,56 +80,67 @@
                     ?>
                         
                         <?php include '../assets/php/menuInAdminShow.php'; ?>
-                        <?php include '../assets/php/menuAdmin.php'; ?>
-                        <?php include '../assets/php/btnConnexionInAdminShow.php'; ?>
-                        
-                        <h1>Modifiez l'angle <span><?php echo $_GET['id']; ?></span>.</h1>
-                        
-                        <form action="update.php?id=<?php echo $_GET['id']; ?>" method="POST">
-                            <label for="NumAngl">ID :</label>
-                            <input type="text" id="NumAngl" name="NumAngl" placeholder="Sur 8 car." size="8" minlength="8" value="<?php echo $donnees['NumAngl']; ?>" required disabled>
 
-                            <label for="LibAngl">Libellé angle :</label>
-                            <input type="text" id="LibAngl" name="LibAngl" placeholder="Sur 60 car." size="60" maxlength="60" autofocus="autofocus" value="<?php echo $donnees['LibAngl']; ?>" required>
+                        <div class="thematiques">
+                                            <?php include '../assets/php/menuAdmin.php'; ?>
+                            <div class="Update">
+                                                    <h1>Modifiez l'angle <span><?php echo $_GET['id']; ?></span>.</h1>
+                                <div class="UpdateContent">                   
+                                                    <form action="update.php?id=<?php echo $_GET['id']; ?>" method="POST">
+                                                        <div class="Margin">
+                                                            <label for="NumAngl">ID :</label>
+                                                            <input type="text" id="NumAngl" name="NumAngl" placeholder="Sur 8 car." size="8" minlength="8" value="<?php echo $donnees['NumAngl']; ?>" required disabled><br>
+                                                        </div>
+                                                        <div class="Margin">
+                                                            <label for="LibAngl">Libellé angle :</label>
+                                                            <input type="text" id="LibAngl" name="LibAngl" placeholder="Sur 60 car." size="60" maxlength="60" autofocus="autofocus" value="<?php echo $donnees['LibAngl']; ?>" required><br>
+                                                        </div>
+                                                        <div class="Margin">
+                                                            <label for="NumLang">NumLang :</label>
+                                                            <select name="NumLang" id="NumLang" required>
+                                                                <option value="" disabled>-- Choisir un pays --</option>
+                                                                <?php 
+                                                                
+                                                                    $req = $bdd->query('SELECT * FROM langue ORDER BY NumLang');
 
-                            <label for="NumLang">NumLang :</label>
-                            <select name="NumLang" id="NumLang" required>
-                                <option value="" disabled>-- Choisir un pays --</option>
-                                <?php 
-                                
-                                    $req = $bdd->query('SELECT * FROM langue ORDER BY NumLang');
+                                                                    while($donnees = $req->fetch()) {
+                                                                ?>
 
-                                    while($donnees = $req->fetch()) {
-                                ?>
+                                                                        <option value="<?php echo $donnees['NumLang']; ?>" <?php echo $donnees['NumLang'] == $NumLangAngl ? "selected" : ""; ?>><?php echo $donnees['Lib1Lang']; ?></option>
+                                                                
+                                                                <?php
+                                                                    }
 
-                                        <option value="<?php echo $donnees['NumLang']; ?>" <?php echo $donnees['NumLang'] == $NumLangAngl ? "selected" : ""; ?>><?php echo $donnees['Lib1Lang']; ?></option>
-                                
-                                <?php
-                                    }
+                                                                    $req->closeCursor();
 
-                                    $req->closeCursor();
+                                                                ?>
+                                                            </select><br>
+                                                        </div>
+                                                        <div class="Margin">
+                                                            <input type="submit"><br>
+                                                        </div>
+                                                    </form>
+                                                    
+                                                    <div class="Margin">
+                                                        <a href="index.php" class="back"><i class="fas fa-arrow-left"></i> Revenir au tableau</a>
+                                                    </div>
+                                                <?php
+                                            } else {
+                                                $_SESSION['answer'] = "<span>Cet angle est introuvable !</span>";
 
-                                ?>
-                            </select>
+                                                // Redirection avec un message personnalisé
+                                                header('Location: index.php');
+                                            }
+                                        } else {
+                                            // Redirection avec un message personnalisé
+                                            $_SESSION['answer'] = "<span>Cet angle est introuvable !</span>";
+                                            header('Location: index.php');
+                                        }
 
-                            <input type="submit">
-                        </form>
-
-                        <a href="index.php" class="back"><i class="fas fa-arrow-left"></i> Revenir au tableau</a>
-                    <?php
-                } else {
-                    $_SESSION['answer'] = "<span>Cet angle est introuvable !</span>";
-
-                    // Redirection avec un message personnalisé
-                    header('Location: index.php');
-                }
-            } else {
-                // Redirection avec un message personnalisé
-                $_SESSION['answer'] = "<span>Cet angle est introuvable !</span>";
-                header('Location: index.php');
-            }
-
-        ?>
+                                    ?>
+                                </div>
+                            </div>
+                        </div>
     </body>
 
 </html>
