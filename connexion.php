@@ -81,67 +81,38 @@
                 }
 
             }
+        ?>
+        <div class="connexion">
+            <!-- Menus -->
+            <?php include 'assets/php/menu.php'; ?>
 
+            <div class="contentConnexion">
+                <h1>Connexion</h1>
+                
+                <!-- Formulaire de connexion avec input près remplis si erreur -->
+                <div class="formulaireConnexion">
+                    <form action="" method="POST">
+                        <div class="inputConnexion">
+                            <label for="login">Identifiant :</label><br>
+                            <input type="text" id="login" name="login" placeholder="Sur 30 car." value="<?php echo isset($_SESSION['errorConnexion']) && $_SESSION['errorConnexion'] == true ? $_SESSION['login'] : "" ?>"  maxlength="30" required><br>
 
-    ?>
-    <div class="connexion">
-        <!-- Menus -->
-        <?php include 'assets/php/menu.php'; ?>
+                            <label for="password">Mot de passe :</label><br>
+                            <input type="password" id="password" name="password" placeholder="Sur 15 car." value="<?php echo isset($_SESSION['errorConnexion']) && $_SESSION['errorConnexion'] == true ? $_SESSION['password'] : "" ?>"  maxlength="15" minlength="6" required><br>
+                        </div>
 
-        <div class="contentConnexion">
-            <h1>Connexion</h1>
-            
-            <!-- Formulaire de connexion avec input près remplis si erreur -->
-            <div class="formulaireConnexion">
-                <form action="" method="POST">
-                    <div class="inputConnexion">
-                        <label for="login">Identifiant :</label><br>
-                        <input type="text" id="login" name="login" placeholder="Sur 30 car." value="<?php echo isset($_SESSION['errorLogin']) && $_SESSION['errorLogin'] == true ? $_SESSION['login'] : "" ?>"  maxlength="30" required><br>
+                        <!-- Message d'erreur de connexion -->
+                        <?php echo isset($_SESSION['errorConnexion']) && $_SESSION['errorConnexion'] == true ? "L'identifiant ou le mot de passe n'est pas valide !" : "" ?>
+                        <div class="validerConnexion">
+                            <input type="submit">
+                        </div>
+                    </form>
 
-                        <label for="password">Mot de passe :</label><br>
-                        <input type="password" id="password" name="password" placeholder="Sur 15 car." value="<?php echo isset($_SESSION['errorLogin']) && $_SESSION['errorLogin'] == true ? $_SESSION['password'] : "" ?>"  maxlength="15" minlength="6" required><br>
-                    </div>
+                    <!-- Lien pour s'inscrire -->
+                    <a href="inscription.php">S'inscrire</a>
 
-                    <!-- Message d'erreur de connexion -->
-                    <?php echo isset($_SESSION['errorLogin']) && $_SESSION['errorLogin'] == true ? "L'identifiant ou le mot de passe n'est pas valide !" : "" ?>
-                    <div class="validerConnexion">
-                        <input type="submit">
-                    </div>
-                </form>
-
-                <!-- Lien pour s'inscrire -->
-                <a href="inscription.php">S'inscrire</a>
-
-                <script src="assets/js/script.js"></script>
+                    <script src="assets/js/script.js"></script>
+                </div>
             </div>
         </div>
-    </div>
-</body>
-        ?>
-
-        <h1>Connexion</h1>
-
-        <!-- Menus -->
-        <?php include 'assets/php/btnConnexion.php'; ?>
-        <?php include 'assets/php/menu.php'; ?>
-
-        <!-- Formulaire de connexion avec input près remplis si erreur -->
-        <form action="" method="POST">
-            <label for="login">Identifiant :</label>
-            <input type="text" id="login" name="login" placeholder="Sur 30 car." value="<?php echo isset($_SESSION['errorConnexion']) && $_SESSION['errorConnexion'] == true ? $_SESSION['login'] : "" ?>" size="30" maxlength="30" required>
-
-            <label for="password">Mot de passe :</label>
-            <input type="password" id="password" name="password" placeholder="Sur 15 car." value="<?php echo isset($_SESSION['errorConnexion']) && $_SESSION['errorConnexion'] == true ? $_SESSION['password'] : "" ?>" size="15" maxlength="15" minlength="6" required>
-
-            <!-- Message d'erreur de connexion -->
-            <?php echo isset($_SESSION['errorConnexion']) && $_SESSION['errorConnexion'] == true ? "L'identifiant ou le mot de passe n'est pas valide !" : "" ?>
-
-            <input type="submit">
-        </form>
-
-        <!-- Lien pour s'inscrire -->
-        <a href="inscription.php">S'inscrire</a>
-
-        <script src="assets/js/script.js"></script>
     </body>
 </html>
