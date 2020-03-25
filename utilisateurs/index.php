@@ -64,7 +64,7 @@
             ?>
                 <tr>
                     <td><?php echo $donnees['Login'];?></td>
-                    <td><?php echo "****"?></td>
+                    <td><?php echo $donnees['Pass'];?></td>
                     <td><?php echo $donnees['LastName'];?></td>
                     <td><?php echo $donnees['FirstName'];?></td>
                     <td><?php echo $donnees['EMail'];?></td>
@@ -81,6 +81,8 @@
                 ?>
             </tbody>
         </table>
+
+        <a href="new.php" class="add"><i class="fas fa-plus"></i> Ajouter un nouvel utilisateur</a>
 
         <script src="../assets/js/script.js"></script>
     </body>

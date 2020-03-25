@@ -49,10 +49,9 @@
                     $login = ctrlSaisies($_POST['login']);
                     $password = ctrlSaisies($_POST['password']);
 
-                    $req = $bdd->prepare('SELECT * FROM user WHERE Login = ? AND Pass = ?');
+                    $req = $bdd->prepare('SELECT * FROM user WHERE Login = ?');
                     $req->execute(array(
-                        $login,
-                        $password
+                        $login
                     ));
                     $donnees = $req->fetch();
 
@@ -66,17 +65,29 @@
                         // Redirige avec un message d'erreur
                         header('Location: connexion.php');
                     } else {
-                        $_SESSION['user'] = true;
-                        $_SESSION['login'] = $login;
-                        $_SESSION['errorConnexion'] = false;
+                        $isPasswordCorrect = password_verify($password, $donnees['Pass']);
 
-                        // Vérifie si c'est l'admin connecté
-                        if($_SESSION['login'] == 'Admin') {
-                            $_SESSION['admin'] = true;
+                        if($isPasswordCorrect) {
+                            $_SESSION['user'] = true;
+                            $_SESSION['login'] = $login;
+                            $_SESSION['errorConnexion'] = false;
+    
+                            // Vérifie si c'est l'admin connecté
+                            if($_SESSION['login'] == 'Admin') {
+                                $_SESSION['admin'] = true;
+                            }
+    
+                            // Redirige après la connexion
+                            header('Location: index.php');
+                        } else {
+                            $_SESSION['errorConnexion'] = true;
+
+                            $_SESSION['login'] = $login;
+                            $_SESSION['password'] = $password;
+    
+                            // Redirige avec un message d'erreur
+                            header('Location: connexion.php');
                         }
-
-                        // Redirige après la connexion
-                        header('Location: index.php');
 
                     }
 

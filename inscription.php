@@ -53,6 +53,7 @@
                     $email = ctrlSaisies($_POST['email']);
                     $login = ctrlSaisies($_POST['login']);
                     $password = ctrlSaisies($_POST['password']);
+                    $pass_hache = password_hash($password, PASSWORD_DEFAULT);
 
                     $req = $bdd->prepare('SELECT * FROM user WHERE Login = ?');
                     $req->execute(array($login));
@@ -66,7 +67,7 @@
                             'LastName' => $lastName,
                             'EMail' => $email,
                             'Login' => $login,
-                            'Pass' => $password
+                            'Pass' => $pass_hache
                             ));
 
                         $_SESSION['user'] = true;
@@ -123,7 +124,7 @@
             <input type="text" id="login" name="login" placeholder="Sur 30 car." value="<?php echo isset($_SESSION['errorLogin']) && $_SESSION['errorLogin'] == true ? $_SESSION['login'] : "" ?>" size="30" maxlength="30" required>
 
             <label for="password">Mot de passe :</label>
-            <input type="password" id="password" name="password" placeholder="Sur 15 car." value="<?php echo isset($_SESSION['errorLogin']) && $_SESSION['errorLogin'] == true ? $_SESSION['password'] : "" ?>" size="15" maxlength="15" minlength="6" required>
+            <input type="password" id="password" name="password" placeholder="Sur 255 car." value="<?php echo isset($_SESSION['errorLogin']) && $_SESSION['errorLogin'] == true ? $_SESSION['password'] : "" ?>" size="255" maxlength="255" minlength="6" required>
 
             <input type="submit">
         </form>
