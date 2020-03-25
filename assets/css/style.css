@@ -160,6 +160,7 @@ body {
     margin: 0px;
     background-image: url("../images/image_2.png");
     background-repeat: no-repeat;
+    background-attachment: fixed;
     background-color: #345831;
     background-size: cover;
     width: 100vw;
@@ -172,14 +173,14 @@ body {
 }
 
 /* btnConnexion */
-.body .btnConnexion {
+.btnConnexion {
     float: right;
     margin-top: 3vh;
     margin-right: 4vw;
     font-size: 33px;
 }
 
-.body .btnConnexion a {
+.btnConnexion a {
     color: white;
     font-size: 33px;
 }
@@ -211,4 +212,86 @@ body {
 .commentaires h1 {
     font-family: 'Bebas Neue', cursive;
     color: #6D0A1B;
+    text-align: center;
 }
+
+/* mentions */
+.mentions h1 {
+    font-family: 'Bebas Neue', cursive;
+    color: #6D0A1B;
+    text-align: center;
+    font-size: 50px;
+    padding-top: 5vh;
+    margin: 0px;
+}
+
+.mentionsContent {
+    background-color: white;
+    width: 60vw;
+    height: 845vh;
+    margin-top: 20vh;
+    margin-left: 10vw;
+}
+.mentionsContent img {
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+}
+.mentionsTrueContent {
+    color: #355931;
+    width: 50vw;
+    margin: 0px auto;
+    font-family: Helvetica, sans-serif;
+}
+
+.mentionsTrueContent a {
+    color: #355931;
+}
+
+/* thematiques */
+.thematiques {
+    display: flex;
+    flex-direction: column;
+}
+
+/* thematiques update & new */
+.thematiques h1 {
+    font-family: 'Bebas Neue', cursive;
+    color: #6D0A1B;
+    text-align: center;
+    font-size: 50px;
+    padding-top: 5vh;
+    margin: 0px;
+}
+
+.thematiquesUpdate {
+    background-color: white;
+    width: 60vw;
+    height: 70vh;
+    margin-top: 10vh;
+    margin-left: 10vw;
+    font-size: 20px;
+}
+
+.thematiquesUpdateContent {
+    color: #355931;
+    width: 30vw;
+    margin: 0px auto;
+    font-family: Helvetica, sans-serif;
+}
+
+.thematiquesMargin {
+    margin-top: 30px;
+}
+
+
+.thematiques a {
+    text-decoration: none;
+    font-family: 'Bebas Neue', cursive;
+    color: #355931;
+}
+
+.thematiques a:hover {
+    text-decoration: underline;
+}
+/* thematiques new */

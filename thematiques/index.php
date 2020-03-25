@@ -27,60 +27,62 @@
         
 
         <?php include '../assets/php/menuInAdminShow.php'; ?>
-        <?php include '../assets/php/menuAdmin.php'; ?>
+        <div class="thematiques">
+            <?php include '../assets/php/menuAdmin.php'; ?>
+            
+            <h1>Toutes les thématiques.</h1>
+            
+            <?php 
 
-        <h1>Toutes les thématiques.</h1>
-        
-        <?php 
-
-            // Affichage du message personnalisé lors de la redirection
-            if(isset($_SESSION['answer']) && !empty($_SESSION['answer'])) {
-                echo "<p class='answer'>" . $_SESSION['answer'] . "</p>";
-                $_SESSION['answer'] = "";
-            }
-
-        ?>
-
-        <table>
-            <thead>
-                <tr>
-                    <th>NumThem</th>
-                    <th>LibThem</th>
-                    <th>NumLang</th>
-                </tr>
-            </thead>
-            <tbody>
-
-            <?php
-
-                $req = $bdd->query('SELECT * FROM thematique ORDER BY NumThem');
-
-                // Affichage de toutes les thématiques dans un tableau
-                while ($donnees = $req->fetch())
-                {
+                // Affichage du message personnalisé lors de la redirection
+                if(isset($_SESSION['answer']) && !empty($_SESSION['answer'])) {
+                    echo "<p class='answer'>" . $_SESSION['answer'] . "</p>";
+                    $_SESSION['answer'] = "";
+                }
 
             ?>
-                <tr>
-                    <td><?php echo $donnees['NumThem'];?></td>
-                    <td><?php echo $donnees['LibThem'];?></td>
-                    <td><a href="../langues/index.php"><?php echo $donnees['NumLang'];?></a></td>
-                    <td><a href="update.php?id=<?php echo $donnees['NumThem'];?>" class="modified_link"><i class="fas fa-edit"></i> Modifier</a></td>
-                    <td><a href="delete.php?id=<?php echo $donnees['NumThem'];?>" class="delete_link" data-id="<?php echo $donnees['NumThem']; ?>"><i class="fas fa-trash-alt"></i> Supprimer</a></td>
-                </tr>
 
-                <?php 
+            <table>
+                <thead>
+                    <tr>
+                        <th>NumThem</th>
+                        <th>LibThem</th>
+                        <th>NumLang</th>
+                    </tr>
+                </thead>
+                <tbody>
 
-                    }
+                <?php
 
-                    $req->closeCursor();
+                    $req = $bdd->query('SELECT * FROM thematique ORDER BY NumThem');
+
+                    // Affichage de toutes les thématiques dans un tableau
+                    while ($donnees = $req->fetch())
+                    {
 
                 ?>
-            </tbody>
-        </table>
+                    <tr>
+                        <td><?php echo $donnees['NumThem'];?></td>
+                        <td><?php echo $donnees['LibThem'];?></td>
+                        <td><a href="../langues/index.php"><?php echo $donnees['NumLang'];?></a></td>
+                        <td><a href="update.php?id=<?php echo $donnees['NumThem'];?>" class="modified_link"><i class="fas fa-edit"></i> Modifier</a></td>
+                        <td><a href="delete.php?id=<?php echo $donnees['NumThem'];?>" class="delete_link" data-id="<?php echo $donnees['NumThem']; ?>"><i class="fas fa-trash-alt"></i> Supprimer</a></td>
+                    </tr>
 
-        <a href="new.php" class="add"><i class="fas fa-plus"></i> Ajouter une nouvelle thématique</a>
+                    <?php 
 
-        <script src="../assets/js/script.js"></script>
+                        }
+
+                        $req->closeCursor();
+
+                    ?>
+                </tbody>
+            </table>
+
+            <a href="new.php" class="add"><i class="fas fa-plus"></i> Ajouter une nouvelle thématique</a>
+
+            <script src="../assets/js/script.js"></script>
+        </div>
     </body>
 
 </html>
