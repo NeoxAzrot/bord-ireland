@@ -57,8 +57,7 @@
                     $date_comm = date("Y-m-d H:i:s");
 
                     // Vérifie si c'est le premier commentaire de la table
-                    $req = $bdd->prepare('SELECT * FROM comment');
-                    $req->execute(array($numArt));
+                    $req = $bdd->query('SELECT * FROM comment');
                     $donnees = $req->fetch();
         
                     if(empty($donnees)) {
@@ -75,8 +74,7 @@
                             ));
                     } else {
                         // Récupère la clé primaire maximale du commentaire et lui ajoute 1
-                        $req = $bdd->prepare('SELECT MAX(NumCom) AS NumComMax FROM comment');
-                        $req->execute(array($numArt));
+                        $req = $bdd->query('SELECT MAX(NumCom) AS NumComMax FROM comment');
                         $donnees = $req->fetch();
 
                         $comm_max = $donnees['NumComMax'];

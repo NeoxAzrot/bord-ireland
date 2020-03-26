@@ -29,63 +29,38 @@
             // Affiche le formulaire seulement la première fois
             if($_POST) {
                 // Vérifie si tous les input ont été remplis et contrôle la saisie
-                if((isset($_POST['LibMoCle']) && !empty($_POST['LibMoCle'])) AND
-                (isset($_POST['NumLang']) && !empty($_POST['NumLang']))) {
-                    $LibMoCle = ctrlSaisies($_POST['LibMoCle']);
-                    $NumLang = ctrlSaisies($_POST['NumLang']);
-                    $NumLang = strtoupper($NumLang);
+                if((isset($_POST['FirstName']) && !empty($_POST['FirstName'])) AND
+                (isset($_POST['LastName']) && !empty($_POST['LastName'])) AND
+                (isset($_POST['EMail']) && !empty($_POST['EMail'])) AND
+                (isset($_POST['Login']) && !empty($_POST['Login'])) AND
+                (isset($_POST['Pass']) && !empty($_POST['Pass']))) {
+                    $FirstName = ctrlSaisies($_POST['FirstName']);
+                    $LastName = ctrlSaisies($_POST['LastName']);
+                    $EMail = ctrlSaisies($_POST['EMail']);
+                    $Login = ctrlSaisies($_POST['Login']);
+                    $Pass = ctrlSaisies($_POST['Pass']);
+                    $pass_hache = password_hash($Pass, PASSWORD_DEFAULT);
 
-                    $req = $bdd->query('SELECT * FROM motcle WHERE NumLang = "' . $NumLang . '"');
+                    $req = $bdd->query('SELECT * FROM user WHERE Login = "' . $Login . '"');
                     $donnees = $req->fetch();
         
-                    // Vérifie si le mot clés existe déjà
+                    // Vérifie si l'utilisateur existe déjà
                     if(empty($donnees)) {
-                        // Récupère la clé primaire maximale du mot clés et lui ajoute 1
-                        $req = $bdd->query('SELECT MAX(NumMoCle) AS NumMoCleMax FROM motcle');
-                        $donnees = $req->fetch();
-
-                        $NumMoCle_split = str_split($donnees['NumMoCleMax'], 4);
-                        $NumMoCle_split_id = str_split($NumMoCle_split[1], 2);
-                        $NumMoCle_next_id = (int) $NumMoCle_split_id[0] + 1;
-
-                        // Rajoute un 0 devant si on est entre 1 et 9 car sinon on aurait par exemple : MTCL2 et non MTCL02
-                        if($NumMoCle_next_id < 10) {
-                            $NumMoCle_next_id = "0" . $NumMoCle_next_id;
-                        }
-
-                        $req = $bdd->prepare('INSERT INTO motcle(NumMoCle, LibMoCle, NumLang) VALUES(:NumMoCle, :LibMoCle, :NumLang)');
+                        // Ajoute l'utilisateur dans la table
+                        $req = $bdd->prepare('INSERT INTO user(Login, Pass, LastName, FirstName, EMail) VALUES(:Login, :Pass, :LastName, :FirstName, :EMail)');
                         $req->execute(array(
-                            'NumMoCle' => "MTCL" . $NumMoCle_next_id . "01",
-                            'LibMoCle' => $LibMoCle,
-                            'NumLang' => $NumLang
+                            'Login' => $Login,
+                            'Pass' => $pass_hache,
+                            'LastName' => $LastName,
+                            'FirstName' => $FirstName,
+                            'EMail' => $EMail
                             ));
 
-                        $_SESSION['answer'] = "<b>" . "MTCL" . $NumMoCle_next_id . "01" . "</b> vient d'être ajouté à la table !";
-                    } else {
-                        // Récupère la clé primaire maximale du mot clés par rapport à la langue et lui ajoute 1
-                        $req = $bdd->query('SELECT MAX(NumMoCle) AS NumMoCleMax FROM motcle WHERE NumLang = "' . $NumLang . '"');
-                        $donnees = $req->fetch();
-
-                        $NumMoCle_split = str_split($donnees['NumMoCleMax'], 4);
-                        $NumMoCle_split_id = str_split($NumMoCle_split[1], 2);
-                        $NumMoCle_next_id = (int) $NumMoCle_split_id[1] + 1;
+                        $_SESSION['answer'] = "<b>" . $Login . "</b> vient d'être ajouté à la table !";
                         
-                        // Rajoute un 0 devant si on est entre 1 et 9 car sinon on aurait par exemple : MTCL2 et non MTCL02
-                        if($NumMoCle_next_id < 10) {
-                            $NumMoCle_next_id = "0" . $NumMoCle_next_id;
-                        }
-
-                        // Ajoute le mot clés
-                        $req = $bdd->prepare('INSERT INTO motcle(NumMoCle, LibMoCle, NumLang) VALUES(:NumMoCle, :LibMoCle, :NumLang)');
-                        $req->execute(array(
-                            'NumMoCle' => "MTCL" . $NumMoCle_split_id[0] . $NumMoCle_next_id,
-                            'LibMoCle' => $LibMoCle,
-                            'NumLang' => $NumLang
-                            ));
-
-                        $_SESSION['answer'] = "<b>" . "MTCL" . $NumMoCle_split_id[0] . $NumMoCle_next_id . "</b> vient d'être ajouté à la table !";
-
                         $req->closeCursor();
+                    } else {
+                        $_SESSION['answer'] = "<span><b>" . $Login . "</b> existe déjà dans la table !<span>";
                     }
 
                 }
@@ -103,28 +78,20 @@
         <h1>Ajoutez un utilisateur.</h1>
         
         <form action="new.php" method="POST">
-            <label for="LibMoCle">Libellé mot clés :</label>
-            <input type="text" id="LibMoCle" name="LibMoCle" placeholder="Sur 30 car." size="30" maxlength="30" autofocus="autofocus" required>
+            <label for="FirstName">Prénom :</label>
+            <input type="text" id="FirstName" name="FirstName" placeholder="Sur 30 car." size="30" maxlength="30" autofocus="autofocus" required>
 
-            <label for="NumLang">NumLang :</label>
-            <select name="NumLang" id="NumLang" required>
-                <option value="" disabled selected>-- Choisir une langue --</option>
-                <?php 
-                
-                    $req = $bdd->query('SELECT * FROM langue ORDER BY NumLang');
+            <label for="LastName">Nom :</label>
+            <input type="text" id="LastName" name="LastName" placeholder="Sur 30 car." size="30" maxlength="30" required>
 
-                    while($donnees = $req->fetch()) {
-                ?>
+            <label for="EMail">Email :</label>
+            <input type="email" id="EMail" name="EMail" placeholder="Sur 50 car." size="50" maxlength="50" required>
 
-                        <option value="<?php echo $donnees['NumLang']; ?>"><?php echo $donnees['Lib1Lang']; ?></option>
-                
-                <?php
-                    }
+            <label for="Login">Identifiant :</label>
+            <input type="text" id="Login" name="Login" placeholder="Sur 30 car." size="30" maxlength="30" required>
 
-                    $req->closeCursor();
-
-                ?>
-            </select>
+            <label for="Pass">Mot de passe :</label>
+            <input type="password" id="Pass" name="Pass" placeholder="Sur 255 car." maxlength="255" minlength="6" required>
 
             <input type="submit">
         </form>

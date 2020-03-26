@@ -33,21 +33,19 @@
             // Affiche le formulaire seulement la première fois
             if($_POST) {
                 // Vérifie si tous les input ont été remplis et contrôle la saisie
-                if((isset($_POST['num_lang']) && !empty($_POST['num_lang'])) AND
-                (isset($_POST['lib_court']) && !empty($_POST['lib_court'])) AND
-                (isset($_POST['lib_long']) && !empty($_POST['lib_long'])) AND
-                (isset($_POST['pays']) && !empty($_POST['pays']))) {
-                    $lib_court = ctrlSaisies($_POST['lib_court']);
-                    $lib_long = ctrlSaisies($_POST['lib_long']);
-                    $pays = ctrlSaisies($_POST['pays']);
-                    $pays = strtoupper($pays);
+                if((isset($_POST['FirstName']) && !empty($_POST['FirstName'])) AND
+                (isset($_POST['LastName']) && !empty($_POST['LastName'])) AND
+                (isset($_POST['EMail']) && !empty($_POST['EMail']))) {
+                    $FirstName = ctrlSaisies($_POST['FirstName']);
+                    $LastName = ctrlSaisies($_POST['LastName']);
+                    $EMail = ctrlSaisies($_POST['EMail']);
 
-                    // Met à jour la langue
-                    $req = $bdd->prepare('UPDATE langue SET Lib1Lang = :Lib1Lang, Lib2Lang = :Lib2Lang, NumPays = :NumPays WHERE NumLang = :ID');
+                    // Met à jour l'utilisateur
+                    $req = $bdd->prepare('UPDATE user SET FirstName = :FirstName, LastName = :LastName, EMail = :EMail WHERE Login = :ID');
                     $req->execute(array(
-                        'Lib1Lang' => $lib_court,
-                        'Lib2Lang' => $lib_long,
-                        'NumPays' => $pays,
+                        'FirstName' => $FirstName,
+                        'LastName' => $LastName,
+                        'EMail' => $EMail,
                         'ID' => $_GET['id']
                         ));
                 }
@@ -58,47 +56,33 @@
             }
 
             if(isset($_GET['id']) && !empty($_GET['id'])) {
-                $req = $bdd->prepare('SELECT * FROM langue WHERE NumLang = :id');
+                $req = $bdd->prepare('SELECT * FROM user WHERE Login = :id');
                 $req->execute(array(
                     'id' => $_GET['id']
                 ));
 
                 $donnees = $req->fetch();
 
-                // Affiche le formulaire et le pré remplie que si la langue existe
+                // Affiche le formulaire et le pré remplie que si l'utilisateur existe
                 if(!empty($donnees)) {
                     ?>
-                        <h1>Modifiez le commentaire <span><?php echo $_GET['id']; ?></span>.</h1>
+                        <h1>Modifiez l'utilisateur <span><?php echo $_GET['id']; ?></span>.</h1>
 
                         <form action="update.php?id=<?php echo $_GET['id']; ?>" method="POST">
-                            <label for="num_lang">ID :</label>
-                            <input type="text" id="num_lang" name="num_lang" placeholder="Sur 6 car." size="6" minlength="6" value="<?php echo $donnees['NumLang']; ?>" required disabled>
+                            <label for="Login">Identifiant :</label>
+                            <input type="text" id="Login" name="Login" placeholder="Sur 30 car." size="30" maxlength="30" value="<?php echo $donnees['Login']; ?>" required disabled>
 
-                            <label for="lib_court">Libellé court :</label>
-                            <input type="text" id="lib_court" name="lib_court" placeholder="Sur 25 car." size="25" maxlength="25" autofocus="autofocus" value="<?php echo $donnees['Lib1Lang']; ?>" required>
+                            <label for="Pass">Mot de passe :</label>
+                            <input type="password" id="Pass" name="Pass" placeholder="Sur 255 car." maxlength="255" minlength="6" value="******" required disabled>
 
-                            <label for="lib_long">Libellé long :</label>
-                            <input type="text" id="lib_long" name="lib_long" placeholder="Sur 45 car." size="45" maxlength="45" value="<?php echo $donnees['Lib2Lang']; ?>" required>
+                            <label for="FirstName">Prénom :</label>
+                            <input type="text" id="FirstName" name="FirstName" placeholder="Sur 30 car." size="30" maxlength="30" value="<?php echo $donnees['FirstName']; ?>" required>
 
-                            <label for="pays">Quel pays :</label>
-                            <select name="pays" id="pays" required>
-                                <option value="" disabled>-- Choisir un pays --</option>
-                                <?php 
-                                
-                                    $req = $bdd->query('SELECT * FROM pays ORDER BY numPays');
+                            <label for="LastName">Nom :</label>
+                            <input type="text" id="LastName" name="LastName" placeholder="Sur 30 car." size="30" maxlength="30" autofocus="autofocus" value="<?php echo $donnees['LastName']; ?>" required>
 
-                                    while($donnees = $req->fetch()) {
-                                ?>
-
-                                        <option value="<?php echo $donnees['numPays']; ?>" <?php echo $donnees['numPays'] == str_split($_GET['id'], 4)[0] ? "selected" : ""; ?>><?php echo $donnees['frPays']; ?></option>
-                                
-                                <?php
-                                    }
-
-                                    $req->closeCursor();
-
-                                ?>
-                            </select>
+                            <label for="EMail">Email :</label>
+                            <input type="email" id="EMail" name="EMail" placeholder="Sur 50 car." size="50" maxlength="50" value="<?php echo $donnees['EMail']; ?>" required>
 
                             <input type="submit">
                         </form>
@@ -106,18 +90,14 @@
                         <a href="index.php" class="back"><i class="fas fa-arrow-left"></i> Revenir au tableau</a>
                     <?php
                 } else {
-                    // Permet de renvoyer le message personnalisé quand on change la langue de base. Exemple : ITAL --> FRAN (car l'id n'était plus trouvé)
-                    if(isset($_POST['num_lang'])) {
-                        $_SESSION['answer'] = "La modification de <b>" . $_GET['id'] . "</b> a bien été pris en compte !";
-                    } else {
-                        $_SESSION['answer'] = "<span>Cette langue est introuvable !</span>";
-                    }
+                    $_SESSION['answer'] = "<span>Cet utilisateur est introuvable !</span>";
+
                     // Redirection avec un message personnalisé
                     header('Location: index.php');
                 }
             } else {
                 // Redirection avec un message personnalisé
-                $_SESSION['answer'] = "<span>Cette langue est introuvable !</span>";
+                $_SESSION['answer'] = "<span>Cet utilisateur est introuvable !</span>";
                 header('Location: index.php');
             }
 

@@ -109,7 +109,7 @@
                             <input type="text" id="login" name="login" placeholder="Sur 30 car." value="<?php echo isset($_SESSION['errorConnexion']) && $_SESSION['errorConnexion'] == true ? $_SESSION['login'] : "" ?>"  maxlength="30" required><br>
 
                             <label for="password">Mot de passe :</label><br>
-                            <input type="password" id="password" name="password" placeholder="Sur 15 car." value="<?php echo isset($_SESSION['errorConnexion']) && $_SESSION['errorConnexion'] == true ? $_SESSION['password'] : "" ?>"  maxlength="15" minlength="6" required><br>
+                            <input type="password" id="password" name="password" placeholder="Sur 255 car." value="<?php echo isset($_SESSION['errorConnexion']) && $_SESSION['errorConnexion'] == true ? $_SESSION['password'] : "" ?>"  maxlength="255" minlength="6" required><br>
                         </div>
 
                         <!-- Message d'erreur de connexion -->

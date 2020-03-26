@@ -45,6 +45,7 @@
             <table>
                 <thead>
                     <tr>
+                        <th>NumCom :</th>
                         <th>Date :</th>
                         <th>Pseudo :</th>
                         <th>Email :</th>
@@ -65,12 +66,14 @@
 
                 ?>
                     <tr>
+                        <td><?php echo $donnees['NumCom'];?></td>
                         <td><?php echo dateChangeFormat($donnees['DtCreC'], "Y-m-d H:i:s", "d/m/Y H:i:s");?></td>
                         <td><?php echo $donnees['PseudoAuteur'];?></td>
                         <td><?php echo $donnees['EmailAuteur'];?></td>
                         <td><?php echo $donnees['TitrCom'];?></td>
                         <td><?php echo $donnees['LibCom'];?></td>
                         <td><a href="../articles/index.php"><?php echo $donnees['NumArt'];?></a></td>
+                        <td><a href="update.php?id=<?php echo $donnees['NumCom'];?>" class="modified_link"><i class="fas fa-edit"></i> Modifier</a></td>
                         <td><a href="delete.php?id=<?php echo $donnees['NumCom'];?>" class="delete_link" data-id="<?php echo $donnees['NumCom']; ?>"><i class="fas fa-trash-alt"></i> Supprimer</a></td>
                     </tr>
 
@@ -83,6 +86,8 @@
                     ?>
                 </tbody>
             </table>
+
+            <a href="new.php" class="add"><i class="fas fa-plus"></i> Ajouter un nouveau commentaire</a>
                             
             <script src="../assets/js/script.js"></script>
         </div>
