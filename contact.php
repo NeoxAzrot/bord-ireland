@@ -8,6 +8,7 @@
     error_reporting(E_ALL);
 
     include 'assets/php/connect_PDO.php';
+    include 'assets/php/ctrlSaisies.php';
 
 ?>
 
@@ -24,11 +25,73 @@
     </head>
 
     <body>
+        <?php
+
+            // Affiche le formulaire seulement la première fois
+            if($_POST) {
+                // Vérifie si tous les input ont été remplis et contrôle la saisie
+                if((isset($_POST['name']) && !empty($_POST['name'])) AND
+                (isset($_POST['email']) && !empty($_POST['email'])) AND
+                (isset($_POST['subject']) && !empty($_POST['subject'])) AND
+                (isset($_POST['message']) && !empty($_POST['message']))) {
+                    $name = ctrlSaisies($_POST['name']);
+                    $email = ctrlSaisies($_POST['email']);
+                    $subject = ctrlSaisies($_POST['subject']);
+                    $message = nl2br(ctrlSaisies($_POST['message']));
+
+                    // Création de l'email
+                    $email_from = 'contact@bordirlande.fr';
+                    $email_subject = $subject;
+                    $email_body = $message;
+
+                    $email_body .= "<br/><br/><hr/><br/><u>Informations supplémentaires :</u> <br/><br/><b>Nom</b> : $name<br/><b>E-mail</b> : $email<br/><b>Sujet</b> : $subject";
+                        
+                    $to = "sami.lepays@gmail.com";
+                    $headers = "From: $email_from \r\n";
+                    $headers .= "Reply-To: $email \r\n";
+                    $headers .= "MIME-Version: 1.0 \r\n";
+                    $headers .= "Content-type: text/html; charset=utf-8 \r\n";
+
+                    // Envoie de l'email
+                    mail($to, $email_subject, $email_body, $headers);
+
+                    // Redirection avec un message personnalisé
+                    $validation = true;
+                }
+            }
+    
+        ?> 
+
         <h1>Contact</h1>
 
         <!-- Menus -->
         <?php include 'assets/php/menu.php'; ?>
         <?php include 'assets/php/btnConnexion.php'; ?>
+
+        <?php 
+
+            if(isset($validation) && $validation == true) {
+                echo "Le message a bien été envoyé !";
+            }
+
+        ?>
+
+        <form action="" method="POST" >
+            <label for="name">Prénom / Nom</label>
+            <input type="text" name="name" id="name" placeholder="John Doe" required/>
+
+            <label for="email">Adresse mail</label>
+            <input type="email" name="email" id="email" placeholder="johndoe@exemple.com" required/>
+
+            <label for="subject">Sujet</label>
+            <input type="text" name="subject" id="subject" placeholder="Entrer votre sujet" required/>
+
+            <label for="message" id="textarea-label">Message</label>
+            <textarea name="message" id="message" placeholder="Entrer votre message" required></textarea>
+
+            <input type="submit" value="Envoyer" />
+            <input type="reset" value="Effacer" />
+        </form>
         
         <script src="assets/js/script.js"></script>
     </body>

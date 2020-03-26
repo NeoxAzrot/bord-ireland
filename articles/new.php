@@ -92,7 +92,7 @@
                 }
 
                 // Redirection avec un message personnalisé
-                header('Location: index.php');
+                //header('Location: index.php');
             }
 
         ?>
