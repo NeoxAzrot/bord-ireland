@@ -48,7 +48,7 @@
             }
 
             if(isset($_GET['id']) && !empty($_GET['id'])) {
-                $req = $bdd->prepare('SELECT * FROM thematique WHERE NumThem = :id');
+                $req = $bdd->prepare('SELECT * FROM article WHERE NumArt = :id');
                 $req->execute(array(
                     'id' => $_GET['id']
                 ));
@@ -56,8 +56,10 @@
                 $donnees = $req->fetch();
 
                 $NumLangThem = $donnees['NumLang'];
+                $NumLangThem = $donnees['NumLang'];
+                $NumLangThem = $donnees['NumLang'];
 
-                // Affiche le formulaire et le pré remplie que si la thématique existe
+                // Affiche le formulaire et le pré remplie que si l'article existe
                 if(!empty($donnees)) {
                     ?>
                         
@@ -99,14 +101,14 @@
                         <a href="index.php" class="back"><i class="fas fa-arrow-left"></i> Revenir au tableau</a>
                     <?php
                 } else {
-                    $_SESSION['answer'] = "<span>Cette thématique est introuvable !</span>";
+                    $_SESSION['answer'] = "<span>Cet article est introuvable !</span>";
 
                     // Redirection avec un message personnalisé
                     header('Location: index.php');
                 }
             } else {
                 // Redirection avec un message personnalisé
-                $_SESSION['answer'] = "<span>Cette thématique est introuvable !</span>";
+                $_SESSION['answer'] = "<span>Cet article est introuvable !</span>";
                 header('Location: index.php');
             }
 
