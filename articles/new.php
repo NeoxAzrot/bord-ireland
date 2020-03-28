@@ -98,14 +98,6 @@
                             $name = basename("article01." . $ext); // basename() peut empêcher les attaques de système de fichiers
                             move_uploaded_file($tmp_name, "$uploads_dir/$name");
 
-                            /*for($i = 0; $i < $NbMotCle; $i++) {
-                                $req = $bdd->prepare('INSERT INTO motclearticle(NumArt, NumMoCle) VALUES(:NumArt, :NumMoCle)');
-                                $req->execute(array(
-                                    'NumArt' => "01",
-                                    'NumMoCle' => $MotCle[$i]
-                                    ));
-                            }*/
-
                             // Ajoute l'article dans la table si c'est le premier
                             $req = $bdd->prepare('INSERT INTO article(NumArt, DtCreA, LibTitrA, LibChapoA, LibAccrochA, Parag1A, LibSsTitr1, Parag2A, LibSsTitr2, Parag3A, LibConclA, UrlPhotA, Likes, NumAngl, NumThem, NumLang)
                                                 VALUES(:NumArt, :DtCreA, :LibTitrA, :LibChapoA, :LibAccrochA, :Parag1A, :LibSsTitr1, :Parag2A, :LibSsTitr2, :Parag3A, :LibConclA, :UrlPhotA, :Likes, :NumAngl, :NumThem, :NumLang)');
@@ -128,6 +120,15 @@
                                 'NumLang' => $NumLang
                                 ));
 
+                            // Ajout des mots clés
+                            for($i = 0; $i < $NbMotCle; $i++) {
+                                $req = $bdd->prepare('INSERT INTO motclearticle(NumArt, NumMoCle) VALUES(:NumArt, :NumMoCle)');
+                                $req->execute(array(
+                                    'NumArt' => "01",
+                                    'NumMoCle' => $MotCle[$i]
+                                    ));
+                            }
+
                             $_SESSION['answer'] = "<b>" . "01" . "</b> vient d'être ajouté à la table !";
                         } else {
                             // Récupère la clé primaire maximale de l'article et lui ajoute 1
@@ -144,14 +145,6 @@
                             // Change le nom de l'image
                             $name = basename("article" . $NumArt_next_id . "." . $ext); // basename() peut empêcher les attaques de système de fichiers
                             move_uploaded_file($tmp_name, "$uploads_dir/$name");
-
-                            /*for($i = 0; $i < $NbMotCle; $i++) {
-                                $req = $bdd->prepare('INSERT INTO motclearticle(NumArt, NumMoCle) VALUES(:NumArt, :NumMoCle)');
-                                $req->execute(array(
-                                    'NumArt' => $NumArt_next_id,
-                                    'NumMoCle' => $MotCle[$i]
-                                    ));
-                            }*/
 
                             // Ajoute l'article
                             $req = $bdd->prepare('INSERT INTO article(NumArt, DtCreA, LibTitrA, LibChapoA, LibAccrochA, Parag1A, LibSsTitr1, Parag2A, LibSsTitr2, Parag3A, LibConclA, UrlPhotA, Likes, NumAngl, NumThem, NumLang)
@@ -174,6 +167,15 @@
                                 'NumThem' => $NumThem,
                                 'NumLang' => $NumLang
                                 ));
+
+                            // Ajout des mots clés
+                            for($i = 0; $i < $NbMotCle; $i++) {
+                                $req = $bdd->prepare('INSERT INTO motclearticle(NumArt, NumMoCle) VALUES(:NumArt, :NumMoCle)');
+                                $req->execute(array(
+                                    'NumArt' => $NumArt_next_id,
+                                    'NumMoCle' => $MotCle[$i]
+                                    ));
+                            }
 
                             $_SESSION['answer'] = "<b>" . $NumArt_next_id . "</b> vient d'être ajouté à la table !";
                         }
