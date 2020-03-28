@@ -77,13 +77,13 @@
 
                     // Vérifie la taille du fichier
                     if ($_FILES["UrlPhotA"]["size"] > 10000000) { // 10 Mo
-                        $_SESSION['answer'] = "<span>L'article n'a pas pu être ajouter à la table car l'image faisait plus de 10 Mo !</span>";
+                        $_SESSION['answer'] = "<span>L'article n'a pas pu être ajouté à la table car l'image faisait plus de 10 Mo !</span>";
                         $uploadIsOk = false;
                     }
 
                     // Vérifie si il y a une erreur
                     if ($_FILES["UrlPhotA"]["error"] > 0) {
-                        $_SESSION['answer'] = "<span>L'article n'a pas pu être ajouter à la table. La mise en ligne de l'image a rencontré une erreur !</span>";
+                        $_SESSION['answer'] = "<span>L'article n'a pas pu être ajouté à la table. La mise en ligne de l'image a rencontré une erreur !</span>";
                         $uploadIsOk = false;
                     }
 
@@ -229,6 +229,26 @@
             <label for="UrlPhotA">URL photo (10 Mo. MAX) :</label>
             <input type="file" id="UrlPhotA" name="UrlPhotA" accept="image/*" required>
 
+            <label for="NumLang">NumLang :</label>
+            <select name="NumLang" id="NumLang" required>
+                <option value="" disabled selected>-- Choisir une langue --</option>
+                <?php 
+                
+                    $req = $bdd->query('SELECT * FROM langue ORDER BY NumLang');
+
+                    while($donnees = $req->fetch()) {
+                ?>
+
+                        <option value="<?php echo $donnees['NumLang']; ?>"><?php echo $donnees['Lib1Lang']; ?></option>
+                
+                <?php
+                    }
+
+                    $req->closeCursor();
+
+                ?>
+            </select>
+
             <label for="NumAngl">NumAngl :</label>
             <select name="NumAngl" id="NumAngl" required>
                 <option value="" disabled selected>-- Choisir un angle --</option>
@@ -239,7 +259,7 @@
                     while($donnees = $req->fetch()) {
                 ?>
 
-                        <option value="<?php echo $donnees['NumAngl']; ?>"><?php echo $donnees['LibAngl']; ?></option>
+                        <option value="<?php echo $donnees['NumAngl']; ?>" data-lang="<?php echo $donnees['NumLang']; ?>"><?php echo $donnees['LibAngl']; ?></option>
                 
                 <?php
                     }
@@ -259,27 +279,7 @@
                     while($donnees = $req->fetch()) {
                 ?>
 
-                        <option value="<?php echo $donnees['NumThem']; ?>"><?php echo $donnees['LibThem']; ?></option>
-                
-                <?php
-                    }
-
-                    $req->closeCursor();
-
-                ?>
-            </select>
-
-            <label for="NumLang">NumLang :</label>
-            <select name="NumLang" id="NumLang" required>
-                <option value="" disabled selected>-- Choisir une langue --</option>
-                <?php 
-                
-                    $req = $bdd->query('SELECT * FROM langue ORDER BY NumLang');
-
-                    while($donnees = $req->fetch()) {
-                ?>
-
-                        <option value="<?php echo $donnees['NumLang']; ?>"><?php echo $donnees['Lib1Lang']; ?></option>
+                        <option value="<?php echo $donnees['NumThem']; ?>" data-lang="<?php echo $donnees['NumLang']; ?>"><?php echo $donnees['LibThem']; ?></option>
                 
                 <?php
                     }
