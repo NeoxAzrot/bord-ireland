@@ -286,6 +286,7 @@ body {
     margin-top: 10vh;
     margin-left: 10vw;
     font-size: 20px;
+    overflow: auto;
 }
 
 .UpdateContent {
@@ -413,4 +414,20 @@ body {
     margin-left: 10vw;
     font-size: 20px;
     overflow: auto;
+}
+
+/* Modifier article */ 
+
+.UpdateArticle {
+    background-color: white;
+    width: 60vw;
+    height: 470vh;
+    margin-top: 10vh;
+    margin-left: 10vw;
+    font-size: 20px;
+    overflow: auto;
+}
+
+.UpdateArticle textarea {
+    width: 30vw;
 }

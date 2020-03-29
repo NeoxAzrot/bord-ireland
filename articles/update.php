@@ -43,7 +43,8 @@
                 (isset($_POST['Likes'])) AND
                 (isset($_POST['NumAngl']) && !empty($_POST['NumAngl'])) AND
                 (isset($_POST['NumThem']) && !empty($_POST['NumThem'])) AND
-                (isset($_POST['NumLang']) && !empty($_POST['NumLang']))) {
+                (isset($_POST['NumLang']) && !empty($_POST['NumLang'])) AND
+                (isset($_POST['MotCle']) && !empty($_POST['MotCle']))) {
                     $DtCreA = ctrlSaisies($_POST['DtCreA']);
                     $LibTitrA = ctrlSaisies($_POST['LibTitrA']);
                     $LibChapoA = ctrlSaisies($_POST['LibChapoA']);
@@ -61,6 +62,24 @@
                     $NumThem = strtoupper($NumThem);
                     $NumLang = ctrlSaisies($_POST['NumLang']);
                     $NumLang = strtoupper($NumLang);
+                    $MotCle = $_POST['MotCle']; // On ne peut pas controler la saisie de tout l'array (on doit faire cas par cas)
+                    $NbMotCle = count($MotCle);
+
+                    // Supprime tous les mots clés reliés avant de les remettre
+                    $req = $bdd->prepare('DELETE FROM motclearticle WHERE NumArt = :id');
+                    $req->execute(array(
+                        'id' => $_GET['id']
+                    ));
+
+                    // Ajoute tous les mots clés de l'article
+                    for($i = 0; $i < $NbMotCle; $i++)
+                    {
+                        $req = $bdd->prepare('INSERT INTO motclearticle(NumArt, NumMoCle) VALUES(:NumArt, :NumMoCle)');
+                        $req->execute(array(
+                            'NumArt' => $_GET['id'],
+                            'NumMoCle' => $MotCle[$i]
+                            ));
+                    }
 
                     if($Likes < 0) {
                         $Likes = 0;
@@ -139,6 +158,8 @@
                         $_SESSION['answer'] = "La modification de <b>" . $_GET['id'] . "</b> a bien été pris en compte !";
                     }
 
+                } else {
+                    $_SESSION['answer'] = "Un mot clés est obligatoire par article pour le référencement dans le blog !";
                 }
 
                 // Redirection avec un message personnalisé
@@ -153,6 +174,22 @@
 
                 $donnees = $req->fetch();
 
+                // Récupère le nombre de mots clés
+                $reqMotClesArticle = $bdd->prepare('SELECT COUNT(*) AS nbMotCle FROM motclearticle WHERE NumArt = ?');
+                $reqMotClesArticle->execute(array($_GET['id']));
+                $donneesMotClesArticle = $reqMotClesArticle->fetch();
+
+                $nbMotCle = $donneesMotClesArticle['nbMotCle'];
+
+                // Les mets dans un tableau pour la suite
+                $reqMotCles = $bdd->prepare('SELECT * FROM motclearticle WHERE NumArt = ?');
+                $reqMotCles->execute(array($_GET['id']));
+                $arrayMotCles = array();
+                while($donneesMotCles = $reqMotCles->fetch())
+                {
+                    array_push($arrayMotCles, $donneesMotCles['NumMoCle']);
+                }
+
                 $NumLangArt = $donnees['NumLang'];
                 $NumAnglArt = $donnees['NumAngl'];
                 $NumThemArt = $donnees['NumThem'];
@@ -162,130 +199,170 @@
                     ?>
                         
                         <?php include '../assets/php/menuInAdminShow.php'; ?>
-                        <?php include '../assets/php/menuAdmin.php'; ?>
-                        
-                        <h1>Modifiez l'article <span><?php echo $_GET['id']; ?></span>.</h1>
-                        
-                        <form action="update.php?id=<?php echo $_GET['id']; ?>" method="POST" enctype="multipart/form-data">
-                            <label for="NumArt">NumArt :</label>
-                            <input type="text" id="NumArt" name="NumArt" placeholder="Sur 6 car." size="6" maxlength="6" value="<?php echo $donnees['NumArt']; ?>" required disabled>
+                        <div class="thematiques">
+                                            <?php include '../assets/php/menuAdmin.php'; ?>
+                            <div class="UpdateArticle">
+                                            <h1>Modifiez l'article <span><?php echo $_GET['id']; ?></span>.</h1><br>
+                                <div class="UpdateContent">             
+                                            <form action="update.php?id=<?php echo $_GET['id']; ?>" method="POST" enctype="multipart/form-data">
+                                                <label for="NumArt">NumArt :</label>
+                                                <input type="text" id="NumArt" name="NumArt" placeholder="Sur 6 car." size="6" maxlength="6" value="<?php echo $donnees['NumArt']; ?>" required disabled><br><br>
 
-                            <label for="DtCreA">Date de l'article :</label>
-                            <input type="date" id="DtCreA" name="DtCreA" autofocus="autofocus" value="<?php echo $donnees['DtCreA']; ?>" required>
+                                                <label for="DtCreA">Date de l'article :</label>
+                                                <input type="date" id="DtCreA" name="DtCreA" autofocus="autofocus" value="<?php echo $donnees['DtCreA']; ?>" required><br><br>
 
-                            <label for="LibTitrA">Libellé titre :</label>
-                            <textarea name="LibTitrA" id="LibTitrA" cols="30" rows="10" placeholder="Ecrivez ici..." required><?php echo $donnees['LibTitrA']; ?></textarea>
-                                    
-                            <label for="LibChapoA">Libellé chapo :</label>
-                            <textarea name="LibChapoA" id="LibChapoA" cols="30" rows="10" placeholder="Ecrivez ici..." required><?php echo $donnees['LibChapoA']; ?></textarea>
+                                                <label for="LibTitrA">Libellé titre :</label><br>
+                                                <textarea name="LibTitrA" id="LibTitrA" cols="30" rows="10" placeholder="Ecrivez ici..." required><?php echo $donnees['LibTitrA']; ?></textarea><br><br>
+                                                        
+                                                <label for="LibChapoA">Libellé chapo :</label><br>
+                                                <textarea name="LibChapoA" id="LibChapoA" cols="30" rows="10" placeholder="Ecrivez ici..." required><?php echo $donnees['LibChapoA']; ?></textarea><br><br>
 
-                            <label for="LibAccrochA">Libellé accroche :</label>
-                            <textarea name="LibAccrochA" id="LibAccrochA" cols="30" rows="10" placeholder="Ecrivez ici..." required><?php echo $donnees['LibAccrochA']; ?></textarea>
+                                                <label for="LibAccrochA">Libellé accroche :</label><br>
+                                                <textarea name="LibAccrochA" id="LibAccrochA" cols="30" rows="10" placeholder="Ecrivez ici..." required><?php echo $donnees['LibAccrochA']; ?></textarea><br><br>
 
-                            <label for="Parag1A">Libellé paragraphe 1 :</label>
-                            <textarea name="Parag1A" id="Parag1A" cols="30" rows="10" placeholder="Ecrivez ici..." required><?php echo $donnees['Parag1A']; ?></textarea>
+                                                <label for="Parag1A">Libellé paragraphe 1 :</label><br>
+                                                <textarea name="Parag1A" id="Parag1A" cols="30" rows="10" placeholder="Ecrivez ici..." required><?php echo $donnees['Parag1A']; ?></textarea><br><br>
 
-                            <label for="LibSsTitr1">Libellé sous-titre 1 :</label>
-                            <textarea name="LibSsTitr1" id="LibSsTitr1" cols="30" rows="10" placeholder="Ecrivez ici..." required><?php echo $donnees['LibSsTitr1']; ?></textarea>
+                                                <label for="LibSsTitr1">Libellé sous-titre 1 :</label><br>
+                                                <textarea name="LibSsTitr1" id="LibSsTitr1" cols="30" rows="10" placeholder="Ecrivez ici..." required><?php echo $donnees['LibSsTitr1']; ?></textarea><br><br>
 
-                            <label for="Parag2A">Libellé paragraphe 2 :</label>
-                            <textarea name="Parag2A" id="Parag2A" cols="30" rows="10" placeholder="Ecrivez ici..." required><?php echo $donnees['Parag2A']; ?></textarea>
+                                                <label for="Parag2A">Libellé paragraphe 2 :</label><br>
+                                                <textarea name="Parag2A" id="Parag2A" cols="30" rows="10" placeholder="Ecrivez ici..." required><?php echo $donnees['Parag2A']; ?></textarea><br><br>
 
-                            <label for="LibSsTitr2">Libellé sous-titre 2 :</label>
-                            <textarea name="LibSsTitr2" id="LibSsTitr2" cols="30" rows="10" placeholder="Ecrivez ici..." required><?php echo $donnees['LibSsTitr2']; ?></textarea>
+                                                <label for="LibSsTitr2">Libellé sous-titre 2 :</label><br>
+                                                <textarea name="LibSsTitr2" id="LibSsTitr2" cols="30" rows="10" placeholder="Ecrivez ici..." required><?php echo $donnees['LibSsTitr2']; ?></textarea><br><br>
 
-                            <label for="Parag3A">Libellé paragraphe 3 :</label>
-                            <textarea name="Parag3A" id="Parag3A" cols="30" rows="10" placeholder="Ecrivez ici..." required><?php echo $donnees['Parag3A']; ?></textarea>
+                                                <label for="Parag3A">Libellé paragraphe 3 :</label><br>
+                                                <textarea name="Parag3A" id="Parag3A" cols="30" rows="10" placeholder="Ecrivez ici..." required><?php echo $donnees['Parag3A']; ?></textarea><br><br>
 
-                            <label for="LibConclA">Libellé conlusion :</label>
-                            <textarea name="LibConclA" id="LibConclA" cols="30" rows="10" placeholder="Ecrivez ici..." required><?php echo $donnees['LibConclA']; ?></textarea>
+                                                <label for="LibConclA">Libellé conlusion :</label><br>
+                                                <textarea name="LibConclA" id="LibConclA" cols="30" rows="10" placeholder="Ecrivez ici..." required><?php echo $donnees['LibConclA']; ?></textarea><br><br>
 
-                            <label for="Likes">Likes :</label>
-                            <input type="number" id="Likes" name="Likes" min="0" placeholder="Nombre de like" value="<?php echo $donnees['Likes']; ?>" required>
+                                                <label for="Likes">Likes :</label>
+                                                <input type="number" id="Likes" name="Likes" min="0" placeholder="Nombre de like" value="<?php echo $donnees['Likes']; ?>" required><br><br>
 
-                            <label for="UrlPhotA">Remplir seulement si vous voulez changer l'image (10 Mo. MAX) :</label>
-                            <input type="file" id="UrlPhotA" name="UrlPhotA" accept="image/*">
+                                                <label for="UrlPhotA">Remplir seulement si vous voulez changer l'image (10 Mo. MAX) :</label>
+                                                <input type="file" id="UrlPhotA" name="UrlPhotA" accept="image/*"><br><br>
 
-                            <label for="NumLang">NumLang :</label>
-                            <select name="NumLang" id="NumLang" required>
-                                <option value="" disabled selected>-- Choisir une langue --</option>
-                                <?php 
-                                
-                                    $req = $bdd->query('SELECT * FROM langue ORDER BY NumLang');
+                                                <label for="NumLang">NumLang :</label>
+                                                <select name="NumLang" id="NumLang" required>
+                                                    <option value="" disabled selected>-- Choisir une langue --</option>
+                                                    <?php 
+                                                    
+                                                        $req = $bdd->query('SELECT * FROM langue ORDER BY NumLang');
 
-                                    while($donnees = $req->fetch()) {
-                                ?>
+                                                        while($donnees = $req->fetch()) {
+                                                    ?>
 
-                                        <option value="<?php echo $donnees['NumLang']; ?>" <?php echo $donnees['NumLang'] == $NumLangArt ? "selected" : ""; ?>><?php echo $donnees['Lib1Lang']; ?></option>
-                                
-                                <?php
+                                                            <option value="<?php echo $donnees['NumLang']; ?>" <?php echo $donnees['NumLang'] == $NumLangArt ? "selected" : ""; ?>><?php echo $donnees['Lib1Lang']; ?></option>
+                                                    
+                                                    <?php
+                                                        }
+
+                                                        $req->closeCursor();
+
+                                                    ?>
+                                                </select><br><br>
+
+                                                <label for="NumAngl">NumAngl :</label>
+                                                <select name="NumAngl" id="NumAngl" required>
+                                                    <option value="" disabled selected>-- Choisir un angle --</option>
+                                                    <?php 
+                                                    
+                                                        $req = $bdd->query('SELECT * FROM angle ORDER BY NumAngl');
+
+                                                        while($donnees = $req->fetch()) {
+                                                    ?>
+
+                                                            <option value="<?php echo $donnees['NumAngl']; ?>" data-lang="<?php echo $donnees['NumLang']; ?>" <?php echo $donnees['NumAngl'] == $NumAnglArt ? "selected" : ""; ?>><?php echo $donnees['LibAngl']; ?></option>
+                                                    
+                                                    <?php
+                                                        }
+
+                                                        $req->closeCursor();
+
+                                                    ?>
+                                                </select><br><br>
+
+                                                <label for="NumThem">NumThem :</label>
+                                                <select name="NumThem" id="NumThem" required>
+                                                    <option value="" disabled selected>-- Choisir une thématique --</option>
+                                                    <?php 
+                                                    
+                                                        $req = $bdd->query('SELECT * FROM thematique ORDER BY NumThem');
+
+                                                        while($donnees = $req->fetch()) {
+                                                    ?>
+
+                                                            <option value="<?php echo $donnees['NumThem']; ?>" data-lang="<?php echo $donnees['NumLang']; ?>" <?php echo $donnees['NumThem'] == $NumThemArt ? "selected" : ""; ?>><?php echo $donnees['LibThem']; ?></option>
+                                                    
+                                                    <?php
+                                                        }
+
+                                                        $req->closeCursor();
+
+                                                    ?>
+                                                </select><br><br>
+
+                                                <!-- Génération mot clés avec JavaScript -->
+                                                <div id="MotCleJS">
+                                                <?php 
+                                                    for($i = 0; $i < $nbMotCle; $i++)
+                                                    {
+                                                ?>
+                                                    <div class="MotCleContainer">
+                                                        <label for="MotCle">Mot clés :</label>
+                                                        <select name="MotCle[]" id="MotCle" required>
+                                                            <option value="" disabled selected>-- Choisir un mot clés --</option>
+                                                            <?php 
+                                                            
+                                                                $req = $bdd->query('SELECT * FROM motcle ORDER BY NumMoCle');
+
+                                                                while($donnees = $req->fetch()) {
+                                                            ?>
+
+                                                                    <option value="<?php echo $donnees['NumMoCle']; ?>" <?php echo $donnees['NumMoCle'] == $arrayMotCles[$i] ? "selected" : ""; ?>><?php echo $donnees['LibMoCle']; ?></option>
+                                                            
+                                                            <?php
+                                                                }
+
+                                                                $req->closeCursor();
+
+                                                            ?>
+                                                        </select><br><br>
+
+                                                        <button type="button" class="removeMotCleJS" onclick="$(this).parents('.MotCleContainer').remove();">Supprimer <i class="fas fa-minus"></i></button>
+                                                    </div>
+                                                <?php 
+                                                    }
+                                                ?>
+                                                </div>
+
+                                                <button type="button" class="addMotCleJS">Ajouter un mot clés <i class="fas fa-plus"></i></button>
+
+                                                <input type="submit">
+                                            </form>
+
+                                            <a href="index.php" class="back"><i class="fas fa-arrow-left"></i> Revenir au tableau</a>
+                                        <?php
+                                    } else {
+                                        $_SESSION['answer'] = "<span>Cet article est introuvable !</span>";
+
+                                        // Redirection avec un message personnalisé
+                                        header('Location: index.php');
                                     }
+                                } else {
+                                    // Redirection avec un message personnalisé
+                                    $_SESSION['answer'] = "<span>Cet article est introuvable !</span>";
+                                    header('Location: index.php');
+                                }
 
-                                    $req->closeCursor();
+                            ?>
 
-                                ?>
-                            </select>
-
-                            <label for="NumAngl">NumAngl :</label>
-                            <select name="NumAngl" id="NumAngl" required>
-                                <option value="" disabled selected>-- Choisir un angle --</option>
-                                <?php 
-                                
-                                    $req = $bdd->query('SELECT * FROM angle ORDER BY NumAngl');
-
-                                    while($donnees = $req->fetch()) {
-                                ?>
-
-                                        <option value="<?php echo $donnees['NumAngl']; ?>" data-lang="<?php echo $donnees['NumLang']; ?>" <?php echo $donnees['NumAngl'] == $NumAnglArt ? "selected" : ""; ?>><?php echo $donnees['LibAngl']; ?></option>
-                                
-                                <?php
-                                    }
-
-                                    $req->closeCursor();
-
-                                ?>
-                            </select>
-
-                            <label for="NumThem">NumThem :</label>
-                            <select name="NumThem" id="NumThem" required>
-                                <option value="" disabled selected>-- Choisir une thématique --</option>
-                                <?php 
-                                
-                                    $req = $bdd->query('SELECT * FROM thematique ORDER BY NumThem');
-
-                                    while($donnees = $req->fetch()) {
-                                ?>
-
-                                        <option value="<?php echo $donnees['NumThem']; ?>" data-lang="<?php echo $donnees['NumLang']; ?>" <?php echo $donnees['NumThem'] == $NumThemArt ? "selected" : ""; ?>><?php echo $donnees['LibThem']; ?></option>
-                                
-                                <?php
-                                    }
-
-                                    $req->closeCursor();
-
-                                ?>
-                            </select>
-
-                            <input type="submit">
-                        </form>
-
-                        <a href="index.php" class="back"><i class="fas fa-arrow-left"></i> Revenir au tableau</a>
-                    <?php
-                } else {
-                    $_SESSION['answer'] = "<span>Cet article est introuvable !</span>";
-
-                    // Redirection avec un message personnalisé
-                    header('Location: index.php');
-                }
-            } else {
-                // Redirection avec un message personnalisé
-                $_SESSION['answer'] = "<span>Cet article est introuvable !</span>";
-                header('Location: index.php');
-            }
-
-        ?>
-
-        <script src="../assets/js/script.js"></script>
+                            <script src="../assets/js/script.js"></script>
+                            </div>
+                        </div>
+                    </div>
     </body>
 
 </html>

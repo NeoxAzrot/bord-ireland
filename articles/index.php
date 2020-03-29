@@ -58,6 +58,7 @@
                         <th>LibConclA</th>
                         <th>UrlPhotA</th>
                         <th>Likes</th>
+                        <th>Mots Clés</th>
                         <th>NumAngl</th>
                         <th>NumThem</th>
                         <th>NumLang</th>
@@ -88,6 +89,21 @@
                         <td><?php echo $donnees['LibConclA'];?></td>
                         <td><img src="../assets/uploads/<?php echo $donnees['UrlPhotA'];?>" alt="Image de l'article"></td>
                         <td><?php echo $donnees['Likes'];?></td>
+                        <td><ul>
+                        <?php
+
+                            $reqMotClesArticle = $bdd->prepare('SELECT * FROM motclearticle WHERE NumArt = ?');
+                            $reqMotClesArticle->execute(array($donnees['NumArt']));
+                            while($donneesMotClesArticle = $reqMotClesArticle->fetch())
+                            {
+                                $reqMotCles = $bdd->prepare('SELECT * FROM motcle WHERE NumMoCle = ?');
+                                $reqMotCles->execute(array($donneesMotClesArticle['NumMoCle']));
+                                $donneesMotCles = $reqMotCles->fetch();
+                                echo '<li>' . $donneesMotCles['LibMoCle'] . '</li>';
+                            }
+
+                        ?>
+                        </ul></td>
                         <td><a href="../angles/index.php"><?php echo $donnees['NumAngl'];?></a></td>
                         <td><a href="../thematiques/index.php"><?php echo $donnees['NumThem'];?></a></td>
                         <td><a href="../langues/index.php"><?php echo $donnees['NumLang'];?></a></td>
