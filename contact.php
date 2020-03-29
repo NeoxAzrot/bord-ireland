@@ -65,38 +65,54 @@
     
         ?> 
 
-        <h1>Contact</h1>
 
         <!-- Menus -->
         <?php include 'assets/php/menu.php'; ?>
-        <?php include 'assets/php/btnConnexion.php'; ?>
 
-        <?php 
+        <div class="contact">
+            <div class="btnContact">
+                <?php include 'assets/php/btnConnexion.php'; ?>
+            </div>
+            
+            <div class="contactContent">
+                <h1>Contact</h1>
 
-            if(isset($validation) && $validation == true) {
-                echo "Le message a bien été envoyé !";
-            }
+                <div class="contactContent1">
+                    <?php 
 
-        ?>
+                        if(isset($validation) && $validation == true) {
+                            echo "Le message a bien été envoyé !";
+                        }
 
-        <form action="" method="POST" >
-            <label for="name">Prénom / Nom</label>
-            <input type="text" name="name" id="name" placeholder="John Doe" required/>
+                    ?>
 
-            <label for="email">Adresse mail</label>
-            <input type="email" name="email" id="email" placeholder="johndoe@exemple.com" required/>
-
-            <label for="subject">Sujet</label>
-            <input type="text" name="subject" id="subject" placeholder="Entrer votre sujet" required/>
-
-            <label for="message" id="textarea-label">Message</label>
-            <textarea name="message" id="message" placeholder="Entrer votre message" required></textarea>
-
-            <input type="submit" value="Envoyer" />
-            <input type="reset" value="Effacer" />
-        </form>
-        
-        <script src="assets/js/script.js"></script>
+                    <form action="" method="POST" >
+                        <div class="Margin">
+                            <label for="name">Prénom / Nom :</label>
+                            <input type="text" name="name" id="name" placeholder="John Doe" required/><br>
+                        </div>
+                        <div class="Margin">
+                            <label for="email">Adresse mail :</label>
+                            <input type="email" name="email" id="email" placeholder="johndoe@exemple.com" required/><br>
+                        </div>
+                        <div class="Margin">
+                            <label for="subject">Sujet :</label>
+                            <input type="text" name="subject" id="subject" placeholder="Entrer votre sujet" required/><br>
+                        </div>
+                        <div class="Margin">
+                            <label for="message" id="textarea-label">Message :</label><br>
+                            <textarea name="message" id="message" placeholder="Entrer votre message" required></textarea><br>
+                        </div>
+                        <div class="effacer">
+                            <input type="reset" value="Effacer" />
+                        </div>
+                        <div class="submitContact">
+                            <input type="submit" value="Envoyer" />
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
     </body>
 
 </html>

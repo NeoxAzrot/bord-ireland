@@ -73,30 +73,44 @@
         
         
         <?php include '../assets/php/menuInAdminShow.php'; ?>
-        <?php include '../assets/php/menuAdmin.php'; ?>
         
-        <h1>Ajoutez un utilisateur.</h1>
-        
-        <form action="new.php" method="POST">
-            <label for="FirstName">Prénom :</label>
-            <input type="text" id="FirstName" name="FirstName" placeholder="Sur 30 car." size="30" maxlength="30" autofocus="autofocus" required>
+        <div class="thematiques">
+            <?php include '../assets/php/menuAdmin.php'; ?>
 
-            <label for="LastName">Nom :</label>
-            <input type="text" id="LastName" name="LastName" placeholder="Sur 30 car." size="30" maxlength="30" required>
-
-            <label for="EMail">Email :</label>
-            <input type="email" id="EMail" name="EMail" placeholder="Sur 50 car." size="50" maxlength="50" required>
-
-            <label for="Login">Identifiant :</label>
-            <input type="text" id="Login" name="Login" placeholder="Sur 30 car." size="30" maxlength="30" required>
-
-            <label for="Pass">Mot de passe :</label>
-            <input type="password" id="Pass" name="Pass" placeholder="Sur 255 car." maxlength="255" minlength="6" required>
-
-            <input type="submit">
-        </form>
-
-        <a href="index.php" class="back"><i class="fas fa-arrow-left"></i> Revenir au tableau</a>
+            <div class="Update">      
+                <h1>Ajoutez un utilisateur.</h1>
+                    <div class="UpdateContent">
+                        <form action="new.php" method="POST">
+                            <div class="Margin">
+                                <label for="FirstName">Prénom :</label>
+                                <input type="text" id="FirstName" name="FirstName" placeholder="Sur 30 car." size="30" maxlength="30" autofocus="autofocus" required><br>
+                            </div>
+                            <div class="Margin">
+                                <label for="LastName">Nom :</label>
+                                <input type="text" id="LastName" name="LastName" placeholder="Sur 30 car." size="30" maxlength="30" required><br>
+                            </div>
+                            <div class="Margin">
+                                <label for="EMail">Email :</label>
+                                <input type="email" id="EMail" name="EMail" placeholder="Sur 50 car." size="50" maxlength="50" required><br>
+                            </div>
+                            <div class="Margin">
+                                <label for="Login">Identifiant :</label>
+                                <input type="text" id="Login" name="Login" placeholder="Sur 30 car." size="30" maxlength="30" required><br>
+                            </div>
+                            <div class="Margin">
+                                <label for="Pass">Mot de passe :</label>
+                                <input type="password" id="Pass" name="Pass" placeholder="Sur 255 car." maxlength="255" minlength="6" required><br>
+                            </div>
+                            <div class="Margin">
+                                <input type="submit"><br>
+                            </div>
+                        </form>
+                        <div class="Margin">
+                            <a href="index.php" class="back"><i class="fas fa-arrow-left"></i> Revenir au tableau</a>
+                        </div>
+                    </div>
+            </div>
+        </div>
     </body>
 
 </html>

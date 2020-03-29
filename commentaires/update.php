@@ -26,130 +26,138 @@
     <body>
         
         <?php include '../assets/php/menuInAdminShow.php'; ?>
-        <?php include '../assets/php/menuAdmin.php'; ?>
-        
-        <?php
-        
-            // Affiche le formulaire seulement la première fois
-            if($_POST) {
-                // Vérifie si tous les input ont été remplis et contrôle la saisie
-                if((isset($_POST['DtCreC']) && !empty($_POST['DtCreC'])) AND
-                (isset($_POST['PseudoAuteur']) && !empty($_POST['PseudoAuteur'])) AND
-                (isset($_POST['EmailAuteur']) && !empty($_POST['EmailAuteur'])) AND
-                (isset($_POST['TitrCom']) && !empty($_POST['TitrCom'])) AND
-                (isset($_POST['LibCom']) && !empty($_POST['LibCom'])) AND
-                (isset($_POST['NumArt']) && !empty($_POST['NumArt']))) {
-                    $DtCreC = ctrlSaisies($_POST['DtCreC']);
-                    $DtCreC = str_replace("T", " ", $DtCreC);
-                    $PseudoAuteur = ctrlSaisies($_POST['PseudoAuteur']);
-                    $EmailAuteur = ctrlSaisies($_POST['EmailAuteur']);
-                    $TitrCom = ctrlSaisies($_POST['TitrCom']);
-                    $LibCom = ctrlSaisies($_POST['LibCom']);
-                    $NumArt = ctrlSaisies($_POST['NumArt']);
+        <div class="thematiques">
+            <?php include '../assets/php/menuAdmin.php'; ?>
+            <div class="Update">
+                        <?php
+                        
+                            // Affiche le formulaire seulement la première fois
+                            if($_POST) {
+                                // Vérifie si tous les input ont été remplis et contrôle la saisie
+                                if((isset($_POST['DtCreC']) && !empty($_POST['DtCreC'])) AND
+                                (isset($_POST['PseudoAuteur']) && !empty($_POST['PseudoAuteur'])) AND
+                                (isset($_POST['EmailAuteur']) && !empty($_POST['EmailAuteur'])) AND
+                                (isset($_POST['TitrCom']) && !empty($_POST['TitrCom'])) AND
+                                (isset($_POST['LibCom']) && !empty($_POST['LibCom'])) AND
+                                (isset($_POST['NumArt']) && !empty($_POST['NumArt']))) {
+                                    $DtCreC = ctrlSaisies($_POST['DtCreC']);
+                                    $DtCreC = str_replace("T", " ", $DtCreC);
+                                    $PseudoAuteur = ctrlSaisies($_POST['PseudoAuteur']);
+                                    $EmailAuteur = ctrlSaisies($_POST['EmailAuteur']);
+                                    $TitrCom = ctrlSaisies($_POST['TitrCom']);
+                                    $LibCom = ctrlSaisies($_POST['LibCom']);
+                                    $NumArt = ctrlSaisies($_POST['NumArt']);
 
-                    // Ajout des secondes random car elles ne sont pas disponible dans l'input
-                    $seconde = rand(0, 59);
+                                    // Ajout des secondes random car elles ne sont pas disponible dans l'input
+                                    $seconde = rand(0, 59);
 
-                    if($seconde < 10) {
-                        $seconde = "0" . $seconde;
-                    }
-
-                    $DtCreC = $DtCreC . ':' . $seconde;
-
-                    // Met à jour le commentaire
-                    $req = $bdd->prepare('UPDATE comment SET DtCreC = :DtCreC, PseudoAuteur = :PseudoAuteur, EmailAuteur = :EmailAuteur, TitrCom = :TitrCom, LibCom = :LibCom, NumArt = :NumArt WHERE NumCom = :ID');
-                    $req->execute(array(
-                        'DtCreC' => $DtCreC,
-                        'PseudoAuteur' => $PseudoAuteur,
-                        'EmailAuteur' => $EmailAuteur,
-                        'TitrCom' => $TitrCom,
-                        'LibCom' => $LibCom,
-                        'NumArt' => $NumArt,
-                        'ID' => $_GET['id']
-                        ));
-                }
-
-                // Redirection avec un message personnalisé
-                $_SESSION['answer'] = "La modification de <b>" . $_GET['id'] . "</b> a bien été pris en compte !";
-                header('Location: index.php');
-            }
-
-            if(isset($_GET['id']) && !empty($_GET['id'])) {
-                $req = $bdd->prepare('SELECT * FROM comment WHERE NumCom = :id');
-                $req->execute(array(
-                    'id' => $_GET['id']
-                ));
-
-                $donnees = $req->fetch();
-
-                $NumComArt = $donnees['NumArt'];
-
-                 // Pour enlever les secondes qui marche pas dans l'input
-                $date = substr($donnees['DtCreC'], 0, -3);
-                $date = str_replace(" ", "T", $date);
-
-                // Affiche le formulaire et le pré remplie que si le commentaire existe
-                if(!empty($donnees)) {
-                    ?>
-                        <h1>Modifiez le commentaire <span><?php echo $_GET['id']; ?></span>.</h1>
-
-                        <form action="update.php?id=<?php echo $_GET['id']; ?>" method="POST">
-                            <label for="NumCom">NumCom :</label>
-                            <input type="text" id="NumCom" name="NumCom" placeholder="Sur 6 car." size="6" maxlength="6" value="<?php echo $donnees['NumCom']; ?>" required disabled>
-
-                            <label for="DtCreC">Date :</label>
-                            <input type="datetime-local" id="DtCreC" name="DtCreC" autofocus="autofocus" value="<?php echo $date; ?>" required>
-
-                            <label for="PseudoAuteur">Pseudo :</label>
-                            <input type="text" id="PseudoAuteur" name="PseudoAuteur" placeholder="Sur 20 car." size="20" maxlength="20" value="<?php echo $donnees['PseudoAuteur']; ?>" required>
-
-                            <label for="EmailAuteur">Email :</label>
-                            <input type="email" id="EmailAuteur" name="EmailAuteur" placeholder="Sur 60 car." size="60" maxlength="60" value="<?php echo $donnees['EmailAuteur']; ?>" required>
-
-                            <label for="TitrCom">Titre :</label>
-                            <input type="text" id="TitrCom" name="TitrCom" placeholder="Sur 60 car." size="60" maxlength="60" value="<?php echo $donnees['TitrCom']; ?>" required>
-
-                            <label for="LibCom">Libellé du commentaire :</label>
-                            <textarea name="LibCom" id="LibCom" cols="30" rows="10" placeholder="Ecrivez ici..." required><?php echo $donnees['LibCom']; ?></textarea>
-
-                            <label for="NumArt">Article :</label>
-                            <select name="NumArt" id="NumArt" required>
-                                <option value="" disabled selected>-- Choisir un article --</option>
-                                <?php 
-                                
-                                    $req = $bdd->query('SELECT * FROM article ORDER BY DtCreA DESC');
-
-                                    while($donnees = $req->fetch()) {
-                                ?>
-
-                                        <option value="<?php echo $donnees['NumArt']; ?>" <?php echo $donnees['NumArt'] == $NumComArt ? "selected" : ""; ?>><?php echo $donnees['LibTitrA']; ?></option>
-                                
-                                <?php
+                                    if($seconde < 10) {
+                                        $seconde = "0" . $seconde;
                                     }
 
-                                    $req->closeCursor();
+                                    $DtCreC = $DtCreC . ':' . $seconde;
 
-                                ?>
-                            </select>
+                                    // Met à jour le commentaire
+                                    $req = $bdd->prepare('UPDATE comment SET DtCreC = :DtCreC, PseudoAuteur = :PseudoAuteur, EmailAuteur = :EmailAuteur, TitrCom = :TitrCom, LibCom = :LibCom, NumArt = :NumArt WHERE NumCom = :ID');
+                                    $req->execute(array(
+                                        'DtCreC' => $DtCreC,
+                                        'PseudoAuteur' => $PseudoAuteur,
+                                        'EmailAuteur' => $EmailAuteur,
+                                        'TitrCom' => $TitrCom,
+                                        'LibCom' => $LibCom,
+                                        'NumArt' => $NumArt,
+                                        'ID' => $_GET['id']
+                                        ));
+                                }
 
-                            <input type="submit">
-                        </form>
+                                // Redirection avec un message personnalisé
+                                $_SESSION['answer'] = "La modification de <b>" . $_GET['id'] . "</b> a bien été pris en compte !";
+                                header('Location: index.php');
+                            }
 
-                        <a href="index.php" class="back"><i class="fas fa-arrow-left"></i> Revenir au tableau</a>
-                    <?php
-                } else {
-                    $_SESSION['answer'] = "<span>Ce commentaire est introuvable !</span>";
+                            if(isset($_GET['id']) && !empty($_GET['id'])) {
+                                $req = $bdd->prepare('SELECT * FROM comment WHERE NumCom = :id');
+                                $req->execute(array(
+                                    'id' => $_GET['id']
+                                ));
 
-                    // Redirection avec un message personnalisé
-                    header('Location: index.php');
-                }
-            } else {
-                // Redirection avec un message personnalisé
-                $_SESSION['answer'] = "<span>Ce commentaire est introuvable !</span>";
-                header('Location: index.php');
-            }
+                                $donnees = $req->fetch();
 
-        ?>
+                                $NumComArt = $donnees['NumArt'];
+
+                                // Pour enlever les secondes qui marche pas dans l'input
+                                $date = substr($donnees['DtCreC'], 0, -3);
+                                $date = str_replace(" ", "T", $date);
+
+                                // Affiche le formulaire et le pré remplie que si le commentaire existe
+                                if(!empty($donnees)) {
+                                    ?>
+                                        <h1>Modifiez le commentaire <span><?php echo $_GET['id']; ?></span>.</h1>
+                                            <div class="UpdateContent">
+                                                <form action="update.php?id=<?php echo $_GET['id']; ?>" method="POST">
+                                                    <label for="NumCom">NumCom :</label>
+                                                    <input type="text" id="NumCom" name="NumCom" placeholder="Sur 6 car." size="6" maxlength="6" value="<?php echo $donnees['NumCom']; ?>" required disabled><br>
+
+                                                    <label for="DtCreC">Date :</label>
+                                                    <input type="datetime-local" id="DtCreC" name="DtCreC" autofocus="autofocus" value="<?php echo $date; ?>" required><br>
+
+                                                    <label for="PseudoAuteur">Pseudo :</label>
+                                                    <input type="text" id="PseudoAuteur" name="PseudoAuteur" placeholder="Sur 20 car." size="20" maxlength="20" value="<?php echo $donnees['PseudoAuteur']; ?>" required><br>
+
+                                                    <label for="EmailAuteur">Email :</label>
+                                                    <input type="email" id="EmailAuteur" name="EmailAuteur" placeholder="Sur 60 car." size="60" maxlength="60" value="<?php echo $donnees['EmailAuteur']; ?>" required><br>
+
+                                                    <label for="TitrCom">Titre :</label>
+                                                    <input type="text" id="TitrCom" name="TitrCom" placeholder="Sur 60 car." size="60" maxlength="60" value="<?php echo $donnees['TitrCom']; ?>" required><br>
+
+                                                    <label for="LibCom">Libellé du commentaire :</label><br>
+                                                    <textarea name="LibCom" id="LibCom" cols="30" rows="10" placeholder="Ecrivez ici..." required><?php echo $donnees['LibCom']; ?></textarea><br>
+
+                                                    <label for="NumArt">Article :</label>
+                                                    <select name="NumArt" id="NumArt" required>
+                                                        <option value="" disabled selected>-- Choisir un article --</option>
+                                                        <?php 
+                                                        
+                                                            $req = $bdd->query('SELECT * FROM article ORDER BY DtCreA DESC');
+
+                                                            while($donnees = $req->fetch()) {
+                                                        ?>
+
+                                                                <option value="<?php echo $donnees['NumArt']; ?>" <?php echo $donnees['NumArt'] == $NumComArt ? "selected" : ""; ?>><?php echo $donnees['LibTitrA']; ?></option>
+                                                        
+                                                        <?php
+                                                            }
+
+                                                            $req->closeCursor();
+
+                                                        ?>
+                                                    </select><br>
+                                                    <div class="Margin">
+                                                        <input type="submit"><br>
+                                                    </div>
+                                                </form>
+                                                
+                                                <div class="Margin">
+                                                    <a href="index.php" class="back"><i class="fas fa-arrow-left"></i> Revenir au tableau</a>
+                                                </div>
+                                            </div>
+                                    <?php
+                                } else {
+                                    $_SESSION['answer'] = "<span>Ce commentaire est introuvable !</span>";
+
+                                    // Redirection avec un message personnalisé
+                                    header('Location: index.php');
+                                }
+                            } else {
+                                // Redirection avec un message personnalisé
+                                $_SESSION['answer'] = "<span>Ce commentaire est introuvable !</span>";
+                                header('Location: index.php');
+                            }
+
+                        ?>
+                
+            </div>
+        </div>
     </body>
 
 </html>

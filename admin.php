@@ -40,14 +40,16 @@
                     <li><a href="mots_cles/index.php">Mots clés</a></li>
                     <li><a href="thematiques/index.php">Thématiques</a></li>
                     <li><a href="langues/index.php">Langues</a></li>
-                    <li class="connexionAdmin"> <?php include 'assets/php/btnConnexion.php'; ?></li>
+                    <li class="btnAdmin"> <?php include 'assets/php/btnConnexion.php'; ?></li>
                 </ul>
             </div>
         
        
-            <div class="contentAdmin">
-                <h1>Administrateur</h1>
-
+            <div class="contact">
+                <div class="contactContent">
+                    <h1>Administrateur</h1>
+                    <p>Bienvenu sur la page Administrateur de Bord'Irlande ! <br> D'ici vous pourrez gérer toute l'administratiion du site !</p>
+                </div>
                 <?php
 
                     // Check si l'admin est connecté

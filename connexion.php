@@ -120,8 +120,9 @@
                     </form>
 
                     <!-- Lien pour s'inscrire -->
-                    <a href="inscription.php">S'inscrire</a>
-
+                    <div class="inscrireConnexion">
+                        <a href="inscription.php">S'inscrire</a>
+                    </div>
                     <script src="assets/js/script.js"></script>
                 </div>
             </div>
