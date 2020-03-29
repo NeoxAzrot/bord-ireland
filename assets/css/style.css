@@ -58,7 +58,7 @@
 .menuAdmin li {
     flex-direction: row;
     list-style: none;
-    margin-left: 4vw;
+    margin-left: 3vw;
 }
 
 .menuAdmin ul {
@@ -161,6 +161,13 @@ body .administration {
     height: 90vh;
 }
 
+.administration p {
+    font-family: Helvetica, sans-serif;
+    font-size: 30px;
+    text-align: center;
+    margin-top: 15vh;
+}
+
 /* Acceuil */ 
 body {
     display: flex;
@@ -181,8 +188,8 @@ body {
 
 /* btnConnexion */
 .btnConnexion {
+    display: flex;
     float: right;
-    margin-top: 3vh;
     margin-right: 4vw;
     font-size: 33px;
 }
@@ -193,7 +200,7 @@ body {
 }
 /* Connexion Menu Admin */
 .connexionAdmin {
-    border: 1px solid black;
+    width: 5vw;
 }
 /* Administration article */
 .articleAdmin {
@@ -368,3 +375,44 @@ body {
 .btnContact {
     float: right;
 }
+
+/* affichage pseudo et deconnexion Admin */
+.pseudoAdmin {
+    margin-right: 1vw;
+    font-size: 25px;
+    font-family: Helvetica, sans-serif;
+    margin-bottom: 2vh;
+}
+
+.pseudoAdminInAdminShow {
+    display: flex;
+}
+
+
+/*New Article */ 
+
+
+/* En savoir plus article */ 
+.SavoirPlus {
+    display: flex;
+    flex-direction: column;
+    text-align: center;
+    font-family: Helvetica, sans-serif;
+    color: #345831;
+}
+.SavoirPlus h1 {
+    font-family: 'Bebas Neue', cursive;
+    color: #6D0A1B;
+    font-size: 50px;
+}
+.SavoirPlusContent {
+    background-color: white;
+    width: 60vw;
+    height: 70vh;
+    margin-top: 7vh;
+    margin-left: 10vw;
+    font-size: 20px;
+    overflow: auto;
+}
+
+.SavoirPlusContent

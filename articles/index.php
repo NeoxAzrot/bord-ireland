@@ -86,7 +86,7 @@
                         <td><?php echo $donnees['LibSsTitr2'];?></td>
                         <td><?php echo $donnees['Parag3A'];?></td>
                         <td><?php echo $donnees['LibConclA'];?></td>
-                        <td><img src="<?php echo $donnees['UrlPhotA'];?>" alt="Image de l'article"></td>
+                        <td><img src="../assets/uploads/<?php echo $donnees['UrlPhotA'];?>" alt="Image de l'article"></td>
                         <td><?php echo $donnees['Likes'];?></td>
                         <td><a href="../angles/index.php"><?php echo $donnees['NumAngl'];?></a></td>
                         <td><a href="../thematiques/index.php"><?php echo $donnees['NumThem'];?></a></td>

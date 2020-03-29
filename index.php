@@ -29,27 +29,32 @@
         <!-- Menus -->
         <?php include 'assets/php/menu.php'; ?>
 
-        <div class="body">
+        <div class="contact">
+            <div class="btnContact">
                 <?php include 'assets/php/btnConnexion.php'; ?>
+            </div>
+            
+            <div class="contactContent">
 
-            <?php 
+                <?php 
 
-                // Affiche le dernier article
-                $req = $bdd->query('SELECT * FROM article ORDER BY DtCreA DESC LIMIT 1');
+                    // Affiche le dernier article
+                    $req = $bdd->query('SELECT * FROM article ORDER BY DtCreA DESC LIMIT 1');
 
-                while ($donnees = $req->fetch())
-                {
-                    echo $donnees['LibTitrA'] . ' - ';
-                    echo dateChangeFormat($donnees['DtCreA'], "Y-m-d", "d/m/Y");
-                    echo '<br><br>';
-                    echo "<a href='articles.php?numArt=" . $donnees['NumArt'] . "'>En savoir plus</a>";
-                }
+                    while ($donnees = $req->fetch())
+                    {
+                        echo $donnees['LibTitrA'] . ' - ';
+                        echo dateChangeFormat($donnees['DtCreA'], "Y-m-d", "d/m/Y");
+                        echo '<br><br>';
+                        echo "<a href='articles.php?numArt=" . $donnees['NumArt'] . "'>En savoir plus</a>";
+                    }
 
-                $req->closeCursor();
+                    $req->closeCursor();
 
-            ?>
+                ?>
 
-            <script src="assets/js/script.js"></script>
+                <script src="assets/js/script.js"></script>
+            </div>
         </div>
     </body>
 
