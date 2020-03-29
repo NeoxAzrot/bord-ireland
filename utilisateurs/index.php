@@ -70,7 +70,13 @@
                         <td><?php echo $donnees['FirstName'];?></td>
                         <td><?php echo $donnees['EMail'];?></td>
                         <td><a href="update.php?id=<?php echo $donnees['Login'];?>" class="modified_link"><i class="fas fa-edit"></i> Modifier</a></td>
+                        <?php
+                        if($donnees['Login'] != "Admin") {
+                        ?>
                         <td><a href="delete.php?id=<?php echo $donnees['Login'];?>" class="delete_link" data-id="<?php echo $donnees['Login']; ?>"><i class="fas fa-trash-alt"></i> Supprimer</a></td>
+                        <?php
+                        }
+                        ?>
                     </tr>
 
                     <?php 

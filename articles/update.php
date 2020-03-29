@@ -43,7 +43,8 @@
                 (isset($_POST['Likes'])) AND
                 (isset($_POST['NumAngl']) && !empty($_POST['NumAngl'])) AND
                 (isset($_POST['NumThem']) && !empty($_POST['NumThem'])) AND
-                (isset($_POST['NumLang']) && !empty($_POST['NumLang']))) {
+                (isset($_POST['NumLang']) && !empty($_POST['NumLang'])) AND
+                (isset($_POST['MotCle']) && !empty($_POST['MotCle']))) {
                     $DtCreA = ctrlSaisies($_POST['DtCreA']);
                     $LibTitrA = ctrlSaisies($_POST['LibTitrA']);
                     $LibChapoA = ctrlSaisies($_POST['LibChapoA']);
@@ -61,6 +62,24 @@
                     $NumThem = strtoupper($NumThem);
                     $NumLang = ctrlSaisies($_POST['NumLang']);
                     $NumLang = strtoupper($NumLang);
+                    $MotCle = $_POST['MotCle']; // On ne peut pas controler la saisie de tout l'array (on doit faire cas par cas)
+                    $NbMotCle = count($MotCle);
+
+                    // Supprime tous les mots clés reliés avant de les remettre
+                    $req = $bdd->prepare('DELETE FROM motclearticle WHERE NumArt = :id');
+                    $req->execute(array(
+                        'id' => $_GET['id']
+                    ));
+
+                    // Ajoute tous les mots clés de l'article
+                    for($i = 0; $i < $NbMotCle; $i++)
+                    {
+                        $req = $bdd->prepare('INSERT INTO motclearticle(NumArt, NumMoCle) VALUES(:NumArt, :NumMoCle)');
+                        $req->execute(array(
+                            'NumArt' => $_GET['id'],
+                            'NumMoCle' => $MotCle[$i]
+                            ));
+                    }
 
                     if($Likes < 0) {
                         $Likes = 0;
@@ -139,6 +158,8 @@
                         $_SESSION['answer'] = "La modification de <b>" . $_GET['id'] . "</b> a bien été pris en compte !";
                     }
 
+                } else {
+                    $_SESSION['answer'] = "Un mot clés est obligatoire par article pour le référencement dans le blog !";
                 }
 
                 // Redirection avec un message personnalisé
@@ -152,6 +173,22 @@
                 ));
 
                 $donnees = $req->fetch();
+
+                // Récupère le nombre de mots clés
+                $reqMotClesArticle = $bdd->prepare('SELECT COUNT(*) AS nbMotCle FROM motclearticle WHERE NumArt = ?');
+                $reqMotClesArticle->execute(array($_GET['id']));
+                $donneesMotClesArticle = $reqMotClesArticle->fetch();
+
+                $nbMotCle = $donneesMotClesArticle['nbMotCle'];
+
+                // Les mets dans un tableau pour la suite
+                $reqMotCles = $bdd->prepare('SELECT * FROM motclearticle WHERE NumArt = ?');
+                $reqMotCles->execute(array($_GET['id']));
+                $arrayMotCles = array();
+                while($donneesMotCles = $reqMotCles->fetch())
+                {
+                    array_push($arrayMotCles, $donneesMotCles['NumMoCle']);
+                }
 
                 $NumLangArt = $donnees['NumLang'];
                 $NumAnglArt = $donnees['NumAngl'];
@@ -265,6 +302,42 @@
 
                                 ?>
                             </select>
+
+                            <!-- Génération mot clés avec JavaScript -->
+                            <div id="MotCleJS">
+                            <?php 
+                                for($i = 0; $i < $nbMotCle; $i++)
+                                {
+                            ?>
+                                <div class="MotCleContainer">
+                                    <label for="MotCle">Mot clés :</label>
+                                    <select name="MotCle[]" id="MotCle" required>
+                                        <option value="" disabled selected>-- Choisir un mot clés --</option>
+                                        <?php 
+                                        
+                                            $req = $bdd->query('SELECT * FROM motcle ORDER BY NumMoCle');
+
+                                            while($donnees = $req->fetch()) {
+                                        ?>
+
+                                                <option value="<?php echo $donnees['NumMoCle']; ?>" <?php echo $donnees['NumMoCle'] == $arrayMotCles[$i] ? "selected" : ""; ?>><?php echo $donnees['LibMoCle']; ?></option>
+                                        
+                                        <?php
+                                            }
+
+                                            $req->closeCursor();
+
+                                        ?>
+                                    </select>
+
+                                    <button type="button" class="removeMotCleJS" onclick="$(this).parents('.MotCleContainer').remove();">Supprimer <i class="fas fa-minus"></i></button>
+                                </div>
+                            <?php 
+                                }
+                            ?>
+                            </div>
+
+                            <button type="button" class="addMotCleJS">Ajouter un mot clés <i class="fas fa-plus"></i></button>
 
                             <input type="submit">
                         </form>
