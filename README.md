@@ -1,4 +1,4 @@
-Pour se connecter à la base de donnée :
+Pour se connecter avec le .sql donné :
 
-Login : Admin (OBLIGATOIRE)
-Pass : char(255) dans la BDD pour le hachage
+Login : Admin
+Pass : Admin33!

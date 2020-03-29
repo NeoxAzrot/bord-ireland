@@ -30,13 +30,12 @@
         <!-- Menus -->
         <?php include 'assets/php/menu.php'; ?>
 
-        <div class="btnContact">
-            <?php include 'assets/php/btnConnexion.php'; ?>
-        </div>
+            <div class="btnContact">
+                <?php include 'assets/php/btnConnexion.php'; ?>
+            </div>
 
         <div class="SavoirPlus">
         <div class="SavoirPlusContent">
-            <h1>Les articles</h1>
             
             <?php
 
@@ -137,6 +136,8 @@
                     $donnees = $req->fetch();
 
                     // Affiche l'article
+                    echo "<h1>L'article</h1>";
+
                     echo $donnees['LibTitrA'] . ' - ';
                     echo dateChangeFormat($donnees['DtCreA'], "Y-m-d", "d/m/Y");
 
@@ -206,6 +207,8 @@
             } else {
                 // Affiches tout les articles en ordre décroissant, si on ne précise pas un article
                 $req = $bdd->query('SELECT * FROM article ORDER BY DtCreA DESC');
+
+                echo "<h1>Les articles</h1>";
 
                 while ($donnees = $req->fetch())
                 {
