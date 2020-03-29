@@ -28,70 +28,72 @@
         <?php include '../assets/php/menuInAdminShow.php'; ?>
         <div class="thematiques">
             <?php include '../assets/php/menuAdmin.php'; ?>
-            
+            <div class="Update">
             <h1>Supprimez la thématique <span><?php echo $_GET['id']; ?></span>.</h1>
-            
-            <?php
+                <div class="UpdateContent"> 
+                    <?php
 
-                if(isset($_GET['id']) && !empty($_GET['id'])) {
-
-                    $req = $bdd->prepare('SELECT * FROM article WHERE NumThem = :id');
-                    $req->execute(array(
-                        'id' => $_GET['id']
-                    ));
-                    $donnees = $req->fetch();
-
-                    if(empty($donnees)) {
-                        // Supprime la thématique en utilisant la clés primaire
-                        $req = $bdd->prepare('DELETE FROM thematique WHERE NumThem = :id');
-                        $req->execute(array(
-                            'id' => $_GET['id']
-                        ));
-
-                        $req->closeCursor();
-
-                        // Redirection avec un message personnalisé
-                        $_SESSION['answer'] = "<span><b>" . $_GET['id'] . "</b> a bien été supprimé !</span>";
-                        header('Location: index.php');
-
-                    } else {
-                        ?>
-
-                        <?php
+                        if(isset($_GET['id']) && !empty($_GET['id'])) {
 
                             $req = $bdd->prepare('SELECT * FROM article WHERE NumThem = :id');
                             $req->execute(array(
                                 'id' => $_GET['id']
                             ));
+                            $donnees = $req->fetch();
 
-                        ?>
+                            if(empty($donnees)) {
+                                // Supprime la thématique en utilisant la clés primaire
+                                $req = $bdd->prepare('DELETE FROM thematique WHERE NumThem = :id');
+                                $req->execute(array(
+                                    'id' => $_GET['id']
+                                ));
 
-                        <p>Pour supprimer la thématique <?php echo $_GET['id']; ?>, vous devrez d'abord supprimer cette liste :</p>
-                        <ul>
+                                $req->closeCursor();
 
-                        <?php
+                                // Redirection avec un message personnalisé
+                                $_SESSION['answer'] = "<span><b>" . $_GET['id'] . "</b> a bien été supprimé !</span>";
+                                header('Location: index.php');
 
-                        while($donnees = $req->fetch())
-                        {
-                            echo "<li>Article : " . $donnees['NumArt'] ."</li>";
+                            } else {
+                                ?>
+
+                                <?php
+
+                                    $req = $bdd->prepare('SELECT * FROM article WHERE NumThem = :id');
+                                    $req->execute(array(
+                                        'id' => $_GET['id']
+                                    ));
+
+                                ?>
+
+                                <p>Pour supprimer la thématique <?php echo $_GET['id']; ?>, vous devrez d'abord supprimer cette liste :</p>
+                                <ul>
+
+                                <?php
+
+                                while($donnees = $req->fetch())
+                                {
+                                    echo "<li>Article : " . $donnees['NumArt'] ."</li>";
+                                }
+
+                                ?>
+                                
+                                </ul>
+
+                                <?php
+                            }
+
+                        } else {
+                            // Redirection avec un message personnalisé
+                            $_SESSION['answer'] = "<span>Cette thématique est introuvable !</span>";
+                            header('Location: index.php');
                         }
 
-                        ?>
-                        
-                        </ul>
+                    ?>
 
-                        <?php
-                    }
-
-                } else {
-                    // Redirection avec un message personnalisé
-                    $_SESSION['answer'] = "<span>Cette thématique est introuvable !</span>";
-                    header('Location: index.php');
-                }
-
-            ?>
-
-            <a href="index.php" class="back"><i class="fas fa-arrow-left"></i> Revenir au tableau</a>
+                    <a href="index.php" class="back"><i class="fas fa-arrow-left"></i> Revenir au tableau</a>
+                </div>
+            </div>
         </div>
     </body>
 

@@ -28,70 +28,73 @@
         <?php include '../assets/php/menuInAdminShow.php'; ?>
         <div class="thematiques">
             <?php include '../assets/php/menuAdmin.php'; ?>
-            
+            <div class="Update">
             <h1>Supprimez le mot clés <span><?php echo $_GET['id']; ?></span>.</h1>
-            
-            <?php
 
-                if(isset($_GET['id']) && !empty($_GET['id'])) {
+                <div class="UpdateContent"> 
+                    <?php
 
-                    $req = $bdd->prepare('SELECT * FROM motclearticle WHERE NumMoCle = :id');
-                    $req->execute(array(
-                        'id' => $_GET['id']
-                    ));
-                    $donnees = $req->fetch();
-
-                    if(empty($donnees)) {
-                        // Supprime le mot clés en utilisant la clés primaire
-                        $req = $bdd->prepare('DELETE FROM motcle WHERE NumMoCle = :id');
-                        $req->execute(array(
-                            'id' => $_GET['id']
-                        ));
-
-                        $req->closeCursor();
-
-                        // Redirection avec un message personnalisé
-                        $_SESSION['answer'] = "<span><b>" . $_GET['id'] . "</b> a bien été supprimé !</span>";
-                        header('Location: index.php');
-
-                    } else {
-                        ?>
-
-                        <?php
+                        if(isset($_GET['id']) && !empty($_GET['id'])) {
 
                             $req = $bdd->prepare('SELECT * FROM motclearticle WHERE NumMoCle = :id');
                             $req->execute(array(
                                 'id' => $_GET['id']
                             ));
+                            $donnees = $req->fetch();
 
-                        ?>
+                            if(empty($donnees)) {
+                                // Supprime le mot clés en utilisant la clés primaire
+                                $req = $bdd->prepare('DELETE FROM motcle WHERE NumMoCle = :id');
+                                $req->execute(array(
+                                    'id' => $_GET['id']
+                                ));
 
-                        <p>Pour supprimer le mot clés <?php echo $_GET['id']; ?>, vous devrez d'abord supprimer le mots clés relié à cette liste (allez dans « Modifier » de l'article en question et supprimez le mot clés) :</p>
-                        <ul>
+                                $req->closeCursor();
 
-                        <?php
+                                // Redirection avec un message personnalisé
+                                $_SESSION['answer'] = "<span><b>" . $_GET['id'] . "</b> a bien été supprimé !</span>";
+                                header('Location: index.php');
 
-                        while($donnees = $req->fetch())
-                        {
-                            echo "<li>Article : " . $donnees['NumArt'] ."</li>";
+                            } else {
+                                ?>
+
+                                <?php
+
+                                    $req = $bdd->prepare('SELECT * FROM motclearticle WHERE NumMoCle = :id');
+                                    $req->execute(array(
+                                        'id' => $_GET['id']
+                                    ));
+
+                                ?>
+
+                                <p>Pour supprimer le mot clés <?php echo $_GET['id']; ?>, vous devrez d'abord supprimer le mots clés relié à cette liste (allez dans « Modifier » de l'article en question et supprimez le mot clés) :</p>
+                                <ul>
+
+                                <?php
+
+                                while($donnees = $req->fetch())
+                                {
+                                    echo "<li>Article : " . $donnees['NumArt'] ."</li>";
+                                }
+
+                                ?>
+                                
+                                </ul>
+
+                                <?php
+                            }
+
+                        } else {
+                            // Redirection avec un message personnalisé
+                            $_SESSION['answer'] = "<span>Ce mot clés est introuvable !</span>";
+                            header('Location: index.php');
                         }
 
-                        ?>
-                        
-                        </ul>
+                    ?>
 
-                        <?php
-                    }
-
-                } else {
-                    // Redirection avec un message personnalisé
-                    $_SESSION['answer'] = "<span>Ce mot clés est introuvable !</span>";
-                    header('Location: index.php');
-                }
-
-            ?>
-
-            <a href="index.php" class="back"><i class="fas fa-arrow-left"></i> Revenir au tableau</a>
+                    <a href="index.php" class="back"><i class="fas fa-arrow-left"></i> Revenir au tableau</a>
+                </div>
+            </div>
         </div>
     </body>
 

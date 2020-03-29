@@ -28,136 +28,139 @@
         <?php include '../assets/php/menuInAdminShow.php'; ?>
         <div class="thematiques">
             <?php include '../assets/php/menuAdmin.php'; ?>
-            
-            <h1>Supprimez la langue <span><?php echo $_GET['id']; ?></span>.</h1>
-            
-            <?php
+            <div class="Update">
+                <h1>Supprimez la langue <span><?php echo $_GET['id']; ?></span>.</h1>
 
-                if(isset($_GET['id']) && !empty($_GET['id'])) {
+                <div class="UpdateContent">  
+                    <?php
 
-                    $deleteIsOk = true;
+                        if(isset($_GET['id']) && !empty($_GET['id'])) {
 
-                    $req = $bdd->prepare('SELECT * FROM angle WHERE NumLang = :id');
-                    $req->execute(array(
-                        'id' => $_GET['id']
-                    ));
-                    $donnees = $req->fetch();
-
-                    if(!empty($donnees)) {
-                        $deleteIsOk = false;
-                    }
-
-                    $req = $bdd->prepare('SELECT * FROM thematique WHERE NumLang = :id');
-                    $req->execute(array(
-                        'id' => $_GET['id']
-                    ));
-                    $donnees = $req->fetch();
-
-                    if(!empty($donnees)) {
-                        $deleteIsOk = false;
-                    }
-
-                    $req = $bdd->prepare('SELECT * FROM motcle WHERE NumLang = :id');
-                    $req->execute(array(
-                        'id' => $_GET['id']
-                    ));
-                    $donnees = $req->fetch();
-
-                    if(!empty($donnees)) {
-                        $deleteIsOk = false;
-                    }
-
-                    $req = $bdd->prepare('SELECT * FROM article WHERE NumLang = :id');
-                    $req->execute(array(
-                        'id' => $_GET['id']
-                    ));
-                    $donnees = $req->fetch();
-
-                    if(!empty($donnees)) {
-                        $deleteIsOk = false;
-                    }
-
-                    if($deleteIsOk) {
-                        // Supprime la langue en utilisant la clés primaire
-                        $req = $bdd->prepare('DELETE FROM langue WHERE NumLang = :id');
-                        $req->execute(array(
-                            'id' => $_GET['id']
-                        ));
-
-                        $req->closeCursor();
-
-                        // Redirection avec un message personnalisé
-                        $_SESSION['answer'] = "<span><b>" . $_GET['id'] . "</b> a bien été supprimé !</span>";
-                        header('Location: index.php');
-
-                    } else {
-                        ?>
-
-                        <?php
+                            $deleteIsOk = true;
 
                             $req = $bdd->prepare('SELECT * FROM angle WHERE NumLang = :id');
                             $req->execute(array(
                                 'id' => $_GET['id']
                             ));
+                            $donnees = $req->fetch();
 
-                        ?>
+                            if(!empty($donnees)) {
+                                $deleteIsOk = false;
+                            }
 
-                        <p>Pour supprimer la langue <?php echo $_GET['id']; ?>, vous devrez d'abord supprimer cette liste :</p>
-                        <ul>
+                            $req = $bdd->prepare('SELECT * FROM thematique WHERE NumLang = :id');
+                            $req->execute(array(
+                                'id' => $_GET['id']
+                            ));
+                            $donnees = $req->fetch();
 
-                        <?php
+                            if(!empty($donnees)) {
+                                $deleteIsOk = false;
+                            }
 
-                        while($donnees = $req->fetch())
-                        {
-                            echo "<li>Angle : " . $donnees['NumAngl'] ."</li>";
+                            $req = $bdd->prepare('SELECT * FROM motcle WHERE NumLang = :id');
+                            $req->execute(array(
+                                'id' => $_GET['id']
+                            ));
+                            $donnees = $req->fetch();
+
+                            if(!empty($donnees)) {
+                                $deleteIsOk = false;
+                            }
+
+                            $req = $bdd->prepare('SELECT * FROM article WHERE NumLang = :id');
+                            $req->execute(array(
+                                'id' => $_GET['id']
+                            ));
+                            $donnees = $req->fetch();
+
+                            if(!empty($donnees)) {
+                                $deleteIsOk = false;
+                            }
+
+                            if($deleteIsOk) {
+                                // Supprime la langue en utilisant la clés primaire
+                                $req = $bdd->prepare('DELETE FROM langue WHERE NumLang = :id');
+                                $req->execute(array(
+                                    'id' => $_GET['id']
+                                ));
+
+                                $req->closeCursor();
+
+                                // Redirection avec un message personnalisé
+                                $_SESSION['answer'] = "<span><b>" . $_GET['id'] . "</b> a bien été supprimé !</span>";
+                                header('Location: index.php');
+
+                            } else {
+                                ?>
+
+                                <?php
+
+                                    $req = $bdd->prepare('SELECT * FROM angle WHERE NumLang = :id');
+                                    $req->execute(array(
+                                        'id' => $_GET['id']
+                                    ));
+
+                                ?>
+
+                                <p>Pour supprimer la langue <?php echo $_GET['id']; ?>, vous devrez d'abord supprimer cette liste :</p>
+                                <ul>
+
+                                <?php
+
+                                while($donnees = $req->fetch())
+                                {
+                                    echo "<li>Angle : " . $donnees['NumAngl'] ."</li>";
+                                }
+
+                                $req = $bdd->prepare('SELECT * FROM thematique WHERE NumLang = :id');
+                                $req->execute(array(
+                                    'id' => $_GET['id']
+                                ));
+
+                                while($donnees = $req->fetch())
+                                {
+                                    echo "<li>Thématique : " . $donnees['NumThem'] ."</li>";
+                                }
+
+                                $req = $bdd->prepare('SELECT * FROM motcle WHERE NumLang = :id');
+                                $req->execute(array(
+                                    'id' => $_GET['id']
+                                ));
+
+                                while($donnees = $req->fetch())
+                                {
+                                    echo "<li>Mot clés : " . $donnees['NumMoCle'] ."</li>";
+                                }
+
+                                $req = $bdd->prepare('SELECT * FROM article WHERE NumLang = :id');
+                                $req->execute(array(
+                                    'id' => $_GET['id']
+                                ));
+
+                                while($donnees = $req->fetch())
+                                {
+                                    echo "<li>Article : " . $donnees['NumArt'] ."</li>";
+                                }
+
+                                ?>
+                                
+                                </ul>
+
+                                <?php
+                            }
+
+                        } else {
+                            // Redirection avec un message personnalisé
+                            $_SESSION['answer'] = "<span>Cette langue est introuvable !</span>";
+                            header('Location: index.php');
                         }
 
-                        $req = $bdd->prepare('SELECT * FROM thematique WHERE NumLang = :id');
-                        $req->execute(array(
-                            'id' => $_GET['id']
-                        ));
+                    ?>
 
-                        while($donnees = $req->fetch())
-                        {
-                            echo "<li>Thématique : " . $donnees['NumThem'] ."</li>";
-                        }
-
-                        $req = $bdd->prepare('SELECT * FROM motcle WHERE NumLang = :id');
-                        $req->execute(array(
-                            'id' => $_GET['id']
-                        ));
-
-                        while($donnees = $req->fetch())
-                        {
-                            echo "<li>Mot clés : " . $donnees['NumMoCle'] ."</li>";
-                        }
-
-                        $req = $bdd->prepare('SELECT * FROM article WHERE NumLang = :id');
-                        $req->execute(array(
-                            'id' => $_GET['id']
-                        ));
-
-                        while($donnees = $req->fetch())
-                        {
-                            echo "<li>Article : " . $donnees['NumArt'] ."</li>";
-                        }
-
-                        ?>
-                        
-                        </ul>
-
-                        <?php
-                    }
-
-                } else {
-                    // Redirection avec un message personnalisé
-                    $_SESSION['answer'] = "<span>Cette langue est introuvable !</span>";
-                    header('Location: index.php');
-                }
-
-            ?>
-
-            <a href="index.php" class="back"><i class="fas fa-arrow-left"></i> Revenir au tableau</a>
+                    <a href="index.php" class="back"><i class="fas fa-arrow-left"></i> Revenir au tableau</a>
+                </div>
+            </div>
         </div>
     </body>
 

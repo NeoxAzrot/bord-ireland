@@ -30,7 +30,6 @@
             <?php include '../assets/php/menuAdmin.php'; ?>
             
             <h1>Supprimez l'article <span><?php echo $_GET['id']; ?></span>.</h1>
-            
             <?php
 
                 // Supprime l'article en utilisant la clés primaire
