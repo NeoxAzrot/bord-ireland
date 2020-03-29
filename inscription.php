@@ -103,36 +103,50 @@
 
         <!-- Menus -->
         <?php include 'assets/php/menu.php'; ?>
-        <?php include 'assets/php/btnConnexion.php'; ?>
 
-        <h1>Inscription</h1>
+        <div class="contact">
+            <div class="contactContent">
+                <h1>Inscription</h1>
 
-        <!-- Formulaire d'inscription avec input près remplis si erreur -->
-        <form action="" method="POST">
-            <label for="firstName">Prénom :</label>
-            <input type="text" id="firstName" name="firstName" placeholder="Sur 30 car." value="<?php echo isset($_SESSION['errorLogin']) && $_SESSION['errorLogin'] == true ? $_SESSION['firstName'] : "" ?>" size="30" maxlength="30" autofocus="autofocus" required>
+            <!-- Formulaire d'inscription avec input près remplis si erreur -->
+                <div class="contactContent1">
+                    <form action="" method="POST">
+                        <div class="Margin">
+                            <label for="firstName">Prénom :</label>
+                            <input type="text" id="firstName" name="firstName" placeholder="Sur 30 car." value="<?php echo isset($_SESSION['errorLogin']) && $_SESSION['errorLogin'] == true ? $_SESSION['firstName'] : "" ?>" size="30" maxlength="30" autofocus="autofocus" required> <br>
+                        </div>
+                        <div class="Margin">
+                            <label for="lastName">Nom :</label>
+                            <input type="text" id="lastName" name="lastName" placeholder="Sur 30 car." value="<?php echo isset($_SESSION['errorLogin']) && $_SESSION['errorLogin'] == true ? $_SESSION['lastName'] : "" ?>" size="30" maxlength="30" required> <br>
+                        </div>
+                        <div class="Margin">
+                            <label for="email">Email :</label>
+                            <input type="email" id="email" name="email" placeholder="Sur 50 car." value="<?php echo isset($_SESSION['errorLogin']) && $_SESSION['errorLogin'] == true ? $_SESSION['email'] : "" ?>" size="50" maxlength="50" required> <br>
+                        </div>
+                        <div class="Margin">
+                            <label for="login">Identifiant :</label>
+                            <!-- Message d'erreur de connexion -->
+                            <?php echo isset($_SESSION['errorLogin']) && $_SESSION['errorLogin'] == true ? "Cet identifiant existe déjà !" : "" ?>
+                            <input type="text" id="login" name="login" placeholder="Sur 30 car." value="<?php echo isset($_SESSION['errorLogin']) && $_SESSION['errorLogin'] == true ? $_SESSION['login'] : "" ?>" size="30" maxlength="30" required> <br>
+                        </div>
+                        <div class="Margin">
+                            <label for="password">Mot de passe :</label>
+                            <input type="password" id="password" name="password" placeholder="Sur 255 car." value="<?php echo isset($_SESSION['errorLogin']) && $_SESSION['errorLogin'] == true ? $_SESSION['password'] : "" ?>" maxlength="255" minlength="6" required> <br>
+                        </div>
+                        <div class="submitContact">
+                            <input type="submit"> <br>
+                        </div>
+                    </form>
 
-            <label for="lastName">Nom :</label>
-            <input type="text" id="lastName" name="lastName" placeholder="Sur 30 car." value="<?php echo isset($_SESSION['errorLogin']) && $_SESSION['errorLogin'] == true ? $_SESSION['lastName'] : "" ?>" size="30" maxlength="30" required>
+                    <!-- Lien pour se connecter -->
+                    <div class="inscrireConnexion">
+                        <a href="connexion.php">Se connecter</a>
+                    </div>
 
-            <label for="email">Email :</label>
-            <input type="email" id="email" name="email" placeholder="Sur 50 car." value="<?php echo isset($_SESSION['errorLogin']) && $_SESSION['errorLogin'] == true ? $_SESSION['email'] : "" ?>" size="50" maxlength="50" required>
-
-            <label for="login">Identifiant :</label>
-            <!-- Message d'erreur de connexion -->
-            <?php echo isset($_SESSION['errorLogin']) && $_SESSION['errorLogin'] == true ? "Cet identifiant existe déjà !" : "" ?>
-            <input type="text" id="login" name="login" placeholder="Sur 30 car." value="<?php echo isset($_SESSION['errorLogin']) && $_SESSION['errorLogin'] == true ? $_SESSION['login'] : "" ?>" size="30" maxlength="30" required>
-
-            <label for="password">Mot de passe :</label>
-            <input type="password" id="password" name="password" placeholder="Sur 255 car." value="<?php echo isset($_SESSION['errorLogin']) && $_SESSION['errorLogin'] == true ? $_SESSION['password'] : "" ?>" maxlength="255" minlength="6" required>
-
-            <input type="submit">
-        </form>
-
-        <!-- Lien pour se connecter -->
-        <a href="connexion.php">Se connecter</a>
-
-        <script src="assets/js/script.js"></script>
+                    <script src="assets/js/script.js"></script>
+                </div>
+            </div>
+        </div>
     </body>
 
 </html>

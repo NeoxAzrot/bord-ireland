@@ -113,50 +113,57 @@
         
         
         <?php include '../assets/php/menuInAdminShow.php'; ?>
-        <?php include '../assets/php/menuAdmin.php'; ?>
-        
-        <h1>Ajoutez un commentaire.</h1>
-        
-        <form action="new.php" method="POST">
-            <label for="DtCreC">Date :</label>
-            <input type="datetime-local" id="DtCreC" name="DtCreC" autofocus="autofocus" required>
+        <div class="thematiques">
+            <?php include '../assets/php/menuAdmin.php'; ?>
+            <div class="Update">
+                <h1>Ajoutez un commentaire.</h1>
+                <div class="UpdateContent">
+                    <form action="new.php" method="POST">
+                        <label for="DtCreC">Date :</label>
+                        <input type="datetime-local" id="DtCreC" name="DtCreC" autofocus="autofocus" required><br>
 
-            <label for="PseudoAuteur">Pseudo :</label>
-            <input type="text" id="PseudoAuteur" name="PseudoAuteur" placeholder="Sur 20 car." size="20" maxlength="20" required>
+                        <label for="PseudoAuteur">Pseudo :</label>
+                        <input type="text" id="PseudoAuteur" name="PseudoAuteur" placeholder="Sur 20 car." size="20" maxlength="20" required><br>
 
-            <label for="EmailAuteur">Email :</label>
-            <input type="email" id="EmailAuteur" name="EmailAuteur" placeholder="Sur 60 car." size="60" maxlength="60" required>
+                        <label for="EmailAuteur">Email :</label>
+                        <input type="email" id="EmailAuteur" name="EmailAuteur" placeholder="Sur 60 car." size="60" maxlength="60" required><br>
 
-            <label for="TitrCom">Titre :</label>
-            <input type="text" id="TitrCom" name="TitrCom" placeholder="Sur 60 car." size="60" maxlength="60" required>
+                        <label for="TitrCom">Titre :</label>
+                        <input type="text" id="TitrCom" name="TitrCom" placeholder="Sur 60 car." size="60" maxlength="60" required><br>
 
-            <label for="LibCom">Libellé du commentaire :</label>
-            <textarea name="LibCom" id="LibCom" cols="30" rows="10" placeholder="Ecrivez ici..." required></textarea>
+                        <label for="LibCom">Libellé du commentaire :</label><br>
+                        <textarea name="LibCom" id="LibCom" cols="30" rows="10" placeholder="Ecrivez ici..." required></textarea><br>
 
-            <label for="NumArt">Article :</label>
-            <select name="NumArt" id="NumArt" required>
-                <option value="" disabled selected>-- Choisir un article --</option>
-                <?php 
-                
-                    $req = $bdd->query('SELECT * FROM article ORDER BY DtCreA DESC');
+                        <label for="NumArt">Article :</label>
+                        <select name="NumArt" id="NumArt" required>
+                            <option value="" disabled selected>-- Choisir un article --</option>
+                            <?php 
+                            
+                                $req = $bdd->query('SELECT * FROM article ORDER BY DtCreA DESC');
 
-                    while($donnees = $req->fetch()) {
-                ?>
+                                while($donnees = $req->fetch()) {
+                            ?>
 
-                        <option value="<?php echo $donnees['NumArt']; ?>"><?php echo $donnees['LibTitrA']; ?></option>
-                
-                <?php
-                    }
+                                    <option value="<?php echo $donnees['NumArt']; ?>"><?php echo $donnees['LibTitrA']; ?></option>
+                            
+                            <?php
+                                }
 
-                    $req->closeCursor();
+                                $req->closeCursor();
 
-                ?>
-            </select>
-
-            <input type="submit">
-        </form>
-
-        <a href="index.php" class="back"><i class="fas fa-arrow-left"></i> Revenir au tableau</a>
+                            ?>
+                        </select>
+                        <div class="Margin">
+                            <input type="submit">
+                        </div>
+                    </form>
+                                
+                    <div class="Margin">           
+                        <a href="index.php" class="back"><i class="fas fa-arrow-left"></i> Revenir au tableau</a>
+                    </div>
+                </div>
+            </div>
+        </div>
     </body>
 
 </html>

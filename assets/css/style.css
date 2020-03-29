@@ -93,6 +93,7 @@
     font-size: 70px;
     text-align: center;
     color: #6D0A1B;
+    margin-bottom: 3vh;
 }
 
 .contentConnexion label {
@@ -101,7 +102,7 @@
     font-size: 30px;
 }
 
-.contentConnexion .inputConnexion input {
+.inputConnexion input {
     border: 1px solid #6D0A1B;
     background-color: white;
     width: 35vw;
@@ -112,10 +113,12 @@
 .formulaireConnexion {
     margin-left: auto;
     margin-right: auto;
-    width: 30vw;
+    width: 40vw;
 }
 .validerConnexion {
-    margin: 0px;
+    margin-left: auto;
+    margin-right: auto;
+    width: 30vw;
 }
 .validerConnexion input {
     font-family: 'Bebas Neue', cursive;
@@ -127,22 +130,26 @@
     height: 5vh;
     width: 7vw;
     padding-top: 3px;
-    margin-left: 70px;
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
 }
 
-.contentConnexion button {
-    text-decoration: none;
-    background-color: white;
-    border: 1px solid #6D0A1B;
-    height: 5vh;
-    width: 7vw;
+.inscrireConnexion {
     font-family: 'Bebas Neue', cursive;
     font-size: 24px;
+    background-color: white;
+    border: 1px solid #6D0A1B;
     color: #6D0A1B;
-    float: right;
     margin-top: 20px;
-    text-align: center;
+    height: 5vh;
+    width: 7vw;
     padding-top: 3px;
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+    text-decoration: none;
+    text-align: center;
 }
 /* Administration */ 
 body .administration {
@@ -231,6 +238,7 @@ body {
     height: 845vh;
     margin-top: 20vh;
     margin-left: 10vw;
+    overflow: auto;
 }
 .mentionsContent img {
     display: block;
@@ -295,3 +303,68 @@ body {
     text-decoration: underline;
 }
 
+/* Contact */ 
+.contact {
+    display: flex;
+    flex-direction: column;
+}
+
+.contact h1 {
+    font-family: 'Bebas Neue', cursive;
+    color: #6D0A1B;
+    text-align: center;
+    font-size: 50px;
+    padding-top: 5vh;
+    margin: 0px;
+}
+.contactContent {
+    background-color: white;
+    width: 60vw;
+    height: 70vh;
+    margin-top: 7vh;
+    margin-left: 10vw;
+    font-size: 20px;
+    overflow: auto;
+}
+
+.contactContent1 {
+    color: #355931;
+    width: 30vw;
+    margin: 0px auto;
+    font-family: Helvetica, sans-serif;
+}
+
+.contactContent1 textarea {
+    margin-top: 10px;
+    width: 30vw;
+    height: 20vh;
+}
+
+.effacer {
+    float: right;
+}
+
+.submitContact input {
+    font-family: 'Bebas Neue', cursive;
+    font-size: 24px;
+    background-color: white;
+    border: 1px solid #6D0A1B;
+    color: #6D0A1B;
+    margin-top: 20px;
+    height: 5vh;
+    width: 7vw;
+    padding-top: 3px;
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+
+.submitContact {
+    width: 20vw;
+    margin: 0px auto;
+}
+
+.btnContact {
+    float: right;
+}

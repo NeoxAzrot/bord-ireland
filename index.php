@@ -39,7 +39,6 @@
 
                 while ($donnees = $req->fetch())
                 {
-                    echo "<img src='articles.php?UrlPhotA=" . $donnees['UrlPhotA'] . "/>";
                     echo $donnees['LibTitrA'] . ' - ';
                     echo dateChangeFormat($donnees['DtCreA'], "Y-m-d", "d/m/Y");
                     echo '<br><br>';

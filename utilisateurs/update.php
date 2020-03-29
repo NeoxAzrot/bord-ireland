@@ -26,82 +26,94 @@
     <body>
         
         <?php include '../assets/php/menuInAdminShow.php'; ?>
-        <?php include '../assets/php/menuAdmin.php'; ?>
-        
-        <?php
-        
-            // Affiche le formulaire seulement la première fois
-            if($_POST) {
-                // Vérifie si tous les input ont été remplis et contrôle la saisie
-                if((isset($_POST['FirstName']) && !empty($_POST['FirstName'])) AND
-                (isset($_POST['LastName']) && !empty($_POST['LastName'])) AND
-                (isset($_POST['EMail']) && !empty($_POST['EMail']))) {
-                    $FirstName = ctrlSaisies($_POST['FirstName']);
-                    $LastName = ctrlSaisies($_POST['LastName']);
-                    $EMail = ctrlSaisies($_POST['EMail']);
+            <div class="thematiques">
+                            <?php include '../assets/php/menuAdmin.php'; ?>
+                <div class="Update">             
+                            <?php
+                            
+                                // Affiche le formulaire seulement la première fois
+                                if($_POST) {
+                                    // Vérifie si tous les input ont été remplis et contrôle la saisie
+                                    if((isset($_POST['FirstName']) && !empty($_POST['FirstName'])) AND
+                                    (isset($_POST['LastName']) && !empty($_POST['LastName'])) AND
+                                    (isset($_POST['EMail']) && !empty($_POST['EMail']))) {
+                                        $FirstName = ctrlSaisies($_POST['FirstName']);
+                                        $LastName = ctrlSaisies($_POST['LastName']);
+                                        $EMail = ctrlSaisies($_POST['EMail']);
 
-                    // Met à jour l'utilisateur
-                    $req = $bdd->prepare('UPDATE user SET FirstName = :FirstName, LastName = :LastName, EMail = :EMail WHERE Login = :ID');
-                    $req->execute(array(
-                        'FirstName' => $FirstName,
-                        'LastName' => $LastName,
-                        'EMail' => $EMail,
-                        'ID' => $_GET['id']
-                        ));
-                }
+                                        // Met à jour l'utilisateur
+                                        $req = $bdd->prepare('UPDATE user SET FirstName = :FirstName, LastName = :LastName, EMail = :EMail WHERE Login = :ID');
+                                        $req->execute(array(
+                                            'FirstName' => $FirstName,
+                                            'LastName' => $LastName,
+                                            'EMail' => $EMail,
+                                            'ID' => $_GET['id']
+                                            ));
+                                    }
 
-                // Redirection avec un message personnalisé
-                $_SESSION['answer'] = "La modification de <b>" . $_GET['id'] . "</b> a bien été pris en compte !";
-                header('Location: index.php');
-            }
+                                    // Redirection avec un message personnalisé
+                                    $_SESSION['answer'] = "La modification de <b>" . $_GET['id'] . "</b> a bien été pris en compte !";
+                                    header('Location: index.php');
+                                }
 
-            if(isset($_GET['id']) && !empty($_GET['id'])) {
-                $req = $bdd->prepare('SELECT * FROM user WHERE Login = :id');
-                $req->execute(array(
-                    'id' => $_GET['id']
-                ));
+                                if(isset($_GET['id']) && !empty($_GET['id'])) {
+                                    $req = $bdd->prepare('SELECT * FROM user WHERE Login = :id');
+                                    $req->execute(array(
+                                        'id' => $_GET['id']
+                                    ));
 
-                $donnees = $req->fetch();
+                                    $donnees = $req->fetch();
 
-                // Affiche le formulaire et le pré remplie que si l'utilisateur existe
-                if(!empty($donnees)) {
-                    ?>
-                        <h1>Modifiez l'utilisateur <span><?php echo $_GET['id']; ?></span>.</h1>
+                                    // Affiche le formulaire et le pré remplie que si l'utilisateur existe
+                                    if(!empty($donnees)) {
+                                        ?>
+                                            <h1>Modifiez l'utilisateur <span><?php echo $_GET['id']; ?></span>.</h1>
+                                                <div class="UpdateContent">
+                                                                        <form action="update.php?id=<?php echo $_GET['id']; ?>" method="POST">
+                                                                            <div class="Margin">
+                                                                                <label for="Login">Identifiant :</label>
+                                                                                <input type="text" id="Login" name="Login" placeholder="Sur 30 car." size="30" maxlength="30" value="<?php echo $donnees['Login']; ?>" required disabled><br>
+                                                                            </div>
+                                                                            <div class="Margin">
+                                                                                <label for="Pass">Mot de passe :</label>
+                                                                                <input type="password" id="Pass" name="Pass" placeholder="Sur 255 car." maxlength="255" minlength="6" value="******" required disabled><br>
+                                                                            </div>
+                                                                            <div class="Margin">
+                                                                                <label for="FirstName">Prénom :</label>
+                                                                                <input type="text" id="FirstName" name="FirstName" placeholder="Sur 30 car." size="30" maxlength="30" value="<?php echo $donnees['FirstName']; ?>" required><br>
+                                                                            </div>
+                                                                            <div class="Margin">
+                                                                                <label for="LastName">Nom :</label>
+                                                                                <input type="text" id="LastName" name="LastName" placeholder="Sur 30 car." size="30" maxlength="30" autofocus="autofocus" value="<?php echo $donnees['LastName']; ?>" required><br>
+                                                                            </div>
+                                                                            <div class="Margin">
+                                                                                <label for="EMail">Email :</label>
+                                                                                <input type="email" id="EMail" name="EMail" placeholder="Sur 50 car." size="50" maxlength="50" value="<?php echo $donnees['EMail']; ?>" required><br>
+                                                                            </div>
+                                                                            <div class="Margin">
+                                                                                <input type="submit"><br>
+                                                                            </div>
+                                                                        </form>
+                                                    <div class="Margin">
+                                                                        <a href="index.php" class="back"><i class="fas fa-arrow-left"></i> Revenir au tableau</a>
+                                                                    <?php
+                                                                } else {
+                                                                    $_SESSION['answer'] = "<span>Cet utilisateur est introuvable !</span>";
 
-                        <form action="update.php?id=<?php echo $_GET['id']; ?>" method="POST">
-                            <label for="Login">Identifiant :</label>
-                            <input type="text" id="Login" name="Login" placeholder="Sur 30 car." size="30" maxlength="30" value="<?php echo $donnees['Login']; ?>" required disabled>
+                                                                    // Redirection avec un message personnalisé
+                                                                    header('Location: index.php');
+                                                                }
+                                                            } else {
+                                                                // Redirection avec un message personnalisé
+                                                                $_SESSION['answer'] = "<span>Cet utilisateur est introuvable !</span>";
+                                                                header('Location: index.php');
+                                                            }
 
-                            <label for="Pass">Mot de passe :</label>
-                            <input type="password" id="Pass" name="Pass" placeholder="Sur 255 car." maxlength="255" minlength="6" value="******" required disabled>
-
-                            <label for="FirstName">Prénom :</label>
-                            <input type="text" id="FirstName" name="FirstName" placeholder="Sur 30 car." size="30" maxlength="30" value="<?php echo $donnees['FirstName']; ?>" required>
-
-                            <label for="LastName">Nom :</label>
-                            <input type="text" id="LastName" name="LastName" placeholder="Sur 30 car." size="30" maxlength="30" autofocus="autofocus" value="<?php echo $donnees['LastName']; ?>" required>
-
-                            <label for="EMail">Email :</label>
-                            <input type="email" id="EMail" name="EMail" placeholder="Sur 50 car." size="50" maxlength="50" value="<?php echo $donnees['EMail']; ?>" required>
-
-                            <input type="submit">
-                        </form>
-
-                        <a href="index.php" class="back"><i class="fas fa-arrow-left"></i> Revenir au tableau</a>
-                    <?php
-                } else {
-                    $_SESSION['answer'] = "<span>Cet utilisateur est introuvable !</span>";
-
-                    // Redirection avec un message personnalisé
-                    header('Location: index.php');
-                }
-            } else {
-                // Redirection avec un message personnalisé
-                $_SESSION['answer'] = "<span>Cet utilisateur est introuvable !</span>";
-                header('Location: index.php');
-            }
-
-        ?>
+                                                        ?>
+                                                    </div>
+                                                </div>
+                </div>
+            </div>
     </body>
 
 </html>
