@@ -2,7 +2,7 @@ Tu trouveras à la racine le fichier exportBlogArtGp08.sql
 
 Pour se connecter en partie ADMIN avec le .sql donné :
 
-Login : Admin
+Login : Admin 
 Pass : Admin33!
 
 -----------
