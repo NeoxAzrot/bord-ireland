@@ -40,15 +40,16 @@ $("#NumLang").change(function() {
 	});
 });
 
-/*$(document).ready(function() {
-	$('#fetchval').on('change', function() {
+// Barre de recherche
+$(document).ready(function() {
+	$('#fetchval').keyup(function() {
 		var value = $(this).val();
 		$.ajax({
-			url: 'fetch.php',
+			url: 'assets/php/fetch.php',
 			type: 'POST',
 			data: 'request=' + value,
 			beforeSend: function() {
-				$('#table_container').html('Veuillez patienter ...');
+				$('#table_container').html('Recherche en cours ...');
 			},
 			success: function(data) {
 				$('#table_container').html(data);
@@ -56,4 +57,4 @@ $("#NumLang").change(function() {
 		})
 
 	})
-})*/
+})

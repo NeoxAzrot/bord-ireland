@@ -28,6 +28,9 @@
     <body>
         <!-- Menus -->
         <?php include 'assets/php/menu.php'; ?>
+        
+        <!-- Search bar -->
+        <?php include 'assets/php/search.php'; ?>
 
         <div class="contact">
             <div class="btnContact">

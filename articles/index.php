@@ -27,7 +27,7 @@
     <body>
     
         <?php include '../assets/php/menuInAdminShow.php'; ?>
-        <div class="articleAdmin">
+        <div class="thematiques">
             <?php include '../assets/php/menuAdmin.php'; ?>
             
             <h1>Tout les articles.</h1>

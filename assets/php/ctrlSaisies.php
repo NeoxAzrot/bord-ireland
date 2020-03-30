@@ -19,8 +19,6 @@
       $saisie = stripslashes($saisie);
       // Conversion des caractères spéciaux en entités HTML 
       $saisie = htmlentities($saisie);
-      // Garde les retours à la ligne
-      $saisie = nl2br($saisie);
 
       return $saisie;
     }

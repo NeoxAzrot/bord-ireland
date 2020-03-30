@@ -48,7 +48,7 @@
             <div class="contact">
                 <div class="contactContent">
                     <h1>Administrateur</h1>
-                    <p>Bienvenu sur la page Administrateur de Bord'Irlande ! <br> D'ici vous pourrez gérer toute l'administratiion du site !</p>
+                    <p>Bienvenu sur la page Administrateur de Bord'Irlande. <br> D'ici vous pourrez gérer toute l'administration du site !</p>
                 </div>
                 <?php
 

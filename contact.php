@@ -69,6 +69,9 @@
         <!-- Menus -->
         <?php include 'assets/php/menu.php'; ?>
 
+        <!-- Search bar -->
+        <?php include 'assets/php/search.php'; ?>
+
         <div class="contact">
             <div class="btnContact">
                 <?php include 'assets/php/btnConnexion.php'; ?>
@@ -113,6 +116,7 @@
                 </div>
             </div>
         </div>
+        <script src="assets/js/script.js"></script>
     </body>
 
 </html>

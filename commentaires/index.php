@@ -27,10 +27,10 @@
     <body>
         
         <?php include '../assets/php/menuInAdminShow.php'; ?>
-        <div class="commentaires">
+        <div class="thematiques">
             <?php include '../assets/php/menuAdmin.php'; ?>
             
-            <h1>Commentaires :</h1>
+            <h1>Tout les commentaires.</h1>
             
             <?php 
 
