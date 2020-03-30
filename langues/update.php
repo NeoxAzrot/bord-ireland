@@ -68,23 +68,23 @@
                     <div class="thematiques">
                                         <?php include '../assets/php/menuAdmin.php'; ?>
                         <div class="Update">                
-                                                <h1>Modifiez la langue <span><?php echo $_GET['id']; ?></span>.</h1>
+                                                <h1>Modifier la langue <span><?php echo $_GET['id']; ?></span>.</h1>
                             <div class="UpdateContent"> 
                                                 <form action="update.php?id=<?php echo $_GET['id']; ?>" method="POST">
                                                     <div class="Margin"> 
                                                         <label for="num_lang">ID :</label>
-                                                        <input type="text" id="num_lang" name="num_lang" placeholder="Sur 6 car." size="6" minlength="6" value="<?php echo $donnees['NumLang']; ?>" required disabled><br>
+                                                        <input type="text" id="num_lang" name="num_lang" placeholder="Identifiant de la langue" size="6" minlength="6" value="<?php echo $donnees['NumLang']; ?>" required disabled><br>
                                                     </div>
                                                     <div class="Margin"> 
                                                         <label for="lib_court">Libellé court :</label>
-                                                        <input type="text" id="lib_court" name="lib_court" placeholder="Sur 25 car." size="25" maxlength="25" autofocus="autofocus" value="<?php echo $donnees['Lib1Lang']; ?>" required><br>
+                                                        <input type="text" id="lib_court" name="lib_court" placeholder="Entrer le nom de la langue" size="25" maxlength="25" autofocus="autofocus" value="<?php echo $donnees['Lib1Lang']; ?>" required><br>
                                                     </div>
                                                     <div class="Margin">
                                                         <label for="lib_long">Libellé long :</label>
-                                                        <input type="text" id="lib_long" name="lib_long" placeholder="Sur 45 car." size="45" maxlength="45" value="<?php echo $donnees['Lib2Lang']; ?>" required><br>
+                                                        <input type="text" id="lib_long" name="lib_long" placeholder="Entrer le nom de la langue" size="45" maxlength="45" value="<?php echo $donnees['Lib2Lang']; ?>" required><br>
                                                     </div>
                                                     <div class="Margin">
-                                                        <label for="pays">Quel pays :</label>
+                                                        <label for="pays">Pays :</label>
                                                         <select name="pays" id="pays" required>
                                                             <option value="" disabled>-- Choisir un pays --</option>
                                                             <?php 
@@ -104,11 +104,11 @@
                                                             ?>
                                                         </select><br>
                                                     </div>
-                                                    <div class="Margin">
+                                                    <div class="validerInput">
                                                         <input type="submit">
                                                     </div>
                                                 </form>
-                                            <div class="Margin">
+                                            <div class="Margin validerInput">
                                                 <a href="index.php" class="back"><i class="fas fa-arrow-left"></i> Revenir au tableau</a>
                                             </div>
                                             <?php

@@ -44,17 +44,30 @@ $("#NumLang").change(function() {
 $(document).ready(function() {
 	$('#fetchval').keyup(function() {
 		var value = $(this).val();
-		$.ajax({
-			url: 'assets/php/fetch.php',
-			type: 'POST',
-			data: 'request=' + value,
-			beforeSend: function() {
-				$('#table_container').html('Recherche en cours ...');
-			},
-			success: function(data) {
-				$('#table_container').html(data);
-			}
-		})
-
+		if(value.length >= 2) {
+			$.ajax({
+				url: 'assets/php/fetch.php',
+				type: 'POST',
+				data: 'request=' + value,
+				beforeSend: function() {
+					$('#table_container').html('Recherche en cours ...');
+				},
+				success: function(data) {
+					$('#table_container').html(data);
+				}
+			})
+		} else {
+			$.ajax({
+				url: 'assets/php/fetch.php',
+				type: 'POST',
+				data: 'request=' + '',
+				beforeSend: function() {
+					$('#table_container').html('');
+				},
+				success: function(data) {
+					$('#table_container').html('');
+				}
+			})
+		}
 	})
 })

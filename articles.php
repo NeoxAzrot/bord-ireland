@@ -33,12 +33,10 @@
         <!-- Search bar -->
         <?php include 'assets/php/search.php'; ?>
 
+        <div class="SavoirPlus">
             <div class="btnContact">
                 <?php include 'assets/php/btnConnexion.php'; ?>
             </div>
-
-        <div class="SavoirPlus">
-        <div class="SavoirPlusContent">
             
             <?php
 
@@ -139,15 +137,23 @@
                     $donnees = $req->fetch();
 
                     // Affiche l'article
-                    echo "<h1>L'article</h1>";
+                    ?>
+                    <div class="SavoirPlusContent">
+                    <img src="assets/uploads/<?php echo $donnees['UrlPhotA'];?>" alt="Image de l'article">
+                    <h1><?php echo $donnees['LibTitrA']; ?></h1>
+                    <p class="date">Publié le : <?php echo dateChangeFormat($donnees['DtCreA'], "Y-m-d", "d/m/Y"); ?></p>
+                    <p class="chapo"><?php echo $donnees['LibChapoA'] ?></p>
+                    <p class="paragraphe"><?php echo $donnees['Parag1A'] ?></p>
+                    <p class="sous_titre"><?php echo $donnees['LibSsTitr1'] ?></p>
+                    <p class="paragraphe"><?php echo $donnees['Parag2A'] ?></p>
+                    <p class="sous_titre"><?php echo $donnees['LibSsTitr2'] ?></p>
+                    <p class="paragraphe"><?php echo $donnees['Parag3A'] ?></p>
+                    <p class="conclusion"><?php echo $donnees['LibConclA'] ?></p>
 
-                    echo $donnees['LibTitrA'] . ' - ';
-                    echo dateChangeFormat($donnees['DtCreA'], "Y-m-d", "d/m/Y");
-
-            ?>
-
-            <h2><?php echo $donnees['Likes'] ?> mention<?php echo $donnees['Likes'] > 1 ? "s" : "" ?> j'aime</h2>
-            <h2><?php echo $nb_comment ?> commentaire<?php echo $nb_comment > 1 ? "s" : "" ?></h2>
+                    <div class="likeAndCom">
+                        <h2><?php echo $donnees['Likes'] ?> mention<?php echo $donnees['Likes'] > 1 ? "s" : "" ?> j'aime</h2>
+                        <h2><?php echo $nb_comment ?> commentaire<?php echo $nb_comment > 1 ? "s" : "" ?></h2>
+                    </div>
 
                 <?php
 
@@ -212,15 +218,23 @@
                 $req = $bdd->query('SELECT * FROM article ORDER BY DtCreA DESC');
 
                 echo "<h1>Les articles</h1>";
-
+                echo "<div class='flexContainerArticles'>";
                 while ($donnees = $req->fetch())
                 {
-                    echo $donnees['LibTitrA'] . ' - ';
-                    echo dateChangeFormat($donnees['DtCreA'], "Y-m-d", "d/m/Y");
-                    echo '<br><br>';
-                    echo "<a href='articles.php?numArt=" . $donnees['NumArt'] . "'>En savoir plus</a>";
-                    echo '<hr>';
+                ?>
+                    <div class="AllArticles">
+                        <img src="assets/uploads/<?php echo $donnees['UrlPhotA'];?>" alt="Image de l'article">
+                        <p class="date"><?php echo dateChangeFormat($donnees['DtCreA'], "Y-m-d", "d/m/Y");?></p>
+                        <h1><?php echo $donnees['LibTitrA']; ?></h1>
+                        <p class="chapo"><?php echo $donnees['LibChapoA'] ?></p>
+                        <div class="decouvrir">
+                            <a href="articles.php?numArt=<?php echo $donnees['NumArt']; ?>">Découvrir</a>
+                        </div>
+                    </div>
+                <?php
                 }
+
+                echo "</div>";
 
                 $req->closeCursor();
             }

@@ -101,8 +101,8 @@
                     <div class="UpdateContent"> 
                         <form action="traduction.php" method="POST">
                             <div class="Margin">
-                                <label for="NumAngl">NumAngl :</label>
-                                <select name="NumAngl" id="NumAngl" required>
+                                <label for="NumAngl">Angle :</label>
+                                <select name="NumAngl" id="NumAngl" required autofocus="autofocus">
                                     <option value="" disabled selected>-- Choisir un angle --</option>
                                     <?php 
                                     
@@ -122,11 +122,11 @@
                                 </select><br>
                             </div>
                             <div class="Margin">
-                                <label for="LibAngl">Libellé angle :</label>
-                                <input type="text" id="LibAngl" name="LibAngl" placeholder="Sur 60 car." size="60" maxlength="60" autofocus="autofocus" required><br>
+                                <label for="LibAngl">Traduction de l'angle :</label>
+                                <input type="text" id="LibAngl" name="LibAngl" placeholder="Traduire l'angle" size="60" maxlength="60" required><br>
                             </div>
                             <div class="Margin">
-                                <label for="NumLang">NumLang :</label>
+                                <label for="NumLang">Langue :</label>
                                 <select name="NumLang" id="NumLang" required>
                                     <option value="" disabled selected>-- Choisir une langue --</option>
                                     <?php 
@@ -144,13 +144,13 @@
                                         $req->closeCursor();
 
                                     ?>
-                                </select><br>
+                                </select>
                             </div>
-                            <div class="Margin">
-                                <input type="submit"><br>
+                            <div class="validerInput">
+                                <input type="submit">
                             </div>
                         </form>
-                    <div class="Margin">
+                    <div class="Margin validerInput">
                         <a href="index.php" class="back"><i class="fas fa-arrow-left"></i> Revenir au tableau</a>
                     </div>
                 </div>

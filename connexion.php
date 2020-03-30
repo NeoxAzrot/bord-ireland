@@ -104,17 +104,20 @@
                 <!-- Formulaire de connexion avec input près remplis si erreur -->
                 <div class="formulaireConnexion">
                     <form action="" method="POST">
-                        <div class="inputConnexion">
-                            <label for="login">Identifiant :</label><br>
-                            <input type="text" id="login" name="login" placeholder="Sur 30 car." value="<?php echo isset($_SESSION['errorConnexion']) && $_SESSION['errorConnexion'] == true ? $_SESSION['login'] : "" ?>"  maxlength="30" required><br>
-
-                            <label for="password">Mot de passe :</label><br>
-                            <input type="password" id="password" name="password" placeholder="Sur 255 car." value="<?php echo isset($_SESSION['errorConnexion']) && $_SESSION['errorConnexion'] == true ? $_SESSION['password'] : "" ?>"  maxlength="255" minlength="6" required><br>
+                        <div>
+                            <div class="Margin">
+                                <label for="login">Identifiant :</label><br>
+                                <input type="text" id="login" name="login" placeholder="Entrer votre identifiant" value="<?php echo isset($_SESSION['errorConnexion']) && $_SESSION['errorConnexion'] == true ? $_SESSION['login'] : "" ?>"  maxlength="30" required><br>
+                            </div>
+                            <div class="Margin">
+                                <label for="password">Mot de passe :</label><br>
+                                <input type="password" id="password" name="password" placeholder="Entrer votre mot de passe" value="<?php echo isset($_SESSION['errorConnexion']) && $_SESSION['errorConnexion'] == true ? $_SESSION['password'] : "" ?>"  maxlength="255" required><br>
+                            </div>
                         </div>
 
                         <!-- Message d'erreur de connexion -->
-                        <?php echo isset($_SESSION['errorConnexion']) && $_SESSION['errorConnexion'] == true ? "L'identifiant ou le mot de passe n'est pas valide !" : "" ?>
-                        <div class="validerConnexion">
+                        <?php echo isset($_SESSION['errorConnexion']) && $_SESSION['errorConnexion'] == true ? "<p class='errorConnexion'>L'identifiant ou le mot de passe n'est pas valide !</p>" : "" ?>
+                        <div class="validerInput">
                             <input type="submit">
                         </div>
                     </form>

@@ -10,7 +10,13 @@ Pass : Admin33!
 Concernant le site :
 
 Niveau back tout est fonctionnel (barre de recherche, panel admin TOUT LES CRUD, trie des articles, formulaire de contact, connexion / inscription / déconnexion, protection des données, ...)
-Niveau front, l'intégration n'a pas pu être complété à 100% du tout, je répète ici ce que j'ai dis dans le message sur le rendu :
+Niveau front, l'intégration n'a pas pu être complété à 100% :
 
-Je ne sais pas quand tu vas récupérer le code sur GitHub, mais demain (Lundi 30 Mars) j'envoie une v2 avec des améliorations sur le front seulement car le back est 100% fonctionnel ! Si et seulement si j'en ai ton accord, évidemment.
-Je pense que même pour toi, ça sera plus agréable avec une v2 !
+Le site est fonctionel, mais il manque une intégration responsive et peut être repenser les index.php du panel administrateur.
+Revoir le front des résultats de la barre de recherche.
+Et faire un front plus beau pour les commentaires des articles.
+Et rendre de manière plus jolie la partie mention légale, on n'a absolument pas envie de lire dans ces conditions.
+
+Ca me fait penser que niveau back il manque seulement l'ajout d'un j'aime à un article (pour moi il manque une table pour enregistrer que l'utilisateur à like cet article et ne peut pas like plusieurs fois). J'avais donc pensé à faire un système de cookies, mais j'ai oublié de le faire !
+
+Merci pour le délai accordé sur le front en plus !

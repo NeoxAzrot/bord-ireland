@@ -92,52 +92,67 @@
                                 // Affiche le formulaire et le pré remplie que si le commentaire existe
                                 if(!empty($donnees)) {
                                     ?>
-                                        <h1>Modifiez le commentaire <span><?php echo $_GET['id']; ?></span>.</h1>
+                                        <h1>Modifier le commentaire <span><?php echo $_GET['id']; ?></span>.</h1>
                                             <div class="UpdateContent">
                                                 <form action="update.php?id=<?php echo $_GET['id']; ?>" method="POST">
-                                                    <label for="NumCom">NumCom :</label>
-                                                    <input type="text" id="NumCom" name="NumCom" placeholder="Sur 6 car." size="6" maxlength="6" value="<?php echo $donnees['NumCom']; ?>" required disabled><br>
-
-                                                    <label for="DtCreC">Date :</label>
-                                                    <input type="datetime-local" id="DtCreC" name="DtCreC" autofocus="autofocus" value="<?php echo $date; ?>" required><br>
-
-                                                    <label for="PseudoAuteur">Pseudo :</label>
-                                                    <input type="text" id="PseudoAuteur" name="PseudoAuteur" placeholder="Sur 20 car." size="20" maxlength="20" value="<?php echo $donnees['PseudoAuteur']; ?>" required><br>
-
-                                                    <label for="EmailAuteur">Email :</label>
-                                                    <input type="email" id="EmailAuteur" name="EmailAuteur" placeholder="Sur 60 car." size="60" maxlength="60" value="<?php echo $donnees['EmailAuteur']; ?>" required><br>
-
-                                                    <label for="TitrCom">Titre :</label>
-                                                    <input type="text" id="TitrCom" name="TitrCom" placeholder="Sur 60 car." size="60" maxlength="60" value="<?php echo $donnees['TitrCom']; ?>" required><br>
-
-                                                    <label for="LibCom">Libellé du commentaire :</label><br>
-                                                    <textarea name="LibCom" id="LibCom" cols="30" rows="10" placeholder="Ecrivez ici..." required><?php echo $donnees['LibCom']; ?></textarea><br>
-
-                                                    <label for="NumArt">Article :</label>
-                                                    <select name="NumArt" id="NumArt" required>
-                                                        <option value="" disabled selected>-- Choisir un article --</option>
-                                                        <?php 
-                                                        
-                                                            $req = $bdd->query('SELECT * FROM article ORDER BY DtCreA DESC');
-
-                                                            while($donnees = $req->fetch()) {
-                                                        ?>
-
-                                                                <option value="<?php echo $donnees['NumArt']; ?>" <?php echo $donnees['NumArt'] == $NumComArt ? "selected" : ""; ?>><?php echo $donnees['LibTitrA']; ?></option>
-                                                        
-                                                        <?php
-                                                            }
-
-                                                            $req->closeCursor();
-
-                                                        ?>
-                                                    </select><br>
                                                     <div class="Margin">
+                                                        <label for="NumCom">ID :</label>
+                                                        <input type="text" id="NumCom" name="NumCom" placeholder="Identifiant du commentaire" size="6" maxlength="6" value="<?php echo $donnees['NumCom']; ?>" required disabled><br>
+                                                    </div>
+
+                                                    <div class="Margin">
+                                                        <label for="DtCreC">Date :</label>
+                                                        <input type="datetime-local" id="DtCreC" name="DtCreC" autofocus="autofocus" value="<?php echo $date; ?>" required><br>
+                                                    </div>
+
+                                                    <div class="Margin">
+                                                        <label for="PseudoAuteur">Pseudo :</label>
+                                                        <input type="text" id="PseudoAuteur" name="PseudoAuteur" placeholder="Entrer votre pseudo" size="20" maxlength="20" value="<?php echo $donnees['PseudoAuteur']; ?>" required><br>
+                                                    </div>
+
+                                                    <div class="Margin">
+                                                        <label for="EmailAuteur">Email :</label>
+                                                        <input type="email" id="EmailAuteur" name="EmailAuteur" placeholder="Entrer votre email" size="60" maxlength="60" value="<?php echo $donnees['EmailAuteur']; ?>" required><br>
+                                                    </div>
+
+                                                    <div class="Margin">
+                                                        <label for="TitrCom">Titre :</label>
+                                                        <input type="text" id="TitrCom" name="TitrCom" placeholder="Entrer votre titre" size="60" maxlength="60" value="<?php echo $donnees['TitrCom']; ?>" required><br>
+                                                    </div>
+
+                                                    <div class="Margin">
+                                                        <label for="LibCom">Libellé du commentaire :</label><br>
+                                                        <textarea name="LibCom" id="LibCom" cols="30" rows="10" placeholder="Ecrivez ici..." required><?php echo $donnees['LibCom']; ?></textarea><br>
+                                                    </div>
+
+                                                    <div class="Margin">
+                                                        <label for="NumArt">Article :</label>
+                                                        <select name="NumArt" id="NumArt" required>
+                                                            <option value="" disabled selected>-- Choisir un article --</option>
+                                                            <?php 
+                                                            
+                                                                $req = $bdd->query('SELECT * FROM article ORDER BY DtCreA DESC');
+
+                                                                while($donnees = $req->fetch()) {
+                                                            ?>
+
+                                                                    <option value="<?php echo $donnees['NumArt']; ?>" <?php echo $donnees['NumArt'] == $NumComArt ? "selected" : ""; ?>><?php echo $donnees['LibTitrA']; ?></option>
+                                                            
+                                                            <?php
+                                                                }
+
+                                                                $req->closeCursor();
+
+                                                            ?>
+                                                        </select>
+                                                    </div>
+
+                                                    <div class="validerInput">
                                                         <input type="submit"><br>
                                                     </div>
                                                 </form>
                                                 
-                                                <div class="Margin">
+                                                <div class="Margin validerInput">
                                                     <a href="index.php" class="back"><i class="fas fa-arrow-left"></i> Revenir au tableau</a>
                                                 </div>
                                             </div>

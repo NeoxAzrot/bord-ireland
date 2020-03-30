@@ -101,16 +101,16 @@
         <div class="thematiques">
             <?php include '../assets/php/menuAdmin.php'; ?>
             <div class="Update">
-                <h1>Ajoutez une thématique.</h1>
+                <h1>Ajouter une thématique.</h1>
 
                 <div class="UpdateContent">    
                     <form action="new.php" method="POST">
                         <div class="Margin">
-                            <label for="LibThem">Libellé thématique :</label>
-                            <input type="text" id="LibThem" name="LibThem" placeholder="Sur 60 car." size="60" maxlength="60" autofocus="autofocus" required><br>
+                            <label for="LibThem">Thématique :</label>
+                            <input type="text" id="LibThem" name="LibThem" placeholder="Entrer votre thématique" size="60" maxlength="60" autofocus="autofocus" required><br>
                         </div>
                         <div class="Margin">
-                            <label for="NumLang">NumLang :</label>
+                            <label for="NumLang">Langue :</label>
                             <select name="NumLang" id="NumLang" required>
                                 <option value="" disabled selected>-- Choisir une langue --</option>
                                 <?php 
@@ -132,10 +132,13 @@
                         </div>
                         <br>
 
-                        <input type="submit">
+                        <div class="validerInput">
+                            <input type="submit">
+                        </div>
                     </form>
-                
-                    <a href="index.php" class="back"><i class="fas fa-arrow-left"></i> Revenir au tableau</a>
+                    <div class="Margin validerInput">
+                        <a href="index.php" class="back"><i class="fas fa-arrow-left"></i> Revenir au tableau</a>
+                    </div>
                 </div>
             </div>
         </div>

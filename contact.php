@@ -106,11 +106,13 @@
                             <label for="message" id="textarea-label">Message :</label><br>
                             <textarea name="message" id="message" placeholder="Entrer votre message" required></textarea><br>
                         </div>
-                        <div class="effacer">
-                            <input type="reset" value="Effacer" />
-                        </div>
-                        <div class="submitContact">
-                            <input type="submit" value="Envoyer" />
+                        <div class="sendButton">
+                            <div>
+                                <input type="reset" value="Effacer" />
+                            </div>
+                            <div>
+                                <input type="submit" value="Envoyer" />
+                            </div>
                         </div>
                     </form>
                 </div>

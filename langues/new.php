@@ -91,19 +91,19 @@
         <div class="thematiques">
             <?php include '../assets/php/menuAdmin.php'; ?>
             <div class="Update">
-                <h1>Ajoutez une langue.</h1>
+                <h1>Ajouter une langue.</h1>
                 <div class="UpdateContent">
                     <form action="new.php" method="POST">
                         <div class="Margin">
                             <label for="lib_court">Libellé court :</label>
-                            <input type="text" id="lib_court" name="lib_court" placeholder="Sur 25 car." size="25" maxlength="25" autofocus="autofocus" required><br>
+                            <input type="text" id="lib_court" name="lib_court" placeholder="Entrer le nom de la langue" size="25" maxlength="25" autofocus="autofocus" required><br>
                         </div>
                         <div class="Margin">
                             <label for="lib_long">Libellé long :</label>
-                            <input type="text" id="lib_long" name="lib_long" placeholder="Sur 45 car." size="45" maxlength="45" required><br>
+                            <input type="text" id="lib_long" name="lib_long" placeholder="Entrer le nom de la langue" size="45" maxlength="45" required><br>
                         </div>
                         <div class="Margin">
-                            <label for="pays">Quel pays :</label>
+                            <label for="pays">Pays :</label>
                             <select name="pays" id="pays" required>
                                 <option value="" disabled selected>-- Choisir un pays --</option>
                                 <?php 
@@ -123,11 +123,11 @@
                                 ?>
                             </select><br>
                         </div>
-                        <div class="Margin">
+                        <div class="validerInput">
                             <input type="submit"><br>
                         </div>
                     </form>
-                    <div class="Margin">
+                    <div class="Margin validerInput">
                         <a href="index.php" class="back"><i class="fas fa-arrow-left"></i> Revenir au tableau</a>
                     </div>
                 </div>

@@ -67,34 +67,34 @@
                                     // Affiche le formulaire et le pré remplie que si l'utilisateur existe
                                     if(!empty($donnees)) {
                                         ?>
-                                            <h1>Modifiez l'utilisateur <span><?php echo $_GET['id']; ?></span>.</h1>
+                                            <h1>Modifier l'utilisateur <span><?php echo $_GET['id']; ?></span>.</h1>
                                                 <div class="UpdateContent">
                                                                         <form action="update.php?id=<?php echo $_GET['id']; ?>" method="POST">
                                                                             <div class="Margin">
                                                                                 <label for="Login">Identifiant :</label>
-                                                                                <input type="text" id="Login" name="Login" placeholder="Sur 30 car." size="30" maxlength="30" value="<?php echo $donnees['Login']; ?>" required disabled><br>
+                                                                                <input type="text" id="Login" name="Login" placeholder="JohnDoe33" size="30" maxlength="30" value="<?php echo $donnees['Login']; ?>" required disabled><br>
                                                                             </div>
                                                                             <div class="Margin">
                                                                                 <label for="Pass">Mot de passe :</label>
-                                                                                <input type="password" id="Pass" name="Pass" placeholder="Sur 255 car." maxlength="255" minlength="6" value="******" required disabled><br>
+                                                                                <input type="password" id="Pass" name="Pass" placeholder="Entrer votre mot de passe" maxlength="255" minlength="6" value="******" required disabled><br>
                                                                             </div>
                                                                             <div class="Margin">
                                                                                 <label for="FirstName">Prénom :</label>
-                                                                                <input type="text" id="FirstName" name="FirstName" placeholder="Sur 30 car." size="30" maxlength="30" value="<?php echo $donnees['FirstName']; ?>" required><br>
+                                                                                <input type="text" id="FirstName" name="FirstName" placeholder="John" size="30" maxlength="30" value="<?php echo $donnees['FirstName']; ?>" required><br>
                                                                             </div>
                                                                             <div class="Margin">
                                                                                 <label for="LastName">Nom :</label>
-                                                                                <input type="text" id="LastName" name="LastName" placeholder="Sur 30 car." size="30" maxlength="30" autofocus="autofocus" value="<?php echo $donnees['LastName']; ?>" required><br>
+                                                                                <input type="text" id="LastName" name="LastName" placeholder="Doe" size="30" maxlength="30" autofocus="autofocus" value="<?php echo $donnees['LastName']; ?>" required><br>
                                                                             </div>
                                                                             <div class="Margin">
                                                                                 <label for="EMail">Email :</label>
-                                                                                <input type="email" id="EMail" name="EMail" placeholder="Sur 50 car." size="50" maxlength="50" value="<?php echo $donnees['EMail']; ?>" required><br>
+                                                                                <input type="email" id="EMail" name="EMail" placeholder="johndoe@exemple.com" size="50" maxlength="50" value="<?php echo $donnees['EMail']; ?>" required><br>
                                                                             </div>
-                                                                            <div class="Margin">
+                                                                            <div class="validerInput">
                                                                                 <input type="submit"><br>
                                                                             </div>
                                                                         </form>
-                                                    <div class="Margin">
+                                                    <div class="Margin validerInput">
                                                                         <a href="index.php" class="back"><i class="fas fa-arrow-left"></i> Revenir au tableau</a>
                                                                     <?php
                                                                 } else {

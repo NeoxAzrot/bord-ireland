@@ -67,7 +67,7 @@
 
                                 ?>
 
-                                <p>Pour supprimer le mot clés <?php echo $_GET['id']; ?>, vous devrez d'abord supprimer le mots clés relié à cette liste (allez dans « Modifier » de l'article en question et supprimez le mot clés) :</p>
+                                <p>Pour supprimer le mot clés <?php echo $_GET['id']; ?>, vous devrez d'abord supprimer le mot clés relié à cette liste (allez dans « Modifier » de l'article en question et supprimer le mot clés) :</p>
                                 <ul>
 
                                 <?php
@@ -92,7 +92,9 @@
 
                     ?>
 
-                    <a href="index.php" class="back"><i class="fas fa-arrow-left"></i> Revenir au tableau</a>
+                    <div class="Margin validerInput">
+                        <a href="index.php" class="back"><i class="fas fa-arrow-left"></i> Revenir au tableau</a>
+                    </div>
                 </div>
             </div>
         </div>

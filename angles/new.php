@@ -88,15 +88,15 @@
         <div class="thematiques">
             <?php include '../assets/php/menuAdmin.php'; ?>
             <div class="Update">
-                <h1>Ajoutez un angle.</h1>
+                <h1>Ajouter un angle.</h1>
                 <div class="UpdateContent">
                     <form action="new.php" method="POST">
                         <div class="Margin">
                             <label for="LibAngl">Libellé angle :</label>
-                            <input type="text" id="LibAngl" name="LibAngl" placeholder="Sur 60 car." size="60" maxlength="60" autofocus="autofocus" required><br>
+                            <input type="text" id="LibAngl" name="LibAngl" placeholder="Entrer votre angle" size="60" maxlength="60" autofocus="autofocus" required><br>
                         </div>
                         <div class="Margin">
-                            <label for="NumLang">NumLang :</label>
+                            <label for="NumLang">Langue :</label>
                             <select name="NumLang" id="NumLang" required>
                                 <option value="" disabled selected>-- Choisir une langue --</option>
                                 <?php 
@@ -114,14 +114,14 @@
                                     $req->closeCursor();
 
                                 ?>
-                            </select><br>
+                            </select>
                         </div>
-                        <div class="Margin">
+                        <div class="validerInput">
                             <input type="submit">
                         </div>
                     </form>
                     
-                    <div class="Margin">
+                    <div class="Margin validerInput">
                         <a href="index.php" class="back"><i class="fas fa-arrow-left"></i> Revenir au tableau</a>
                     </div>
                 </div>

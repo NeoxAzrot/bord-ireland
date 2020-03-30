@@ -84,19 +84,19 @@
                         <div class="thematiques">
                                             <?php include '../assets/php/menuAdmin.php'; ?>
                             <div class="Update">
-                                                    <h1>Modifiez l'angle <span><?php echo $_GET['id']; ?></span>.</h1>
+                                                    <h1>Modifier l'angle <span><?php echo $_GET['id']; ?></span>.</h1>
                                 <div class="UpdateContent">                   
                                                     <form action="update.php?id=<?php echo $_GET['id']; ?>" method="POST">
                                                         <div class="Margin">
                                                             <label for="NumAngl">ID :</label>
-                                                            <input type="text" id="NumAngl" name="NumAngl" placeholder="Sur 8 car." size="8" minlength="8" value="<?php echo $donnees['NumAngl']; ?>" required disabled><br>
+                                                            <input type="text" id="NumAngl" name="NumAngl" placeholder="Identifiant de l'angle" size="8" minlength="8" value="<?php echo $donnees['NumAngl']; ?>" required disabled><br>
                                                         </div>
                                                         <div class="Margin">
                                                             <label for="LibAngl">Libellé angle :</label>
-                                                            <input type="text" id="LibAngl" name="LibAngl" placeholder="Sur 60 car." size="60" maxlength="60" autofocus="autofocus" value="<?php echo $donnees['LibAngl']; ?>" required><br>
+                                                            <input type="text" id="LibAngl" name="LibAngl" placeholder="Entrer votre angle" size="60" maxlength="60" autofocus="autofocus" value="<?php echo $donnees['LibAngl']; ?>" required><br>
                                                         </div>
                                                         <div class="Margin">
-                                                            <label for="NumLang">NumLang :</label>
+                                                            <label for="NumLang">Langue :</label>
                                                             <select name="NumLang" id="NumLang" required>
                                                                 <option value="" disabled>-- Choisir un pays --</option>
                                                                 <?php 
@@ -116,12 +116,12 @@
                                                                 ?>
                                                             </select><br>
                                                         </div>
-                                                        <div class="Margin">
+                                                        <div class="validerInput">
                                                             <input type="submit"><br>
                                                         </div>
                                                     </form>
                                                     
-                                                    <div class="Margin">
+                                                    <div class="Margin validerInput">
                                                         <a href="index.php" class="back"><i class="fas fa-arrow-left"></i> Revenir au tableau</a>
                                                     </div>
                                                 <?php

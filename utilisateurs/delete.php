@@ -51,7 +51,9 @@
 
             ?>
 
-            <a href="index.php" class="back"><i class="fas fa-arrow-left"></i> Revenir au tableau</a>
+            <div class="Margin validerInput">
+                <a href="index.php" class="back"><i class="fas fa-arrow-left"></i> Revenir au tableau</a>
+            </div>
         </div>
     </body>
 

@@ -37,7 +37,7 @@
                 <?php include 'assets/php/btnConnexion.php'; ?>
             </div>
             
-            <div class="contactContent">
+            <div class="indexContent">
 
                 <?php 
 
@@ -46,10 +46,18 @@
 
                     while ($donnees = $req->fetch())
                     {
-                        echo $donnees['LibTitrA'] . ' - ';
-                        echo dateChangeFormat($donnees['DtCreA'], "Y-m-d", "d/m/Y");
-                        echo '<br><br>';
-                        echo "<a href='articles.php?numArt=" . $donnees['NumArt'] . "'>En savoir plus</a>";
+                        ?>
+                        <img src="assets/uploads/<?php echo $donnees['UrlPhotA'];?>" alt="Image de l'article">
+                        <div class="lastPub">
+                            <h2>Dernière publication</h2>
+                            <p><?php echo dateChangeFormat($donnees['DtCreA'], "Y-m-d", "d/m/Y");?></p>
+                        </div>
+                        <h1><?php echo $donnees['LibTitrA']; ?></h1>
+                        <p><?php echo $donnees['LibChapoA'] ?></p>
+                        <div class="decouvrir">
+                            <a href="articles.php?numArt=<?php echo $donnees['NumArt']; ?>">Découvrir</a>
+                        </div>
+                        <?php
                     }
 
                     $req->closeCursor();

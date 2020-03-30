@@ -49,15 +49,25 @@
                     'id' => $arrayArticleTrue[$i]
                 ));
                 $donnees = $req->fetch();
+                ?>
 
-                echo dateChangeFormat($donnees['DtCreA'], "Y-m-d", "d/m/Y") . " - " . $donnees['LibTitrA'] . '<br>';
-                echo '<a href="articles.php?numArt=' . $donnees['NumArt'] . '">Voir l' . "'" . 'article</a>';
-                echo '<br>';
+                <div class="header">
+                    <img src="assets/uploads/<?php echo $donnees['UrlPhotA'];  ?>" alt="Image de l'article">
+                    <p><?php echo dateChangeFormat($donnees['DtCreA'], "Y-m-d", "d/m/Y"); ?></p>
+                </div>
+
+                <p class="previewSearch"><?php echo $donnees['LibTitrA']; ?></p>
+                <a href="articles.php?numArt=<?php echo $donnees['NumArt']; ?>" class="linkSearch">Voir l'article</a>
+
+                <hr>
+
+                <?php
+
             }
 
             // Affiche un message d'erreur s'il n'y a pas d'article
             if(count($arrayArticleTrue) == 0) {
-                echo "Aucun article trouvé !";
+                echo "<p class='errorSearch'>Aucun article trouvé !</p>";
             }
 
             ?>

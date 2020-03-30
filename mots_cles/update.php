@@ -65,19 +65,19 @@
                     <div class="thematiques">
                                         <?php include '../assets/php/menuAdmin.php'; ?>
                         <div class="Update">                
-                                                <h1>Modifiez le mot clés <span><?php echo $_GET['id']; ?></span>.</h1>
+                                                <h1>Modifier le mot clés <span><?php echo $_GET['id']; ?></span>.</h1>
                             <div class="UpdateContent"> 
                                                 <form action="update.php?id=<?php echo $_GET['id']; ?>" method="POST">
                                                 <div class="Margin"> 
                                                     <label for="NumMoCle">ID :</label>
-                                                    <input type="text" id="NumMoCle" name="NumMoCle" placeholder="Sur 8 car." size="8" minlength="8" value="<?php echo $donnees['NumMoCle']; ?>" required disabled><br>
+                                                    <input type="text" id="NumMoCle" name="NumMoCle" placeholder="Identifiant du mot clés" size="8" minlength="8" value="<?php echo $donnees['NumMoCle']; ?>" required disabled><br>
                                                 </div> 
                                                 <div class="Margin"> 
-                                                    <label for="LibMoCle">Libellé mot clés :</label>
-                                                    <input type="text" id="LibMoCle" name="LibMoCle" placeholder="Sur 30 car." size="30" maxlength="30" autofocus="autofocus" value="<?php echo $donnees['LibMoCle']; ?>" required><br>
+                                                    <label for="LibMoCle">Mot clés :</label>
+                                                    <input type="text" id="LibMoCle" name="LibMoCle" placeholder="Entrer le mot clés" size="30" maxlength="30" autofocus="autofocus" value="<?php echo $donnees['LibMoCle']; ?>" required><br>
                                                 </div>
                                                 <div class="Margin"> 
-                                                    <label for="NumLang">NumLang :</label>
+                                                    <label for="NumLang">Langue :</label>
                                                     <select name="NumLang" id="NumLang" required disabled>
                                                         <option value="" disabled>-- Choisir un pays --</option>
                                                         <?php 
@@ -97,11 +97,11 @@
                                                         ?>
                                                     </select> <br>
                                                 </div>
-                                                <div class="Margin"> 
+                                                <div class="validerInput"> 
                                                     <input type="submit">
                                                 </div>
                                                 </form>
-                                                <div class="Margin">
+                                                <div class="Margin validerInput">
                                                     <a href="index.php" class="back"><i class="fas fa-arrow-left"></i> Revenir au tableau</a>
                                                 </div>
                                             <?php

@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Hôte : 127.0.0.1:3306
--- Généré le :  Dim 29 mars 2020 à 23:03
+-- Généré le :  lun. 30 mars 2020 à 23:42
 -- Version du serveur :  5.7.26
 -- Version de PHP :  7.2.18
 
@@ -110,6 +110,17 @@ CREATE TABLE IF NOT EXISTS `comment` (
   KEY `COMMENT_FK` (`NumCom`),
   KEY `FK_ASSOCIATION_7` (`NumArt`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+--
+-- Déchargement des données de la table `comment`
+--
+
+INSERT INTO `comment` (`NumCom`, `DtCreC`, `PseudoAuteur`, `EmailAuteur`, `TitrCom`, `LibCom`, `NumArt`) VALUES
+('001', '2020-03-30 14:47:53', 'NeoxAzrot', 'sami.lafrance@mmibordeaux.com', 'Quel article !', 'J\'ai tellement appris sur les moutons, merci &agrave; toi blogueur fou &hearts;', '06'),
+('002', '2020-03-30 14:52:00', 'Hitsohi', 'justin.quillevere@mmibordeaux.com', 'Quelle fiction !', 'Tr&egrave;s bien &eacute;cris.', '04'),
+('003', '2020-03-30 14:52:43', 'Hitsohi', 'justin.quillevere@mmibordeaux.com', 'Excellent', 'Merci des tips ! Essayons de passer du bon temps maintenant :)', '01'),
+('004', '2020-03-30 14:55:26', 'NiyesNino', 'nino.mansencal@mmibordeaux.com', 'Une mascotte ?', 'C\'est bien plus qu\'un symbole !!! C\'est un magnifique animal', '06'),
+('005', '2020-03-30 23:41:48', 'Lucas_pastis', 'lucas.marsalle@mmibordeaux.com', 'Tr&egrave;s int&eacute;ressant', 'Article tr&egrave;s int&eacute;ressant !\r\nJe trouve que la photo est magnifique au passage ;)', '03');
 
 -- --------------------------------------------------------
 

@@ -22,7 +22,7 @@
 .menu ul {
     text-align: center;
     padding: 0px;
-    margin-top: 100px;
+    margin-top: 50px;
 }
 
 .menu img {
@@ -38,6 +38,7 @@
     height: 100vh;
     margin: 0px;
     padding: 0px;
+    position: fixed;
 }
 
 /* Menu Admin */
@@ -82,9 +83,9 @@
 
 .contentConnexion {
     width: 60vw;
-    height: 60vh;
+    height: auto;
     background-color: white;
-    margin-left: 10vw;
+    margin-left: 30vw;
     margin-top: 20vh;
 }
 
@@ -94,12 +95,6 @@
     text-align: center;
     color: #6D0A1B;
     margin-bottom: 3vh;
-}
-
-.contentConnexion label {
-    color: #355931;
-    font-family: Helvetica, sans-serif;
-    font-size: 30px;
 }
 
 .inputConnexion input {
@@ -114,6 +109,7 @@
     margin-left: auto;
     margin-right: auto;
     width: 40vw;
+    margin-bottom: 15vh;
 }
 .validerConnexion {
     margin-left: auto;
@@ -136,20 +132,27 @@
 }
 
 .inscrireConnexion {
-    font-family: 'Bebas Neue', cursive;
-    font-size: 24px;
+    font-family: Helvetica, sans-serif;
+    font-size: 20px;
     background-color: white;
-    border: 1px solid #6D0A1B;
     color: #6D0A1B;
-    margin-top: 20px;
-    height: 5vh;
-    width: 7vw;
     padding-top: 3px;
-    display: block;
+    display: inline;
     margin-left: auto;
     margin-right: auto;
     text-decoration: none;
     text-align: center;
+}
+
+.inscrireConnexion a {
+    color: #6D0A1B;
+    text-decoration: none;
+    display: block;
+    margin-top: 20px;
+}
+
+.inscrireConnexion a:hover {
+    text-decoration: underline;
 }
 /* Administration */ 
 body .administration {
@@ -191,12 +194,13 @@ body {
     display: flex;
     float: right;
     margin-right: 4vw;
-    font-size: 33px;
+    font-size: 25px;
+    margin-left: 40vw;
 }
 
 .btnConnexion a {
     color: white;
-    font-size: 33px;
+    font-size: 25px;
 }
 /* Connexion Menu Admin */
 .connexionAdmin {
@@ -242,10 +246,10 @@ body {
 .mentionsContent {
     background-color: white;
     width: 60vw;
-    height: 845vh;
+    height: auto;
     margin-top: 20vh;
-    margin-left: 10vw;
-    overflow: auto;
+    margin-left: -5vw;
+    margin-bottom: 10vh;
 }
 .mentionsContent img {
     display: block;
@@ -257,6 +261,7 @@ body {
     width: 50vw;
     margin: 0px auto;
     font-family: Helvetica, sans-serif;
+    padding-bottom: 5vh;
 }
 
 .mentionsTrueContent a {
@@ -267,6 +272,7 @@ body {
 .thematiques {
     display: flex;
     flex-direction: column;
+    margin-left: 20vw;
 }
 
 /* thematiques + mots clés update & new */
@@ -275,18 +281,23 @@ body {
     color: #6D0A1B;
     text-align: center;
     font-size: 50px;
-    padding-top: 5vh;
+    padding-top: 10vh;
     margin: 0px;
+    margin-top: 5vh;
 }
 
 .Update {
     background-color: white;
     width: 60vw;
-    height: 70vh;
-    margin-top: 10vh;
+    height: auto;
+    margin-top: 20vh;
     margin-left: 10vw;
     font-size: 20px;
-    overflow: auto;
+    margin-bottom: 10vh;
+}
+
+.Update h1 {
+    padding-top: 0;
 }
 
 .UpdateContent {
@@ -294,6 +305,7 @@ body {
     width: 30vw;
     margin: 0px auto;
     font-family: Helvetica, sans-serif;
+    margin-bottom: 5vh;
 }
 
 .Margin {
@@ -328,11 +340,11 @@ body {
 .contactContent {
     background-color: white;
     width: 60vw;
-    height: 70vh;
+    height: auto;
     margin-top: 7vh;
-    margin-left: 10vw;
+    margin-left: -5vw;
     font-size: 20px;
-    overflow: auto;
+    margin-bottom: 10vh;
 }
 
 .contactContent1 {
@@ -340,6 +352,7 @@ body {
     width: 30vw;
     margin: 0px auto;
     font-family: Helvetica, sans-serif;
+    padding-bottom: 5vh;
 }
 
 .contactContent1 textarea {
@@ -383,6 +396,7 @@ body {
     font-size: 25px;
     font-family: Helvetica, sans-serif;
     margin-bottom: 2vh;
+    color: black;
 }
 
 .pseudoAdminInAdminShow {
@@ -409,11 +423,10 @@ body {
 .SavoirPlusContent {
     background-color: white;
     width: 60vw;
-    height: 70vh;
+    height: auto;
     margin-top: 7vh;
-    margin-left: 10vw;
+    margin-left: -5vw;
     font-size: 20px;
-    overflow: auto;
 }
 
 /* Modifier article */ 
@@ -430,4 +443,642 @@ body {
 
 .UpdateArticle textarea {
     width: 30vw;
+}
+
+/* Search bar */
+
+.searchBar {
+    margin-left: 20vw;
+    position: relative;
+}
+
+.searchBar .table-wrapper {
+    position: absolute;
+    width: 100%;
+    height: auto;
+    background-color: white;
+    z-index: 2;
+    top: 55px;
+    left: 2px;
+}
+
+.searchBar .table-wrapper .header {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    padding: 10px 15px;
+}
+
+.searchBar .table-wrapper img {
+    width: 100px;
+    height: 70px;
+}
+
+.searchBar .table-wrapper .header p {
+    font-family: Helvetica, sans-serif;
+    color: black;
+    font-size: 15px;
+    font-weight: 300;
+}
+
+.searchBar .table-wrapper .previewSearch {
+    font-family: Helvetica, sans-serif;
+    color: black;
+    font-size: 15px;
+    font-weight: 700;
+    padding: 0 15px;
+}
+
+.searchBar .table-wrapper .linkSearch {
+    font-family: Helvetica, sans-serif;
+    color: #6D0A1B;
+    font-size: 15px;
+    font-weight: 400;
+    padding: 0 15px;
+    text-decoration: none;
+}
+
+.searchBar .table-wrapper .linkSearch:hover {
+    text-decoration: underline;
+}
+
+/* Admin */ 
+.admin {
+    display: flex;
+    flex-direction: column;
+}
+
+.admin h1 {
+    font-family: 'Bebas Neue', cursive;
+    color: #6D0A1B;
+    text-align: center;
+    font-size: 50px;
+    padding-top: 5vh;
+    margin: 0px;
+}
+.adminContent {
+    background-color: white;
+    width: 60vw;
+    height: auto;
+    margin-top: 7vh;
+    margin-left: 30vw;
+    font-size: 20px;
+    padding-bottom: 5vh;
+}
+
+.adminContent1 {
+    color: #355931;
+    width: 30vw;
+    margin: 0px auto;
+    font-family: Helvetica, sans-serif;
+}
+
+/* Inscription */ 
+.inscription {
+    display: flex;
+    flex-direction: column;
+}
+
+.inscription h1 {
+    font-family: 'Bebas Neue', cursive;
+    color: #6D0A1B;
+    text-align: center;
+    font-size: 50px;
+    padding-top: 5vh;
+    margin: 0px;
+}
+.inscriptionContent {
+    background-color: white;
+    width: 60vw;
+    height: auto;
+    margin-top: 7vh;
+    margin-left: 30vw;
+    font-size: 20px;
+    margin-bottom: 10vh;
+}
+
+.inscriptionContent1 {
+    color: #355931;
+    width: 30vw;
+    margin: 0px auto;
+    font-family: Helvetica, sans-serif;
+    padding-bottom: 5vh;
+}
+
+.article1 {
+    background-color: white;
+    width: 60vw;
+    height: auto;
+    margin-top: 20vh;
+    margin-left: 10vw;
+    font-size: 20px;
+    margin-bottom: 10vh;
+}
+
+.article1 h1 {
+    padding-top: 0;
+}
+
+/* Menu Admin */
+.menuAdminFirst li a{
+    font-size: 25px;
+    color: #6D0A1B;
+}
+
+.menuAdminFirst a {
+    text-decoration: none;
+    font-family: 'Bebas Neue', cursive;
+}
+
+.menuAdminFirst a:hover {
+    text-decoration: underline;
+}
+
+.menuAdminFirst li {
+    flex-direction: row;
+    list-style: none;
+    margin-left: 3vw;
+}
+
+.menuAdminFirst ul {
+    display: flex;
+    padding: 0px;
+    margin-top: 3vh; 
+    margin-bottom: 3vh;
+}
+
+.menuAdminFirst {
+    background-color: white;
+    width: 80vw;
+    height: 10vh;
+    margin: 0px;
+    padding: 0px;
+    margin-left: 20vw;
+}
+
+.btnAdmin .btnConnexion {
+    margin-left: 0;
+}
+
+/* Ajout Sami V2 TODO */
+
+.indexContent {
+    background-color: white;
+    width: 60vw;
+    height: auto;
+    margin-top: 7vh;
+    margin-left: -5vw;
+    font-size: 20px;
+}
+
+.indexContent h1 {
+    font-family: 'Bebas Neue', cursive;
+    font-size: 60px;
+    text-align: center;
+    color: #6D0A1B;
+    margin-bottom: 3vh;
+    font-weight: 400;
+    margin-top: 15vh;
+}
+
+.indexContent .lastPub h2 {
+    font-family: 'Helvetica', sans-serif;
+    font-size: 40px;
+    text-align: right;
+    color: #6D0A1B;
+    font-weight: 300;
+    margin-bottom: 0;
+}
+
+.indexContent p {
+    font-family: 'Helvetica', sans-serif;
+    font-size: 20px;
+    text-align: left;
+    color: #355931;
+    font-weight: 700;
+}
+
+.indexContent .lastPub p {
+    font-family: 'Helvetica', sans-serif;
+    font-size: 20px;
+    text-align: right;
+    color: black;
+    font-weight: 300;
+    margin-top: 10px;
+}
+
+.indexContent {
+    position: relative;
+    margin-top: 20vh;
+    padding: 20px;
+    margin-bottom: 10vh;
+    padding-bottom: 7vh;
+}
+
+.indexContent img {
+    position: absolute;
+    top: -75px;
+    left: -100px;
+    width: 450px;
+    height: 300px;
+}
+
+.indexContent .decouvrir {
+    text-align: center;
+}
+
+.indexContent a {
+    display: inline-block;
+    margin-top: 10vh;
+    border: solid 1px #6D0A1B;
+    padding: 15px 300px;
+    color: #6D0A1B;
+    font-family: 'Helvetica', sans-serif;
+    font-size: 30px;
+    font-weight: 400;
+    text-decoration: none;
+    transition: 0.3s ease;;
+}
+
+.indexContent a:hover {
+    background-color: #6D0A1B;
+    color: white;
+}
+
+.SavoirPlusContent {
+    background-color: white;
+    width: 60vw;
+    height: auto;
+    margin-top: 40vh !important;
+    margin-left: -5vw;
+    font-size: 20px;
+}
+
+.SavoirPlusContent h1 {
+    font-family: 'Bebas Neue', cursive;
+    font-size: 60px;
+    text-align: center;
+    color: #6D0A1B;
+    margin-bottom: 0;
+    font-weight: 400;
+    margin-top: 30vh;
+}
+
+.SavoirPlusContent p {
+    font-family: 'Helvetica', sans-serif;
+    text-align: left;
+}
+
+.SavoirPlusContent .date {
+    font-size: 20px;
+    text-align: right;
+    color: black;
+    font-weight: 300;
+    margin-top: 0;
+    margin-bottom: 5vh;
+}
+
+.SavoirPlusContent .chapo {
+    font-size: 25px;
+    font-weight: 700;
+    margin-bottom: 10vh;
+    color: #355931;
+}
+
+.SavoirPlusContent .paragraphe {
+    font-size: 20px;
+    font-weight: 400;
+    margin-bottom: 10vh;
+    color: #355931;
+}
+
+.SavoirPlusContent .sous_titre {
+    font-size: 35px;
+    font-weight: 700;
+    margin-bottom: 5vh;
+    color: #6D0A1B;
+}
+
+.SavoirPlusContent .conclusion {
+    font-size: 20px;
+    font-weight: 700;
+    margin-bottom: 10vh;
+    color: #355931;
+}
+
+.SavoirPlusContent {
+    position: relative;
+    margin-top: 20vh;
+    padding: 20px;
+    padding-bottom: 7vh;
+    margin-bottom: 10vh;
+}
+
+.SavoirPlusContent img {
+    position: absolute;
+    top: -250px;
+    left:  50%;
+    transform: translateX(-50%);
+    width: 700px;
+    height: 450px;
+}
+
+.SavoirPlusContent .likeAndCom {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+}
+
+.AllArticles {
+    background-color: white;
+    width: 30vw;
+    height: auto;
+    margin-top: 10vh !important;
+    margin-left: -5vw;
+    font-size: 20px;
+}
+
+.AllArticles h1 {
+    font-family: 'Bebas Neue', cursive;
+    font-size: 30px;
+    text-align: left;
+    color: #6D0A1B;
+    margin-bottom: 0;
+    font-weight: 400;
+    margin-top: 5vh;
+}
+
+.AllArticles p {
+    font-family: 'Helvetica', sans-serif;
+    text-align: left;
+}
+
+.AllArticles .date {
+    font-size: 20px;
+    text-align: right;
+    color: black;
+    font-weight: 300;
+    margin-top: 12vh;
+}
+
+.AllArticles .chapo {
+    font-size: 15px;
+    font-weight: 700;
+    margin-bottom: 5vh;
+    color: #355931;
+}
+
+.flexContainerArticles {
+    display: flex;
+    flex-wrap: wrap;
+}
+
+.AllArticles {
+    position: relative;
+    margin-top: 20vh;
+    padding: 20px;
+    padding-bottom: 7vh;
+    margin-bottom: 10vh;
+    margin-left: -200px;
+}
+
+.AllArticles:nth-child(even) {
+    margin-left: 6vw;
+}
+
+.AllArticles img {
+    position: absolute;
+    top: -50px;
+    left: -80px;
+    width: 300px;
+    height: 200px;
+}
+
+.AllArticles a {
+    display: inline-block;
+    border: solid 1px #6D0A1B;
+    padding: 10px 150px;
+    color: #6D0A1B;
+    font-family: 'Helvetica', sans-serif;
+    font-size: 15px;
+    font-weight: 400;
+    text-decoration: none;
+    transition: 0.3s ease;;
+}
+
+.AllArticles a:hover {
+    background-color: #6D0A1B;
+    color: white;
+}
+
+
+/* Input */
+
+#fetchval {
+    background-image: url('../images/search.svg');
+    background-position: 10px 10px;
+    background-size: 20px;
+    background-repeat: no-repeat;
+    padding-left: 40px;
+    margin: 8px 0px;
+    width: auto;
+}
+
+#fetchval:focus {
+    border: 1px solid #6D0A1B;
+    outline: none;
+    padding: 12px 20px;
+    padding-left: 40px;
+    background-image: url('../images/search_focus.svg');
+}
+
+input {
+    width: 100%;
+    padding: 12px 20px;
+    margin: 8px 0;
+    box-sizing: border-box;
+    border: 1px solid #6D0A1B;
+    border-radius: 4px;
+    font-size: 15px;
+    font-family: 'Helvetica', sans-serif;
+    font-weight: 400;
+}
+
+input[type=submit], input[type=reset] {
+    font-size: 20px;
+    font-family: 'Bebas Neue', cursive;
+    font-weight: 400;
+    color: #6D0A1B;
+    padding: 10px 40px;
+    transition: 0.3s ease;
+    margin-top: 30px;
+    width: 30%;
+}
+
+input[type=submit]:hover, input[type=reset]:hover {
+    color: white;
+    background-color: #6D0A1B;
+    cursor: pointer;
+}
+
+input[type=submit]:focus, input[type=reset]:focus {
+    padding: 9px 39px;
+}
+
+input:focus {
+    border: 2px solid #6D0A1B;
+    outline: none;
+    padding: 11px 19px;
+}
+
+textarea {
+    width: 100%;
+    height: 150px;
+    padding: 12px 20px;
+    box-sizing: border-box;
+    border: 1px solid #6D0A1B;
+    border-radius: 4px;
+    resize: none;
+    font-size: 15px;
+    font-family: 'Helvetica', sans-serif;
+    font-weight: 400;
+}
+
+textarea:focus {
+    border: 2px solid #6D0A1B;
+    outline: none;
+    padding: 11px 19px;
+}
+
+label {
+    font-size: 20px;
+    font-family: 'Helvetica', sans-serif;
+    font-weight: 400;
+    color: #355931;
+}
+
+.sendButton {
+    display: flex;
+    justify-content: space-around;
+    flex-direction: row-reverse;
+}
+
+.sendButton input {
+    width: 100%;
+}
+
+.validerInput {
+    text-align: center;
+}
+
+select {
+    width: 100%;
+    padding: 11px 19px;
+    border-radius: 4px;
+    margin: 8px 0;
+    box-sizing: border-box;
+    border: 1px solid #6D0A1B;
+    font-size: 15px;
+    font-family: 'Helvetica', sans-serif;
+    font-weight: 400;
+}
+
+select:focus {
+    border: 2px solid #6D0A1B;
+    outline: none;
+    padding: 10px 18px;
+}
+
+.addMotCleJS, .removeMotCleJS {
+    font-size: 20px;
+    font-family: 'Bebas Neue', cursive;
+    font-weight: 400;
+    color: white;
+    padding: 10px 40px;
+    transition: 0.3s ease;
+    margin-top: 30px;
+    width: 60%;
+    box-sizing: border-box;
+    border: 1px solid #6D0A1B;
+    border-radius: 4px;
+    background-color: #6D0A1B;
+}
+
+.addMotCleJS:hover, .removeMotCleJS:hover {
+    color: #6D0A1B;
+    background-color: white;
+    cursor: pointer;
+}
+
+.addMotCleJS:focus, .removeMotCleJS:focus {
+    padding: 9px 39px;
+}
+
+.errorConnexion {
+    color: red;
+    font-family: 'Helvetica', sans-serif;
+    font-weight: 400;
+    font-size: 15px;
+    text-align: center;
+}
+
+.Update h1 span {
+    text-decoration: underline;
+}
+
+.article1 h1 span {
+    text-decoration: underline;
+}
+
+/* Table */
+
+.thematiques table {
+    border-collapse: collapse;
+    color: black;
+    font-family: 'Helvetica', sans-serif;
+    font-weight: 400;
+    font-size: 15px;
+    width: 100%;
+    margin-top: 5vh;
+}
+
+.thematiques img {
+    width: 200px;
+    height: 150px;
+}
+  
+.thematiques table, th, td {
+    border: 1px solid black;
+}
+
+.thematiques th {
+    height: 50px;
+    font-size: 18px;
+    min-width: 100px;
+}
+
+.thematiques td {
+    vertical-align: top;
+    padding: 5px;
+}
+
+.thematiques a {
+    color: #6D0A1B;
+}
+
+.thematiques .modified_link {
+    color: blue;
+}
+
+.thematiques .delete_link {
+    color: red;
+}
+
+.thematiques tbody tr:hover {
+    background-color: grey;
+}
+
+.thematiques .add {
+    font-size: 25px;
+    margin-top: 20px;
 }

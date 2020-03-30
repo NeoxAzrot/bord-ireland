@@ -11,7 +11,7 @@
 
 <!-- Affiche une partie pour admin si il est connecté -->
 <div class="menu">
-    <img src="../assets/images/logo.png" />
+    <a href="../index.php"><img src="../assets/images/logo.png" /></a>
 
     <ul>
         <li><a href="../index.php">Accueil</a></li>

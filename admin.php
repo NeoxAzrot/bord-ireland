@@ -31,7 +31,7 @@
 
         <!-- Menu différent car admin est à la racine -->
         <div class="administration">
-            <div class="menuAdmin">
+            <div class="menuAdminFirst">
                 <ul>
                     <li><a href="articles/index.php">Articles</a></li>
                     <li><a href="commentaires/index.php">Commentaires</a></li>
@@ -45,10 +45,10 @@
             </div>
         
        
-            <div class="contact">
-                <div class="contactContent">
+            <div class="admin">
+                <div class="adminContent">
                     <h1>Administrateur</h1>
-                    <p>Bienvenu sur la page Administrateur de Bord'Irlande. <br> D'ici vous pourrez gérer toute l'administration du site !</p>
+                    <p>Bienvenue sur la page « administrateur » de Bord'Irlande. <br> D'ici vous pourrez gérer toute l'administration du site !</p>
                 </div>
                 <?php
 
