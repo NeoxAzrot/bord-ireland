@@ -14,8 +14,8 @@ Then you just have to use a [MAMP](https://www.mamp.info/en/downloads/) space to
 
 To connect in administrator part of the site and discover the back office, here are the identifiers:
 
-- Login : **Admin**
-- Password : **Admin33!**
+- Login: **Admin**
+- Password: **Admin33!**
 
 ## About the project
 
