@@ -1,22 +1,31 @@
-Tu trouveras à la racine le fichier exportBlogArtGp08.sql
+# Bord'Ireland
 
-Pour se connecter en partie ADMIN avec le .sql donné :
+> ⚠️ Not totally finished yet
 
-Login : Admin 
-Pass : Admin33!
+## Prerequisites
 
------------
+### Install the database
 
-Concernant le site :
+At the root you will find the file `exportBlogArtGp08.sql` that you have to import in phpmyadmin.
 
-Niveau back tout est fonctionnel (barre de recherche, panel admin TOUT LES CRUD, trie des articles, formulaire de contact, connexion / inscription / déconnexion, protection des données, ...)
-Niveau front, l'intégration n'a pas pu être complété à 100% :
+Then you just have to use a [MAMP](https://www.mamp.info/en/downloads/) space to run the site on your computer.
 
-Le site est fonctionel, mais il manque une intégration responsive et peut être repenser les index.php du panel administrateur.
-Revoir le front des résultats de la barre de recherche.
-Et faire un front plus beau pour les commentaires des articles.
-Et rendre de manière plus jolie la partie mention légale, on n'a absolument pas envie de lire dans ces conditions.
+### Administration
 
-Ca me fait penser que niveau back il manque seulement l'ajout d'un j'aime à un article (pour moi il manque une table pour enregistrer que l'utilisateur à like cet article et ne peut pas like plusieurs fois). J'avais donc pensé à faire un système de cookies, mais j'ai oublié de le faire !
+To connect in administrator part of the site and discover the back office, here are the identifiers:
 
-Merci pour le délai accordé sur le front en plus !
+- Login : **Admin **
+- Password : **Admin33!**
+
+## About the project
+
+- Back level everything is functional (search bar, admin panel ALL CRUD, sorting of articles, contact form, login / registration / logout, data protection, ...)
+- On the front, the integration is **not 100% finished**
+
+### What we could add
+
+- It lacks a responsive integration
+- Rethinking the `index.php` of the admin panel
+- Review the front end of the search bar results
+- Make a more beautiful frontend for the comments of the articles
+- Make the legal notice part prettier, we absolutely do not want to read in these conditions
