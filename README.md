@@ -24,8 +24,8 @@ To connect in administrator part of the site and discover the back office, here 
 
 ### What we could add
 
-- It lacks a responsive integration
-- Rethinking the `index.php` of the admin panel
-- Review the front end of the search bar results
-- Make a more beautiful frontend for the comments of the articles
-- Make the legal notice part prettier, we absolutely do not want to read in these conditions
+- [ ] It lacks a responsive integration
+- [ ] Rethinking the `index.php` of the admin panel
+- [ ] Review the front end of the search bar results
+- [ ] Make a more beautiful frontend for the comments of the articles
+- [ ] Make the legal notice part prettier, we absolutely do not want to read in these conditions
